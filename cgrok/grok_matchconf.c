@@ -50,6 +50,7 @@ void grok_matchconfig_close(grok_program_t *gprog, grok_matchconf_t  *gmc) {
   }
   grok_free(&gmc->grok);
 }
+
 void grok_matchconfig_exec(grok_program_t *gprog, grok_input_t *ginput,
                            const char *text) {
   grok_t *grok;
@@ -70,6 +71,10 @@ void grok_matchconfig_exec(grok_program_t *gprog, grok_input_t *ginput,
     ret = grok_exec(grok, text, &gm);
     if (ret >= 0) {
       grok_matchconfig_react(gprog, ginput, gmc, &gm);
+
+      if (gmc->break_if_match) {
+        break;
+      }
     }
   }
 }

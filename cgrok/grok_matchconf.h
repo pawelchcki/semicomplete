@@ -22,6 +22,7 @@ struct grok_matchconf {
 
   FILE *shellinput; /* fd to write reactions to */
   int pid; /* pid of shell */
+  int break_if_match; /* break if we match */
 };
 
 void grok_matchconfig_init(grok_program_t *gprog, grok_matchconf_t  *gmc);

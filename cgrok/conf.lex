@@ -35,6 +35,7 @@ pattern { return MATCH_PATTERN; }
 reaction { return MATCH_REACTION; }
 shell { return MATCH_SHELL; }
 flush { return MATCH_FLUSH; }
+break-if-match { return MATCH_BREAK_IF_MATCH; }
 
 debug { return CONF_DEBUG; }
 

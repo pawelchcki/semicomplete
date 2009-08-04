@@ -42,6 +42,7 @@ void yyerror (YYLTYPE *loc, struct config *conf, char const *s) {
 %token MATCH_REACTION "reaction"
 %token MATCH_SHELL "shell"
 %token MATCH_FLUSH "flush"
+%token MATCH_BREAK_IF_MATCH "break-if-match"
 
 %token '{' '}' ';' ':' '\n'
 
@@ -129,6 +130,7 @@ match_block_statement: /* empty */
            | "reaction" ':' QUOTEDSTRING { CURMATCH.reaction = $3; }
            | "shell" ':' QUOTEDSTRING { CURMATCH.shell = $3; }
            | "flush" ':' INTEGER { CURMATCH.flush = $3; }
+           | "break-if-match" ':' INTEGER { CURMATCH.break_if_match = $3; }
            | "debug" ':' INTEGER { CURMATCH.grok.logmask = DEBUGMASK($3); }
 
 
