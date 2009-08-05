@@ -11,9 +11,10 @@ File.open("../grok-patterns").each do |line|
   x.add_pattern(name, pat)
 end
 
-x.compile("%{SYSLOGBASE:test}")
+#x.compile("%{SYSLOGBASE:test}")
+x.compile("%{SYSLOGBASE} Accepted %{NOTSPACE:method} for %{DATA:user} from %{IPORHOST:client} port %{INT:port}")
 
-File.open("/var/log/messages").each do |line|
+$stdin.each do |line|
   begin
     pp x.match(line)
   rescue ArgumentError
