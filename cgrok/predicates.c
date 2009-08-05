@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "logging.h"
+#include "grok_logging.h"
 #include "predicates.h"
 
 static pcre *regexp_predicate_op = NULL;

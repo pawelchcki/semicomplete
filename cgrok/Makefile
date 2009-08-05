@@ -1,6 +1,7 @@
 PACKAGE=grok-beta
+PREFIX=/usr/local
 
-CFLAGS+=-pipe
+CFLAGS+=-pipe -fPIC
 #CFLAGS+=-g
 #CFLAGS+=-pg -g
 CFLAGS+=-O3
@@ -77,6 +78,10 @@ grok: LDFLAGS+=-levent
 grok: $(GROKOBJ) conf.tab.o conf.yy.o main.o grok_config.o
 	gcc $(LDFLAGS) -g $^ -o $@
 
+libgrok.so: LDFLAGS+=-levent
+libgrok.so: $(GROKOBJ) conf.tab.o conf.yy.o main.o grok_config.o
+	gcc $(LDFLAGS) -fPIC -shared -g $^ -o $@
+
 # File dependencies
 grok.h: grok_capture.h
 grok_match.h: grok_capture.h
@@ -105,3 +110,11 @@ conf.yy.c: conf.lex conf.tab.h
 
 .c.o:
 	$(CC) -c $(CFLAGS) $< -o $@
+
+install: libgrok.so grok
+	install -m 755 -o root -g root grok $(PREFIX)/bin
+	install -m 644 -o root -g root libgrok.so $(PREFIX)/lib
+	for header in grok.h grokre.h grok_pattern.h grok_capture.h grok_capture_xdr.h grok_match.h grok_logging.h; do \
+		install -m 644 -o root -g root $$header $(PREFIX)/include; \
+	done 
+

@@ -14,7 +14,7 @@
 #include "grok_program.h"
 #include "grok_input.h"
 #include "grok_matchconf.h"
-#include "logging.h"
+#include "grok_logging.h"
 
 #include "libc_helper.h"
 

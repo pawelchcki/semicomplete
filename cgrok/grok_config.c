@@ -5,7 +5,7 @@
 #include "grok_input.h"
 #include "grok_config.h"
 #include "grok_matchconf.h"
-#include "logging.h"
+#include "grok_logging.h"
 
 void conf_init(struct config *conf) {
   conf->nprograms = 0;

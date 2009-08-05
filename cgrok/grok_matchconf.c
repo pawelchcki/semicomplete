@@ -4,7 +4,7 @@
 #include "grok.h"
 #include "grok_matchconf.h"
 #include "grok_matchconf_macro.h"
-#include "logging.h"
+#include "grok_logging.h"
 #include "libc_helper.h"
 #include "filters.h"
 

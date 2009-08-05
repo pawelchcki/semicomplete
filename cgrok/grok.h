@@ -63,12 +63,10 @@ extern int g_cap_predicate;
   ")?" \
   "}"
 
-// "(?<predicate>\\s*(?:[$]?=[<>=~]|![=~]|[$]?[<>])\\s*[^}]+)?"
-
 #define CAPTURE_ID_LEN 4
 #define CAPTURE_FORMAT "%04x"
 
-#include "logging.h"
+#include "grok_logging.h"
 
 #ifndef GROK_TEST_NO_PATTERNS
 #include "grok_pattern.h"
