@@ -39,7 +39,7 @@ CLEANOBJ=*.o *_xdr.[ch] *.yy.c *.tab.c *.tab.h
 CLEANBIN=main grokre grok conftest grok_program
 
 GROKOBJ=grok.o grokre.o grok_capture.o grok_pattern.o stringhelper.o \
-        predicates.o grok_capture_xdr.o grok_match.o logging.o \
+        predicates.o grok_capture_xdr.o grok_match.o grok_logging.o \
         grok_program.o grok_input.o grok_matchconf.o libc_helper.o \
         grok_matchconf_macro.o filters.o
 GROKPROGOBJ=grok_input.o grok_program.o grok_matchconf.o $(GROKOBJ)
