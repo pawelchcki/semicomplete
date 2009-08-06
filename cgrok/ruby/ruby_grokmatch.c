@@ -48,6 +48,26 @@ VALUE rGrokMatch_initialize(VALUE self) {
                               &data, &datalen) == 0) {
     VALUE key, value;
     VALUE ary;
+
+#ifdef _TRIM_KEY_EXCESS_IN_C_
+  /* This section will skip captures of %{FOO} and rename captures of
+   * %{FOO:bar} to just 'bar' */
+    size_t koff = 0;
+    /* there is no 'strcspn' that takes a length, so do it ourselves */
+    while (koff < namelen && name[koff] != ':' && name[koff] != '\0') {
+      koff++;
+    }
+
+    /* Skip captures that aren't named specially */
+    if (koff == namelen) {
+      continue;
+    }
+
+    koff++;
+
+    key = rb_str_new(name + koff, namelen - koff);
+#endif
+
     key = rb_str_new(name, namelen);
     value = rb_str_new(data, datalen);
     if (rb_funcall(captures, pred_include, 1, key) == Qfalse) {
