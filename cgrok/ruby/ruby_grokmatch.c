@@ -36,7 +36,7 @@ VALUE rGrokMatch_initialize(VALUE self) {
 
   rb_iv_set(self, "@start", INT2FIX(gm->start));
   rb_iv_set(self, "@end", INT2FIX(gm->end));
-  rb_iv_set(self, "@input", rb_str_new2(gm->subject));
+  rb_iv_set(self, "@subject", rb_str_new2(gm->subject));
 
   /* Set the @captures variable to a hash of array of strings */
   captures = rb_hash_new();
@@ -73,8 +73,8 @@ VALUE rGrokMatch_end(VALUE self) {
   return rb_iv_get(self, "@end");
 }
 
-VALUE rGrokMatch_input(VALUE self) {
-  return rb_iv_get(self, "@input");
+VALUE rGrokMatch_subject(VALUE self) {
+  return rb_iv_get(self, "@subject");
 }
 
 void rGrokMatch_free(void *p) {
@@ -88,5 +88,5 @@ void Init_GrokMatch() {
   rb_define_method(cGrokMatch, "captures", rGrokMatch_captures, 0);
   rb_define_method(cGrokMatch, "start", rGrokMatch_start, 0);
   rb_define_method(cGrokMatch, "end", rGrokMatch_end, 0);
-  rb_define_method(cGrokMatch, "input", rGrokMatch_input, 0);
+  rb_define_method(cGrokMatch, "subject", rGrokMatch_subject, 0);
 }

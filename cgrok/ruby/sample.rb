@@ -15,6 +15,8 @@ matches = [
   "%{SYSLOGBASE} Accepted %{NOTSPACE:method} for %{DATA:user} from %{IPORHOST:client} port %{INT:port}",
   "%{SYSLOGBASE} Did not receive identification string from %{IPORHOST:client}",
   "%{SYSLOGBASE} error: PAM: authentication error for %{DATA:user} from %{IPORHOST:client}",
+  
+  #"( *%{DATA:key}:%{NOTSPACE:value})+"
 ]
 
 groks = matches.collect do |m|
