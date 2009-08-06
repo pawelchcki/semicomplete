@@ -1,7 +1,7 @@
 %{
 #define _GPERF_
 #include "grok.h"
-#include "logging.h"
+#include "grok_logging.h"
 #include "stringhelper.h"
 
 int filter_jsonencode(grok_match_t *gm, char **value, int *value_len,
