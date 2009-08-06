@@ -16,10 +16,10 @@ Dependencies:
       CUnit        >= 2.1
 
 Building:
-  gmake grok    (or 'make grok' if your make is gnu make)
+  make grok    (or 'gmake grok' if your make is not gnu make)
 
 Installing:
-  No install target exists. This will be written when cgrok is out of beta.
+  make install
 
 Platforms:
   This has been tested on Linux and FreeBSD. All tests pass in both Linux and
