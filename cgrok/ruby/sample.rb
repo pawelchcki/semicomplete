@@ -3,23 +3,38 @@ require "pp"
 
 x = Grok.new
 
+patterns = {}
 File.open("../grok-patterns").each do |line|
   line.chomp!
   next if line =~ /^#/ or line =~ /^ *$/
   name, pat = line.split(" ", 2)
   next if !name or !pat
-  x.add_pattern(name, pat)
+  #x.add_pattern(name, pat)
+  patterns[name] = pat
 end
 
-#x.compile("%{SYSLOGBASE:test}")
-x.compile("%{SYSLOGBASE} Accepted %{NOTSPACE:method} for %{DATA:user} from %{IPORHOST:client} port %{INT:port}")
+matches = [
+  "%{SYSLOGBASE} Accepted %{NOTSPACE:method} for %{DATA:user} from %{IPORHOST:client} port %{INT:port}",
+  "%{SYSLOGBASE} Did not receive identification string from %{IPORHOST:client}",
+  "%{SYSLOGBASE} error: PAM: authentication error for %{DATA:user} from %{IPORHOST:client}",
+]
+
+groks = matches.collect do |m|
+  g = Grok.new
+  patterns.each { |k,v|  g.add_pattern(k,v) }
+  g.compile(m)
+  g
+end
 
 $stdin.each do |line|
-  begin
-    #pp x.match(line).captures
-    m = x.match(line)
-    puts m.captures
-  rescue ArgumentError
+  groks.each do |grok|
+    m = grok.match(line)
+    if m
+      puts
+      puts line
+      pp m.captures
+      break
+    end
   end
 end
 

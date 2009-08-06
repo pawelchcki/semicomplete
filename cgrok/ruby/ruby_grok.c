@@ -56,6 +56,11 @@ VALUE rGrok_match(VALUE self, VALUE input) {
   Data_Get_Struct(self, grok_t, grok);
   c_input = rb_str2cstr(input, &len);
   ret = grok_execn(grok, c_input, (int)len, &gm);
+
+  if (ret == PCRE_ERROR_NOMATCH) {
+    return Qfalse;
+  }
+
   if (ret < 0) {
     rb_raise(rb_eArgError, "Error from grok_execn: %d", ret);
     return Qnil;
