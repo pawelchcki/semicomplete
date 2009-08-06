@@ -1,8 +1,6 @@
 require "Grok"
 require "pp"
 
-x = Grok.new
-
 patterns = {}
 File.open("../grok-patterns").each do |line|
   line.chomp!
@@ -31,7 +29,7 @@ $stdin.each do |line|
     m = grok.match(line)
     if m
       puts
-      puts line
+      puts m.subject
       pp m.captures
       break
     end
