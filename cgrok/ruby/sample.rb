@@ -16,7 +16,9 @@ x.compile("%{SYSLOGBASE} Accepted %{NOTSPACE:method} for %{DATA:user} from %{IPO
 
 $stdin.each do |line|
   begin
-    pp x.match(line)
+    #pp x.match(line).captures
+    m = x.match(line)
+    puts m.captures
   rescue ArgumentError
   end
 end

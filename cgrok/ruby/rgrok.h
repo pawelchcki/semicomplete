@@ -1,8 +1,9 @@
+#ifndef _RGROK_H_
+#define _RGROK_H_ 
 #include <ruby.h>
 
-VALUE cGrok;
-VALUE cGrokMatch;
+//VALUE cGrok = Qnil;
+//VALUE cGrokMatch = Qnil;
 
-extern rGrok_new(VALUE klass);
-extern rGrokMatch_new(VALUE klass);
-
+extern VALUE rGrok_new(VALUE klass);
+#endif /* _RGROK_H_ */

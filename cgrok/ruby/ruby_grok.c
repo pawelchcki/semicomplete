@@ -1,10 +1,17 @@
 #include <ruby.h>
 #include <grok.h>
+#include "rgrok.h"
+#include "ruby_grokmatch.h"
 
 VALUE cGrok; /* Grok class object */
 
+
+extern VALUE cGrokMatch;
+extern void Init_GrokMatch();
+
 static VALUE rGrok_initialize(VALUE self) {
   /* empty */
+  return Qnil;
 }
 
 static void rGrok_free(void *p) {
@@ -54,23 +61,8 @@ VALUE rGrok_match(VALUE self, VALUE input) {
     return Qnil;
   }
 
-  match = rb_hash_new();
-  {
-    char *name;
-    const char *data;
-    int namelen, datalen;
-    void *handle;
-    handle = grok_match_walk_init(&gm);
-    while (grok_match_walk_next(&gm, handle, &name, &namelen, 
-                                &data, &datalen) == 0) {
-      VALUE key, value;
-      key = rb_str_new(name, namelen);
-      value = rb_str_new(data, datalen);
-      rb_hash_aset(match, key, value);
-    }
-  }
-
-  return match;
+  VALUE rgm = rGrokMatch_new_from_grok_match(&gm);
+  return rgm;
 }
 
 VALUE rGrok_add_pattern(VALUE self, VALUE name, VALUE pattern) {
@@ -93,4 +85,6 @@ void Init_Grok() {
   rb_define_method(cGrok, "compile", rGrok_compile, 1);
   rb_define_method(cGrok, "match", rGrok_match, 1);
   rb_define_method(cGrok, "add_pattern", rGrok_add_pattern, 2);
+
+  Init_GrokMatch();
 }
