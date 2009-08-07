@@ -45,7 +45,7 @@ GROKOBJ=grok.o grokre.o grok_capture.o grok_pattern.o stringhelper.o \
 GROKPROGOBJ=grok_input.o grok_program.o grok_matchconf.o $(GROKOBJ)
 
 .PHONY: all
-all: grok
+all: grok libgrok.so
 
 .PHONY: package build-package test-package
 package: build-package test-package
