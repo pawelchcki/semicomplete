@@ -78,6 +78,8 @@ VALUE rGrokMatch_initialize(VALUE self) {
     rb_ary_push(ary, value);
   }
 
+  grok_match_walk_end(gm, handle);
+
   return Qtrue;
 }
 
