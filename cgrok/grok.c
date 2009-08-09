@@ -67,7 +67,7 @@ void grok_init(grok_t *grok) {
     /* do first initalization */
     g_grok_global_initialized = 1;
 
-    /* XXX: Valgrind complains here, but this is a global variable.
+    /* VALGRIND NOTE: Valgrind complains here, but this is a global variable.
      * Ignore valgrind here. */
     g_pattern_re = pcre_compile(PATTERN_REGEX, 0,
                                 &grok->pcre_errptr,

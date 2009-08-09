@@ -31,6 +31,7 @@ struct grok {
   /* PCRE pattern compilation errors */
   const char *pcre_errptr;
   int pcre_erroffset;
+  int pcre_errno;
 
   unsigned int logmask;
   unsigned int logdepth;
@@ -63,6 +64,15 @@ extern int g_cap_predicate;
   ")?" \
   "}"
 
+#define GROK_OK 0
+#define GROK_ERROR_FILE_NOT_ACCESSIBLE 1
+#define GROK_ERROR_PATTERN_NOT_FOUND 2
+#define GROK_ERROR_UNEXPECTED_READ_SIZE 3
+#define GROK_ERROR_COMPILE_FAILED 4
+#define GROK_ERROR_UNINITIALIZED 5
+#define GROK_ERROR_PCRE_ERROR 6
+#define GROK_ERROR_NOMATCH 7
+
 #define CAPTURE_ID_LEN 4
 #define CAPTURE_FORMAT "%04x"
 
@@ -77,7 +87,6 @@ extern int g_cap_predicate;
 #endif
 
 #include "grok_match.h"
-
 #include "grokre.h"
 
 #endif /* ifndef _GROK_H_ */

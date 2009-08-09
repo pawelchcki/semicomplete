@@ -73,6 +73,10 @@ cleanbin:
 cleangen:
 	rm -f $(CLEANGEN)
 
+.PHONY: test
+test:
+	make -C test test
+
 # Binary creation
 grok: LDFLAGS+=-levent
 grok: $(GROKOBJ) conf.tab.o conf.yy.o main.o grok_config.o

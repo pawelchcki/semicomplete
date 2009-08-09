@@ -57,16 +57,21 @@ VALUE rGrok_match(VALUE self, VALUE input) {
   c_input = rb_str2cstr(input, &len);
   ret = grok_execn(grok, c_input, (int)len, &gm);
 
-  if (ret == PCRE_ERROR_NOMATCH) {
-    return Qfalse;
+  VALUE rgm = Qnil;
+  
+  fprintf(stderr, "%d\n", ret);
+  switch (ret) {
+    case GROK_ERROR_NOMATCH:
+      rgm = Qfalse;
+      break;
+    case GROK_OK:
+      rgm = rGrokMatch_new_from_grok_match(&gm);
+      break;
+    default:
+      rb_raise(rb_eArgError, "Error from grok_execn: %d", ret);
+      rgm = Qnil;
   }
 
-  if (ret < 0) {
-    rb_raise(rb_eArgError, "Error from grok_execn: %d", ret);
-    return Qnil;
-  }
-
-  VALUE rgm = rGrokMatch_new_from_grok_match(&gm);
   return rgm;
 }
 
@@ -83,6 +88,24 @@ VALUE rGrok_add_pattern(VALUE self, VALUE name, VALUE pattern) {
   return Qnil;
 }
 
+VALUE rGrok_add_patterns_from_file(VALUE self, VALUE path) {
+  grok_t *grok = NULL;
+  int ret = 0;
+  char *c_path = NULL;
+  long pathlen = 0;
+
+  c_path = rb_str2cstr(path, &pathlen);
+  Data_Get_Struct(self, grok_t, grok);
+
+  ret = grok_patterns_import_from_file(grok, c_path);
+
+  if (ret != GROK_OK) {
+    rb_raise(rb_eArgError, "Failed to add patterns from file %s", c_path);
+  }
+
+  return Qnil;
+}
+
 void Init_Grok() {
   cGrok = rb_define_class("Grok", rb_cObject);
   rb_define_singleton_method(cGrok, "new", rGrok_new, 0);
@@ -90,6 +113,8 @@ void Init_Grok() {
   rb_define_method(cGrok, "compile", rGrok_compile, 1);
   rb_define_method(cGrok, "match", rGrok_match, 1);
   rb_define_method(cGrok, "add_pattern", rGrok_add_pattern, 2);
+  rb_define_method(cGrok, "add_patterns_from_file",
+                   rGrok_add_patterns_from_file, 1);
 
   Init_GrokMatch();
 }

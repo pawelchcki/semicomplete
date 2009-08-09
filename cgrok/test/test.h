@@ -1,7 +1,11 @@
-#define ASSERT_MATCHFAIL(str) CU_ASSERT(grok_exec(&grok, str, NULL) < 0)
-#define ASSERT_MATCHOK(str) CU_ASSERT(grok_exec(&grok, str, NULL) >= 0)
-#define ASSERT_COMPILEOK(str) CU_ASSERT(grok_compile(&grok, str) == 0) 
-#define ASSERT_COMPILEFAIL(str) CU_ASSERT(grok_compile(&grok, str) != 0) 
+#define ASSERT_MATCHFAIL(str) \
+  CU_ASSERT(grok_exec(&grok, str, NULL) == GROK_ERROR_NOMATCH)
+#define ASSERT_MATCHOK(str) \
+  CU_ASSERT(grok_exec(&grok, str, NULL) == GROK_OK)
+#define ASSERT_COMPILEOK(str) \
+  CU_ASSERT(grok_compile(&grok, str) == GROK_OK) 
+#define ASSERT_COMPILEFAIL(str) \
+  CU_ASSERT(grok_compile(&grok, str) != GROK_OK) 
 
 #ifndef LOG_MASK
 #define LOG_MASK 0

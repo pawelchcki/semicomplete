@@ -63,7 +63,7 @@ int grok_compilen(grok_t *grok, const char *pattern, int length) {
 
   if (grok->re == NULL) {
     grok->errstr = (char *)grok->pcre_errptr;
-    return 1;
+    return GROK_ERROR_COMPILE_FAILED;
   }
 
   pcre_fullinfo(grok->re, NULL, PCRE_INFO_CAPTURECOUNT, &grok->pcre_num_captures);
@@ -74,7 +74,7 @@ int grok_compilen(grok_t *grok, const char *pattern, int length) {
    * For each, ask grok->re what stringnum it is */
   grok_study_capture_map(grok);
 
-  return 0;
+  return GROK_OK;
 }
 
 const char * const grok_error(grok_t *grok) {
@@ -94,7 +94,7 @@ int grok_execn(grok_t *grok, const char *text, int textlen, grok_match_t *gm) {
   if (grok->re == NULL) {
     grok_log(grok, LOG_EXEC, "Error: pcre re is null, meaning you haven't called grok_compile yet");
     fprintf(stderr, "ERROR: grok_execn called on an object that has not pattern compiled. Did you call grok_compile yet?\n");
-    return -1;
+    return GROK_ERROR_UNINITIALIZED;
   }
 
   ret = pcre_exec(grok->re, &pce, text, textlen, 0, 0,
@@ -104,6 +104,7 @@ int grok_execn(grok_t *grok, const char *text, int textlen, grok_match_t *gm) {
   if (ret < 0) {
     switch (ret) {
       case PCRE_ERROR_NOMATCH:
+        return GROK_ERROR_NOMATCH;
         break;
       case PCRE_ERROR_NULL:
         fprintf(stderr, "Null error, one of the arguments was null?\n");
@@ -115,18 +116,19 @@ int grok_execn(grok_t *grok, const char *text, int textlen, grok_match_t *gm) {
         fprintf(stderr, "pcre badmagic\n");
         break;
     }
-    return ret;
+    grok->pcre_errno = ret;
+    return GROK_ERROR_PCRE_ERROR;
   }
 
+  /* Push match info into gm only if it is non-NULL */
   if (gm != NULL) {
     gm->grok = grok;
     gm->subject = text;
     gm->start = grok->pcre_capture_vector[0];
-    //gm->end = grok->pcre_capture_vector[1] - grok->pcre_capture_vector[0];
     gm->end = grok->pcre_capture_vector[1];
   }
 
-  return ret;
+  return GROK_OK;
 }
 
 /* XXX: This method is pretty long; split it up? */
@@ -344,6 +346,7 @@ static void grok_study_capture_map(grok_t *grok) {
     ret = grok_capture_get_by_id(grok, capture_id, &gct);
     assert(ret == 0);
     gct.pcre_capture_number = stringnum;
+
     /* update the database with the new data */
     grok_capture_add(grok, &gct);
     grok_capture_free(&gct);

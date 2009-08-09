@@ -5,7 +5,7 @@
 #include "grok.h"
 #include "grok_pattern.h"
 
-void grok_pattern_add(grok_t *grok, const char *name, size_t name_len,
+int grok_pattern_add(grok_t *grok, const char *name, size_t name_len,
                       const char *regexp, size_t regexp_len) {
   DB *patterns = grok->patterns;
   DBT key, value;
@@ -21,6 +21,8 @@ void grok_pattern_add(grok_t *grok, const char *name, size_t name_len,
   value.size = regexp_len;
 
   patterns->put(patterns, NULL, &key, &value, 0);
+
+  return GROK_OK;
 }
 
 int grok_pattern_find(grok_t *grok, const char *name, size_t name_len,
@@ -34,33 +36,34 @@ int grok_pattern_find(grok_t *grok, const char *name, size_t name_len,
   key.data = (void *)name;
   key.size = name_len;
   ret = patterns->get(patterns, NULL, &key, &value, 0);
-  if (ret == 0) {
-    grok_log(grok, LOG_PATTERNS, "Searching for pattern '%s': %.*s",
-             name, value.size, value.data);
-  } else {
+  if (ret != 0) {
     grok_log(grok, LOG_PATTERNS, "Searching for pattern '%s': not found", name);
     *regexp = NULL;
     *regexp_len = 0;
+    return GROK_ERROR_PATTERN_NOT_FOUND;
   }
 
+  grok_log(grok, LOG_PATTERNS, "Searching for pattern '%s': %.*s",
+           name, value.size, value.data);
   *regexp = malloc(value.size);
   memcpy(*regexp, value.data, value.size);
   *regexp_len = value.size;
-  return 0;
+  return GROK_OK;
 }
 
-void grok_patterns_import_from_file(grok_t *grok, const char *filename) {
+int grok_patterns_import_from_file(grok_t *grok, const char *filename) {
   FILE *patfile = NULL;
   size_t filesize = 0;
   size_t bytes = 0;
   char *buffer = NULL;
 
   grok_log(grok, LOG_PATTERNS, "Importing pattern file: '%s'", filename);
+
   patfile = fopen(filename, "r");
   if (patfile == NULL) {
     grok_log(grok, LOG_PATTERNS, "Unable to open '%s' for reading: %s",
              filename, strerror(errno));
-    return;
+    return GROK_ERROR_FILE_NOT_ACCESSIBLE;
   }
   
   fseek(patfile, 0, SEEK_END);
@@ -75,17 +78,20 @@ void grok_patterns_import_from_file(grok_t *grok, const char *filename) {
   memset(buffer, 0, filesize);
   bytes = fread(buffer, 1, filesize, patfile);
   if (bytes != filesize) {
+    grok_log(grok, LOG_PATTERNS, "Unable to open '%s' for reading: %s",
+             filename, strerror(errno));
     fprintf(stderr, "Expected %zd bytes, but read %zd.", filesize, bytes);
-    return;
+    return GROK_ERROR_UNEXPECTED_READ_SIZE;
   }
 
   grok_patterns_import_from_string(grok, buffer);
 
   free(buffer);
   fclose(patfile);
+  return GROK_OK;
 }
 
-void grok_patterns_import_from_string(grok_t *grok, const char *buffer) {
+int grok_patterns_import_from_string(grok_t *grok, const char *buffer) {
   char *tokctx = NULL;
   char *tok = NULL;
   char *strptr = NULL;
@@ -108,10 +114,11 @@ void grok_patterns_import_from_string(grok_t *grok, const char *buffer) {
     if (*tok == '#') continue;
 
     _pattern_parse_string(tok, &name, &name_len, &regexp, &regexp_len);
-    grok_pattern_add(grok, name, name_len, regexp, regexp_len);
+    (void) grok_pattern_add(grok, name, name_len, regexp, regexp_len);
   }
 
   free(dupbuf);
+  return GROK_OK;
 }
 
 void _pattern_parse_string(const char *line,

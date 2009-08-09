@@ -11,6 +11,8 @@ inline void _grok_log(int level, int indent, const char *format, ...) {
 
   va_start(args, format);
   char *prefix;
+
+  /* TODO(sissel): use gperf instead of this silly switch */
   switch (level) {
     case LOG_CAPTURE: prefix = "[capture] "; break;
     case LOG_COMPILE: prefix = "[compile] "; break;

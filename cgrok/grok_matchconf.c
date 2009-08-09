@@ -254,20 +254,6 @@ char *grok_matchconfig_filter_reaction(const char *str, grok_match_t *gm) {
               char *entry;
               int entry_len;
 
-              /* Don't json-ize patterns named FOO:bar */
-              //int i = 0, skip = 0;
-              //while (i < pname_len) {
-                //if (pname[i] == ':') {
-                  //skip = 1;
-                  //break;
-                //}
-                //i++;
-              //}
-
-              //if (skip == 1)
-                //continue;
-
-              //printf("%.*s => %.*s\n", pname_len, pname, pdata_len, pdata);
               substr_replace(&tmp, &tmp_len, &tmp_size, 0, tmp_len,
                              pdata, pdata_len);
               filter_jsonencode(gm, &tmp, &tmp_len, &tmp_size);
