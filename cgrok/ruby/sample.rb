@@ -16,7 +16,7 @@ matches = [
   #"%{SYSLOGBASE} Did not receive identification string from %{IPORHOST:client}",
   #"%{SYSLOGBASE} error: PAM: authentication error for %{DATA:user} from %{IPORHOST:client}",
   #"%{COMBINEDAPACHELOG}",
-  "hello (?=%{GREEDYDATA})%{WORD}"
+  "%{UNINDEXED}hello (?=%{GREEDYDATA})%{WORD}"
   
   #"( *%{DATA:key}:%{NOTSPACE:value})+"
 ]

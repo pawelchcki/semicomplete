@@ -59,7 +59,7 @@ VALUE rGrok_match(VALUE self, VALUE input) {
 
   VALUE rgm = Qnil;
   
-  fprintf(stderr, "%d\n", ret);
+  //fprintf(stderr, "%d\n", ret);
   switch (ret) {
     case GROK_ERROR_NOMATCH:
       rgm = Qfalse;
