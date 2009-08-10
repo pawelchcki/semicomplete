@@ -69,7 +69,7 @@ void grok_matchconfig_exec(grok_program_t *gprog, grok_input_t *ginput,
     grok_log(gprog, LOG_PROGRAM, "Trying match against : %s",
              gmc->reaction);
     ret = grok_exec(grok, text, &gm);
-    if (ret >= 0) {
+    if (ret == GROK_OK) {
       grok_matchconfig_react(gprog, ginput, gmc, &gm);
 
       if (gmc->break_if_match) {
@@ -139,7 +139,7 @@ char *grok_matchconfig_filter_reaction(const char *str, grok_match_t *gm) {
   matchconfig_grok.logmask = gm->grok->logmask;
   matchconfig_grok.logdepth  = gm->grok->logdepth + 1;
   while (grok_execn(&matchconfig_grok, output + offset,
-                    len - offset, &tmp_gm) >= 0) {
+                    len - offset, &tmp_gm) == GROK_OK) {
     grok_log(gm->grok, LOG_REACTION, "Checking '%.*s'",
              len - offset, output + offset);
     const char *name = NULL;

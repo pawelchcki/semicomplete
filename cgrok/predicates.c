@@ -77,12 +77,10 @@ int grok_predicate_regexp(grok_t *grok, grok_capture *gct,
   grok_log(grok, LOG_PREDICATE, "RegexCompare: grok_execn returned %d", ret);
 
   /* negate the match if necessary */
-  if (ret < 0) {
-    if (ret == PCRE_ERROR_NOMATCH) {
+  if (ret == GROK_ERROR_NOMATCH) {
       ret ^= gprt->negative_match;
-    } else {
-      grok_log(grok, LOG_PREDICATE, "RegexCompare: PCRE error %d", ret);
-    }
+  } else {
+    grok_log(grok, LOG_PREDICATE, "RegexCompare: PCRE error %d", ret);
   }
 
   grok_log(grok, LOG_PREDICATE, "RegexCompare: '%.*s' =~ /%s/ => %s",
