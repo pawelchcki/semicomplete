@@ -33,7 +33,8 @@ end
 
 $rounds = 10000
 
+puts "Iterations: #{$rounds}"
 duration = clock($rounds) { datetime_strptime }
 puts "datetime: #{duration} (#{$rounds / duration}/sec)"
 duration = clock($rounds) { my_strptime }
-puts "my: #{duration} (#{$rounds / duration}/sec)"
+puts "my_strptime: #{duration} (#{$rounds / duration}/sec)"
