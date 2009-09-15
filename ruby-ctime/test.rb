@@ -1,23 +1,23 @@
 require "CTime"
 require "date"
 
+ENV["TZ"] = "UTC"
 $str = "Sep 12 01:12:17 2009"
 #$str = "Sep  6 09:11:21"
 $fmt = "%b %e %H:%M:%S %Y"
-$expect = "1252743137"
+$expect = "1252717937"
 
 def clock(iterations)
   duration = 0
-  start_time = Time.now
   1.upto(iterations) do
+    start_time = Time.now
     date = yield
-    #duration += (end_time - start_time)
-    #if date.strftime("%s") != $expect
-      #puts "strptime fail: #{date.strftime("%s")}"
-    #end
-  end
     end_time = Time.now
-  duration = end_time - start_time
+    duration += (end_time - start_time)
+    if date.strftime("%s") != $expect
+      puts "strptime fail: #{date.strftime("%s")}"
+    end
+  end
   return duration
 end
 
