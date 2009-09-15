@@ -1,7 +1,4 @@
 #include <ruby.h>
-#ifndef __USE_BSD
-#define __USE_BSD
-#endif
 #include <time.h>
 #include <stdio.h>
 
