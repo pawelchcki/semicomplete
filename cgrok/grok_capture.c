@@ -123,7 +123,7 @@ int grok_capture_set_extra(grok_t *grok, grok_capture *gct, void *extra) {
 
 void _grok_capture_encode(grok_capture *gct, char **data_ret,
                                     int *size_ret) {
-  #define BASE_ALLOC_SIZE 64;
+  #define BASE_ALLOC_SIZE 256;
   XDR xdr;
   grok_capture local;
   int alloc_size = BASE_ALLOC_SIZE;

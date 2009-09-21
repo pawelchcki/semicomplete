@@ -2,9 +2,9 @@ PACKAGE=grok-beta
 PREFIX=/usr/local
 
 CFLAGS+=-pipe -fPIC
-#CFLAGS+=-g
 #CFLAGS+=-pg -g
-CFLAGS+=-O3
+CFLAGS+=-O2
+#CFLAGS+=-O3
 LDFLAGS+=-lpcre -levent -rdynamic
 #LDFLAGS+=-pg -g
 

@@ -193,7 +193,9 @@ char *grok_pattern_expand(grok_t *grok) {
       /* Add this capture to the list of captures */
       gct.id = capture_id;
       gct.name = (char *)longname; /* XXX: CONST PROBLEM */
+      gct.name_len = strlen(gct.name);
       gct.subname = (char *)subname;
+      gct.subname_len = strlen(gct.subname);
       ret = grok_capture_add(grok, &gct);
       if (ret != 0) {
         /* Some error occured while adding this capture, fail. */

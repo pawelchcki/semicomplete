@@ -53,7 +53,7 @@ int grok_match_walk_next(const grok_match_t *gm, void *handle,
     return ret;
   }
 
-  *namelen = strlen(gct.name);
+  *namelen = gct.name_len; //strlen(gct.name);
   *name = malloc(*namelen);
   memcpy(*name, gct.name, *namelen);
 

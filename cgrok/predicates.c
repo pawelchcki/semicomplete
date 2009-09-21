@@ -140,6 +140,7 @@ int grok_predicate_regexp_init(grok_t *grok, grok_capture *gct,
    * to grok_capture which indicates which fields of it are set to 
    * non-heap pointers. */
   gct->predicate_func_name = strdup("grok_predicate_regexp");
+  gct->predicate_func_name_len = strlen("grok_predicate_regexp");
   //gct->predicate_lib = "";
 
   grok_capture_set_extra(grok, gct, gprt);
@@ -196,6 +197,7 @@ int grok_predicate_numcompare_init(grok_t *grok, grok_capture *gct,
   tmp[args_len] = a;
 
   gct->predicate_func_name = strdup("grok_predicate_numcompare");
+  gct->predicate_func_name_len = strlen("grok_predicate_numcompare");
   //gct->predicate_lib = "";
 
   grok_capture_set_extra(grok, gct, gpnt);
@@ -251,6 +253,7 @@ int grok_predicate_strcompare_init(grok_t *grok, grok_capture *gct,
   memcpy(gpst->value, args + pos, gpst->len);
 
   gct->predicate_func_name = strdup("grok_predicate_strcompare");
+  gct->predicate_func_name_len = strlen("grok_predicate_strcompare");
   //gct->predicate_lib = "";
   grok_capture_set_extra(grok, gct, gpst);
   grok_capture_add(grok, gct);
