@@ -32,8 +32,8 @@ override(`bind', `
       dup2(dupfd, s);
       close(dupfd);
       fdconsumed = 1;
+      return 0;
     } else {
-      printf("%d vs %d\n", port, argport);
       return real_func(s, addr, addrlen);
     }
 
