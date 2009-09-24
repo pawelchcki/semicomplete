@@ -3,10 +3,7 @@
 
 void hack_send_event(XEvent *ev) {
   switch (ev->type) {
-    case KeyPress:
-    case KeyRelease:
-    case ButtonPress:
-    case ButtonRelease:
+    case KeyPress: case KeyRelease: case ButtonPress: case ButtonRelease:
       ev->xany.send_event = False;
       break;
   }

@@ -2,21 +2,41 @@
 #include <errno.h>
 #include <stdlib.h>
 
+static int fdconsumed = 0;
+
 override(`bind', `
   {
     int dupfd;
+    int port;
+    int argport;
     char *dupfd_str;
+    char *port_str;
 
     dupfd_str = getenv("BINDFD");
+    port_str = getenv("BINDPORT");
 
     if (dupfd_str == NULL) {
       fprintf(stderr, "BINDFD not set in environment\n");
       return -1;
     }
 
+    if (port_str == NULL) {
+      fprintf(stderr, "BINDPORT not set in environment\n");
+      return -1;
+    }
+
     dupfd = atoi(dupfd_str); 
-    dup2(dupfd, s);
-    close(dupfd);
+    port = htons(atoi(port_str));
+    argport = ((struct sockaddr_in *)addr)->sin_port;
+    if (port == argport) {
+      dup2(dupfd, s);
+      close(dupfd);
+      fdconsumed = 1;
+    } else {
+      printf("%d vs %d\n", port, argport);
+      return real_func(s, addr, addrlen);
+    }
+
     return 0;
   }
 ')
