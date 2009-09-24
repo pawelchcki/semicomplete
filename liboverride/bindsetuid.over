@@ -1,0 +1,62 @@
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+#include <errno.h>
+#include <stdlib.h>
+
+override(`bind', `
+  {
+    int ret;
+    char *user;
+    char *group;
+#define PWBUFSIZE 256
+    char buf[PWBUFSIZE];
+    struct passwd pwdummy;
+    struct passwd *pw;
+    struct group grdummy;
+    struct group *gr;
+
+    user = getenv("USER");
+    group = getenv("GROUP");
+
+    if (user == NULL) {
+      fprintf(stderr, "USER not set in environment\n");
+      return -1;
+    }
+
+    if (group == NULL) {
+      fprintf(stderr, "GROUP not set in environment\n");
+      return -1;
+    }
+
+    int pwret;
+    pwret = getpwnam_r(user, &pwdummy, buf, PWBUFSIZE, &pw);
+    if (pwret != 0) {
+      perror("getpwnam_r");
+      return -1;
+    }
+
+    int grret;
+    grret = getgrnam_r(group, &grdummy, buf, PWBUFSIZE, &gr);
+
+    printf("uid: %d\n", pw->pw_uid);
+    printf("gid: %d\n", gr->gr_gid);
+
+    ret = real_func(s, addr, addrlen);
+    if (ret != 0) {
+      return ret;
+    }
+
+    if (setgid(gr->gr_gid) != 0) {
+      perror("setgid");
+      return -1;
+    }
+
+    if (setuid(pw->pw_uid) != 0) {
+      perror("setuid");
+      return -1;
+    }
+
+    return ret;
+  }
+')
