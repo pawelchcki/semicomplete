@@ -1,0 +1,22 @@
+#include <unistd.h>
+#include <errno.h>
+#include <stdlib.h>
+
+override(`bind', `
+  {
+    int dupfd;
+    char *dupfd_str;
+
+    dupfd_str = getenv("BINDFD");
+
+    if (dupfd_str == NULL) {
+      fprintf(stderr, "BINDFD not set in environment\n");
+      return -1;
+    }
+
+    dupfd = atoi(dupfd_str); 
+    dup2(dupfd, s);
+    close(dupfd);
+    return 0;
+  }
+')
