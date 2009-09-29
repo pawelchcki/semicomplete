@@ -31,8 +31,8 @@
 + grokre.h
 + libc_helper.c
 + libc_helper.h
-+ logging.c
-+ logging.h
++ grok_logging.c
++ grok_logging.h
 + main.c
 + oldmain.c
 + package.sh
@@ -50,5 +50,13 @@
 + test/runtest.sh
 + test/stringhelper.test.c
 + test/test.h
++ ruby/
++ ruby/ruby_grok.c
++ ruby/rgrok.h
++ ruby/ruby_grokmatch.c
++ ruby/ruby_grokmatch.h
++ ruby/extconf.rb
++ ruby/INSTALL
++ ruby/sample.rb
 - *
 - *.o

@@ -1,10 +1,10 @@
 - You'll need grok installed.
-From 'cgrok', do:
+From 'grok', do:
 % make install
 # This will install grok, libgrok, and grok's headers
 
 - You'll need the 'Grok' ruby module installed.
-From 'cgrok/ruby' do:
+From 'grok/ruby' do:
 % ruby extconf.rb
 % make install
 

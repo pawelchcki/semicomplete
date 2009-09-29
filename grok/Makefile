@@ -1,4 +1,4 @@
-PACKAGE=grok-beta
+PACKAGE=grok
 PREFIX=/usr/local
 
 CFLAGS+=-pipe -fPIC
