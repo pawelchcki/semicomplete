@@ -1,0 +1,11 @@
+#summary A powerful pattern-matching/reacting tool.
+
+= Introduction =
+
+Grok is simple software that allows you to easily parse logs and other files. You teach grok how to parse data through the config file. Grok is a system for reacting to events - those events being log entries.
+
+The grok library is a great choice when you need the pattern matching features of grok in your own tools. There are currently C and Ruby APIs.
+
+  * GrokConcepts -  If you want general information that applies to both the grok program and library.
+  * GrokProgram - If you want documentation about the grok program.
+  * GrokLibrary - If you want documentation about using the grok library api
