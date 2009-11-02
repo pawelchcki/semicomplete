@@ -16,7 +16,7 @@ identifying name, a number, a program name, a uid, and an exit message. You migh
 
 {{{
 TIMESTAMP HOST PROGRAM: pid NUMBER (PROGRAM), uid NUMBER: exited on signal NUMBER
-}}
+}}}
 
 All of these can be represented by regular expressions. Grok comes with a bunch of pre-defined patterns to make getting started easier, including syslog patterns that help with the above. In grok, this pattern looks like:
 
@@ -38,6 +38,4 @@ You can also nest patterns. SYSLOGBASE is a good example. SYSLOGBASE is actually
 SYSLOGDATE and SYSLOGPROG also have nested patterns:
 * SYSLOGPROG %{PROG}(?:\[%{PID}\])?
 * SYSLOGDATE %{MONTH} +%{MONTHDAY} %{TIME}
-
-
 
