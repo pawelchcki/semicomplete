@@ -36,6 +36,9 @@ You can also nest patterns. SYSLOGBASE is a good example. SYSLOGBASE is actually
 }}}
 
 SYSLOGDATE and SYSLOGPROG also have nested patterns:
-* SYSLOGPROG %{PROG}(?:\[%{PID}\])?
-* SYSLOGDATE %{MONTH} +%{MONTHDAY} %{TIME}
+  * SYSLOGPROG = %{PROG}(?:\[%{PID}\])?
+  * SYSLOGDATE = %{MONTH} +%{MONTHDAY} %{TIME}
+  * MONTH = \b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b
+  * etc ...
 
+This means anything matching %{SYSLOGDATE} will have all of the nested pattern names accessible as captures. For example, if you wanted to grab the MONTH value from the pattern match, that's trivial.
