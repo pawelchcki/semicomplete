@@ -11,3 +11,9 @@ The grok library is a great choice when you need the pattern matching features o
     * GrokExamples - Examples of using grok in the real world
     * GrokConfig - Documentation on grok configs
   * GrokLibrary - If you want documentation about using the grok library api
+
+= What can I use Grok for? =
+
+* reporting errors and other patterns from logs and processes
+* parsing complex text output and converting it to json external processing
+* apply 'write-once use-everywhere' to regular expressions
