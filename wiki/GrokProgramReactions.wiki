@@ -10,22 +10,28 @@ Filters are used for translating a capture value before sending to the reaction 
 
 Below is an example that will use the 'shellescape' filter to escape all characters in a value to as to be safe in a shell context.
 {{{
+
 program {
   load-patterns: "patterns/base"
   exec "echo '$something \"testing\"'"
 
   match {
     pattern: ".*"
-    reaction: "Shell will get: echo %{@LINE|shellescape}"
+    reaction: "Shell escaped: %{@LINE|shellescape}"
   }
 
+  match {
+    pattern: ".*"
+    reaction: "json: { myvalue: \"%{@LINE|jsonencode}\" }"
+  } 
 
   match {
     pattern: ".*"
     reaction: "echo %{@LINE|shellescape}"
     shell: "/bin/sh"
+    flush: yes
   }
-} 
+}
 }}}
 
 == Available Filters ==
