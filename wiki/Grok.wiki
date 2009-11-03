@@ -9,4 +9,5 @@ The grok library is a great choice when you need the pattern matching features o
   * GrokConcepts -  If you want general information that applies to both the grok program and library.
   * GrokProgram - If you want documentation about the grok program.
     * GrokExamples - Examples of using grok in the real world
+    * GrokConfig - Documentation on grok configs
   * GrokLibrary - If you want documentation about using the grok library api
