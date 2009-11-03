@@ -7,6 +7,10 @@
 # the 'debug' setting is valid at every level.
 # debug values are copied down-scope unless overridden.
 debug: true
+
+# you can define multiple program blocks in a config file.
+# a program is just a collection of inputs (files, execs) and matches (patterns
+# and reactions),
 program {
   debug: false
 
