@@ -1,0 +1,26 @@
+#summary Useful examples of grok.
+
+= Watching logs for errors =
+
+Uses: since, cron, grok.
+
+For this example,you could do this all in grok, but I find it works easier using cron given cron's builtin email capability.
+
+{{{
+program {
+  exec "since -a /var/log/messages"
+
+  # Ignore certain messages
+  match {
+    pattern: "this is not an error"
+
+    # Silence the output and ensure no further matches are attempted.
+    reaction: none   # no output
+    break-if-match   # don't continue to the next match
+  }
+
+  match {
+    pattern: "error"
+  }
+}
+}}}
