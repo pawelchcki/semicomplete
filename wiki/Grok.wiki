@@ -14,8 +14,8 @@ The grok library is a great choice when you need the pattern matching features o
 
 = Download Grok =
 
-Latest: 
-Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
+  * Latest: http://semicomplete.googlecode.com/files/grok-20091103.tar.gz
+  * Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
 
 = What can I use Grok for? =
 
