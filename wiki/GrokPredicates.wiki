@@ -24,7 +24,40 @@ Got number: 33
 }}}
 
 Regular expression engines don't generally support what we have done above. If you wanted the above in Python or Ruby regex, you would have to write a custom expression that matches a number > 20, which isn't exactly trivial to write. Alternately, you try a number (\d+) pattern and loop over all matches until you find one greater than 20, which sucks and doesn't really work at all in a more complex expression.
-== =~ - Regular expression predicate ===
+
+== > < <= >= == != ==
+
+These are numerical comparison predicates.
+
+== $> $< $<= $>= $== $!= ==
+
+These are string comparison predicates.
+
+{{{
+program {
+  load-patterns: "patterns/base"
+  exec "echo hello; echo world"
+
+  match {
+    pattern: "%{WORD $> test}"
+    reaction: "Found: %{WORD}"
+  } 
+} 
+}}}
+
+Output:
+{{{
+% grok samples/strpredicate.grok 
+Found: world
+}}}
+
+
+
+== =~ and !~ (regular expression predicates) ===
+
+The =~ and !~ operators work the same way they do in Perl and Ruby with respect to matching strings against regular expressions.
+
+The exact syntax is %{name =~ /regexp/}.
 
 If you want to match an IP that starts with 192.168, that's easy:
 {{{
