@@ -1,0 +1,31 @@
+#summary Documentation on the supported predicate operators
+
+= Predicates =
+
+Predicates let you add additional requirements to your matches. They allow you to further restrict a match without having to rewrite a pattern.
+
+For example, if you want to match an IP that starts with 192.168, that's easy:
+{{{
+program {
+  load-patterns: "patterns/base"
+  exec "ifconfig"
+
+  match {
+    pattern: "%{IP =~ /^192.168/}"
+    reaction: "Found: %{IP}"
+  }
+}
+}}}
+
+Output:
+{{{
+% grok samples/ip-predicate.grok   
+Found: 192.168.0.97
+}}}
+
+Without the '=~ /^192.168/' predicate, our output is:
+{{{
+Found: 192.168.0.97
+Found: 127.0.0.1
+}}}
+
