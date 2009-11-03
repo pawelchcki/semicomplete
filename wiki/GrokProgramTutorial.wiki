@@ -53,4 +53,31 @@ Found: 192.168.251.1
 The same syntax is used for specifying patterns in a match as for fetching the captured result in a reaction.
 
 = Predicates =
+
 You can apply predicates (additional checks) to a pattern.
+
+As a trivial example, let's take the output of seq(1) (or jot, for freebsd) and apply a numerical filter that restricts the output to numbers greater than 20.
+
+{{{
+program {
+  load-patterns: "patterns/base"
+  exec "seq 25"
+
+  match {
+    pattern: "%{NUMBER > 20}"
+    reaction: "Found: %{NUMBER}"
+  }
+}
+}}}
+
+Output:
+{{{
+% grok samples/numberpredicate.grok
+Found: 21
+Found: 22
+Found: 23
+Found: 24
+Found: 25
+}}}
+
+See GrokPredicates for information on supported predicates, which include the regexp =~ match operator, too!
