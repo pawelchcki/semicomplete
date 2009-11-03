@@ -2,6 +2,7 @@
 
 = Grok config syntax =
 
+{{{
 # enable or disable debugging. Debug is set false by default.
 # the 'debug' setting is valid at every level.
 # debug values are copied down-scope unless overridden.
