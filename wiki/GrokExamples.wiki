@@ -8,7 +8,7 @@ For this example,you could do this all in grok, but I find it works easier using
 
 {{{
 program {
-  exec "since -a /var/log/messages"
+  exec "since /var/log/messages"
 
   # Ignore certain messages
   match {
@@ -24,3 +24,7 @@ program {
   }
 }
 }}}
+
+Have cron run this periodically. The results will be:
+* output only matched patterns that weren't skipped in the earlier match blocks
+* exits nonzero if there were no unignored matches. (exit zero on any output, like grep)
