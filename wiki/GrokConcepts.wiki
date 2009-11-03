@@ -42,3 +42,6 @@ SYSLOGDATE and SYSLOGPROG also have nested patterns:
   * etc ...
 
 This means anything matching %{SYSLOGDATE} will have all of the nested pattern names accessible as captures. For example, if you wanted to grab the MONTH value from the pattern match, that's trivial.
+
+Want to know more? The grok program tutorial will give you a good overview of grok's features:
+* GrokProgramTutorial
