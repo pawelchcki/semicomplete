@@ -26,5 +26,5 @@ program {
 }}}
 
 Have cron run this periodically. The results will be:
-* output only matched patterns that weren't skipped in the earlier match blocks
-* exits nonzero if there were no unignored matches. (exit zero on any output, like grep)
+  * output only matched patterns that weren't skipped in the earlier match blocks
+  * exits nonzero if there were no unignored matches. (exit zero on any output, like grep)
