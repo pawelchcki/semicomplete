@@ -1,0 +1,35 @@
+#summary details about the 'reaction' values in grok configs.
+
+= Reactions =
+
+A reaction can be any string. Any %{value} values are replaced with the appropriated capture. You can also apply filter functions.
+
+= Reaction Filters =
+
+Filters are used for translating a capture value before sending to the reaction shell.
+
+Below is an example that will use the 'shellescape' filter to escape all characters in a value to as to be safe in a shell context.
+{{{
+program {
+  load-patterns: "patterns/base"
+  exec "echo '$something \"testing\"'"
+
+  match {
+    pattern: ".*"
+    reaction: "Shell will get: echo %{@LINE|shellescape}"
+  }
+
+
+  match {
+    pattern: ".*"
+    reaction: "echo %{@LINE|shellescape}"
+    shell: "/bin/sh"
+  }
+} 
+}}}
+
+== Available Filters ==
+
+* shellescape - escapes all characters necessary to make the string safe in non-quoted a shell argument
+* shelldqescape - escapes characters necessary to be safe within doublequotes in a shell.
+* jsonencode - makes the string safe to represent in a json string (escapes according to json.org recommendations)
