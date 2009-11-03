@@ -12,6 +12,11 @@ The grok library is a great choice when you need the pattern matching features o
     * GrokConfig - Documentation on grok configs
   * GrokLibrary - If you want documentation about using the grok library api
 
+= Download Grok =
+
+Latest: 
+Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
+
 = What can I use Grok for? =
 
   * reporting errors and other patterns from logs and processes
