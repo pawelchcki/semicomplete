@@ -91,6 +91,6 @@ program {
 
 == Available Filters ==
 
-* shellescape - escapes all characters necessary to make the string safe in non-quoted a shell argument
-* shelldqescape - escapes characters necessary to be safe within doublequotes in a shell.
-* jsonencode - makes the string safe to represent in a json string (escapes according to json.org recommendations)
+  * shellescape - escapes all characters necessary to make the string safe in non-quoted a shell argument
+  * shelldqescape - escapes characters necessary to be safe within doublequotes in a shell.
+  * jsonencode - makes the string safe to represent in a json string (escapes according to json.org recommendations)
