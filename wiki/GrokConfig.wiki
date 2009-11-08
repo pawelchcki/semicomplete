@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+﻿#summary One-sentence summary of this page.
 
 = Grok config syntax =
 
@@ -55,6 +55,9 @@ program {
     # match a pattern. This can be any regexp and can include %{foo} grok
     # patterns
     pattern: "some pattern to match"
+
+    # You can have multiple patterns here, any are valid for matching.
+    pattern: "another pattern to match"
 
     # the default reaction is "%{@LINE}" which is the full line matched.
     # the reaction can be a special value of 'none' which means no reaction
