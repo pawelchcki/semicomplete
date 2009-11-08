@@ -52,6 +52,8 @@ Found: 192.168.251.1
 
 The same syntax is used for specifying patterns in a match as for fetching the captured result in a reaction.
 
+See also GrokProgramReactions.
+
 = Predicates =
 
 You can apply predicates (additional checks) to a pattern.
