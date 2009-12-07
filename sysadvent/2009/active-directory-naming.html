@@ -1,13 +1,15 @@
 Active Directory naming is easy, right?
 By Sam Cogan - samcogan.com
 
+<i>This article was written by <a href="http://samcogan.com">Sam Cogan</a></i>
+
 <p>
-Well isn't it? You've just got to pick a name
+Active Directory naming is easy, right? You've just got to pick a name
 for your domain; any name will do won't it?
 </p>
 
 <p>
-This is the view a lot of newcomers to Active Directory (AD) take, and it's the
+This is the view many newcomers to Active Directory (AD) take, and it's the
 view I had when I was first introduced to AD. It often works, even for a while.
 Then, a few days or weeks down the line, you start to notice problems, or with
 greater understanding of how AD works, you realise that perhaps there was a
@@ -46,58 +48,57 @@ why give yourself the headache?
 
 <p>
 I've found there are a number of excuses people give for using the external
-domain name for AD, and I've used some of them myself. One I hear a lot is,
+domain name for AD, and I've used some of them myself. For example,
 "We had to use our external domain because we want to use that domain name for
-our UPN suffix". You should be aware that you can have as many UPN suffixes as
-you like by adding them in the <a href="http://technet.microsoft.com/en-us/library/cc770299.aspx">Domains and Trusts</a> MMC. Once these myths are
-dispelled, it's clear that using your primary external domain name is not
-the way to go.
+our UPN suffix". Truthfully, you can have as many UPN suffixes as
+you like by adding them in the <a
+  href="http://technet.microsoft.com/en-us/library/cc770299.aspx">Domains and
+  Trusts</a> MMC. Inexperience with AD may drive assumptions as above, but
+after digging into it, you will find that your assumptions may not be correct
+about what you think you need to use as your AD domain.
 </p>
 
-<p> So, how should we name our AD domains? There are two common schools of
-thought on this subject: either use the <code>.local</code> top-level domain,
-or use a sub domain of your external domain (like
-<code>corp.example.com</code>, if you own <code>example.com</code>).  Alternately, you can
-use a different external domain name.  </p>
+<p> So, what AD domain name should we use? There are two common schools of
+thought on this subject: either something like <code>example.local</code>, or
+use a subdomain of your external domain (like <code>corp.example.com</code>,
+if you own <code>example.com</code>).  Alternately, you can use a different
+external domain name, but this is not recommended for the general case. </p>
 
 <p> The use of the <code>.local</code> extension came about because it allowed
-the separation of the AD domain from the registered internet domain without
-having to buy another domain. This is an easy way to get AD setup without
-worrying about purchasing a public domain. It's also easy to get an SSL
-certificate for a <code>.local</code> domain from a trusted SSL vendor, should
-you need one for internal resources. The alternative is to chose a real,
-unowned TLD to build your domain on, but you have the obvious risk of that
-domain being owned by someone else.  </p>
+the separation of the AD domain from the registered internet domain (ie;
+<code>example.com</code>) without having to buy another domain. It's also easy
+to get an SSL certificate for a <code>.local</code> domain from a trusted SSL
+vendor, should you need one for internal resources. The alternative is to chose
+a real, unowned TLD to build your domain on, but you have the obvious risk of
+that domain being owned by someone else. </p>
 
-<p> Maybe we have a good domain decision, now, with no extra cost, perfect.
-Maybe not! There are problems with using the <code>.local</code> domain. First,
+<p> Maybe we have a good domain decision, now, with no extra cost?  Maybe not!
+There are problems with using the <code>.local</code> domain. First,
 it's not a reserved TLD. While it's unlikely, it's possible that <a
   href="http://www.iana.org/">IANA</a> could choose to delegate this TLD,
 opening it up for registration and causing potential name conflicts.  Second,
 the use of <code>.local</code> can also cause problems if you have Apple
 computers on the network, as it is used by the Bonjour service. Finally,
 because <code>.local</code> domains are not controlled by a registrar, someone
-else could be using the same
-domain name. This problem will bite you when you need to establish trusts or
-merge domains with another AD instance - if both of you are using
-<code>example.local</code> you will have conflicts.  </p>
+else could be using the same domain name in another AD instance. This problem
+will bite you when you need to establish trusts or merge domains with another
+AD instance - if both of you are using <code>example.local</code> you will have
+conflicts. </p>
 
-<p> Despite these problems, the use of <code>.local</code> is still popular,
+<p> Despite these problems, the use of <code>.local</code> is still popular
 especially in small companies. Microsoft's Small Business server even suggests
-using this extension when using its configuration wizard to create an AD
-domain.  </p>
+using this when using its configuration wizard to create an AD domain.  </p>
 
 <p> Besides naming with <code>.local</code>, you could choose the name as a
 subdomain of your external domain, such as <code>ad.example.com</code>, or buy
-an additional domain for AD only, such as <code>examplecorp.com</code>. I
-recommend the subdomain (ie; <code>ad.example.com</code>) choice.  This is easy
-and ensures ownership of that domain (unless you forget to renew <code>example.com</code>).
-This also helps keep things separate from your company's website.  Using this
-method means that your AD DNS server is only responsible for this subdomain and
-will happily forward on requests for your external websites to servers. This
-method is the most common, today. With the current prices of domain names,
-there are few reason not to own one to ensure your AD domain name is reserved.
-This is the method Microsoft now recommends, and is my first choice too.  </p>
+an additional domain for AD only, such as <code>examplecorp.com</code>. Using
+something like <code>ad.example.com</code> or <code>corp.example.com</code> is
+pretty common today; Microsoft also recommends this. This is easy and ensures
+ownership of that domain (unless you forget to renew <code>example.com</code>).
+Using this method means that your AD DNS server is only responsible for this
+subdomain and will happily forward on requests for your external websites to
+servers.
+</p>
 
 <p> AD naming seems easy, but as we've shown above, there are important
 considerations when choosing a domain name for your Active Directory domain.
@@ -139,3 +140,4 @@ Further reading:
   <a href="http://www.shariqsheikh.com/blog/index.php/200804/how-to-rename-a-windows-server-2008-domain/">Domain Rename on Server 2008</a>
   </li>
 </ul>
+
