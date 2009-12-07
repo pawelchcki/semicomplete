@@ -1,40 +1,41 @@
-Active Directory naming is easy.....right?
+Active Directory naming is easy, right?
 By Sam Cogan - samcogan.com
 
 <p>
-Well isn't it? You've just got to pick a name for your domain; any name will do
-won't it?
+Well isn't it? You've just got to pick a name
+for your domain; any name will do won't it?
 </p>
 
 <p>
-This is the view a lot of newcomers to AD take, it's the view I had when I was
-first introduced to AD, and it often works, for a while. Then a few days or
-weeks down the line they start to notice problems or with greater understanding
-of how AD works, realise that perhaps there was a better name, by then it's too
-late, the names in use. Sure you could rename it with the domain name rename
-tool, but it's likely to cause problems. This article aims to look at why AD
-naming can be problematic and what we can do to make things better
+This is the view a lot of newcomers to Active Directory (AD) take, and it's the
+view I had when I was first introduced to AD. It often works, even for a while.
+Then, a few days or weeks down the line, you start to notice problems, or with
+greater understanding of how AD works, you realise that perhaps there was a
+better name. By this time, it is too late - the name is set in stone. Sure, you
+could rename it with the domain name rename tool (rendom), but it's likely to
+cause problems. Let's look at why AD naming can be problematic and what we can
+do to make things better. 
 </p>
 
 <p>
-Microsoft's decision to tie Active Directory closely to DNS, whilst making
+Microsoft's decision to tie Active Directory closely to DNS, while making
 sense, has caused a lot of problems for inexperienced sysadmins. One of the
 most common problems I hear from new sysadmins working with AD for the first
-time is "I setup Active Directory with our company's external domain name, but
-now no-one can get to the company website or ftp site"
+time is, "I setup Active Directory with our company's external domain name, but
+now no-one can get to the company website or ftp site!"
 </p>
 
 <p>
-Whilst using your company's external domain name for DNS seems like the perfect
-idea in the first instance, because of their limited understanding of how AD
-interacts with DNS they have created problems and administrative overhead,
-where they were aiming to reduce it. Yes, there are potential solutions to this
-problem, implementing split brain DNS, changing your AD name or installing IIS
-on every domain controller to perform redirects. But it's a scary prospect for
-a new sysadmin who's boss is about to explode because he can't get to their
-website and is often enough to put them off AD for good. So yes, you can use
-your external domain name for AD, but in my opinion, you shouldn't.  It causes
-problems; yes you can get round them, but why give yourself the headache?
+Using your company's external domain name for DNS seems like the perfect idea
+at first. Limited understanding of how AD interacts with DNS has lead to a
+decision that may create problems and administrative overhead.
+Yes, there are potential solutions to this problem: implementing split brain
+(aka split view) DNS, changing your AD name, or installing IIS on every domain
+controller to perform redirects. But it's a scary prospect for a new sysadmin
+who's boss is about to explode because he can't get to their website and is
+often enough to put them off AD for good. So yes, you can use your external
+domain name for AD, but in my opinion, you shouldn't.  It causes problems, so
+why give yourself the headache?
 </p>
 
 <p>
@@ -132,4 +133,8 @@ http://blog.completenetworkcare.com/blog2.php/2009/04/24/why-com-is-a-bad-choice
 DNS and Active Directory
 http://msdn.microsoft.com/en-us/library/ms954396.aspx
 
- 
+How Domain Rename Works (Microsoft TechNet)
+http://technet.microsoft.com/en-us/library/cc738208(WS.10).aspx 
+
+Domain Rename on Server 2008
+http://www.shariqsheikh.com/blog/index.php/200804/how-to-rename-a-windows-server-2008-domain/
