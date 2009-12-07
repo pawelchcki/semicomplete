@@ -1,0 +1,135 @@
+Active Directory naming is easy.....right?
+By Sam Cogan - samcogan.com
+
+<p>
+Well isn't it? You've just got to pick a name for your domain; any name will do
+won't it?
+</p>
+
+<p>
+This is the view a lot of newcomers to AD take, it's the view I had when I was
+first introduced to AD, and it often works, for a while. Then a few days or
+weeks down the line they start to notice problems or with greater understanding
+of how AD works, realise that perhaps there was a better name, by then it's too
+late, the names in use. Sure you could rename it with the domain name rename
+tool, but it's likely to cause problems. This article aims to look at why AD
+naming can be problematic and what we can do to make things better
+</p>
+
+<p>
+Microsoft's decision to tie Active Directory closely to DNS, whilst making
+sense, has caused a lot of problems for inexperienced sysadmins. One of the
+most common problems I hear from new sysadmins working with AD for the first
+time is "I setup Active Directory with our company's external domain name, but
+now no-one can get to the company website or ftp site"
+</p>
+
+<p>
+Whilst using your company's external domain name for DNS seems like the perfect
+idea in the first instance, because of their limited understanding of how AD
+interacts with DNS they have created problems and administrative overhead,
+where they were aiming to reduce it. Yes, there are potential solutions to this
+problem, implementing split brain DNS, changing your AD name or installing IIS
+on every domain controller to perform redirects. But it's a scary prospect for
+a new sysadmin who's boss is about to explode because he can't get to their
+website and is often enough to put them off AD for good. So yes, you can use
+your external domain name for AD, but in my opinion, you shouldn't.  It causes
+problems; yes you can get round them, but why give yourself the headache?
+</p>
+
+<p>
+I've found there are a number of excuses people give for using the external
+domain name for AD, I've used some of them myself, and they are usually down to
+lack of knowledge. One I hear a lot is that "We had to use our external domain
+because we want to use the domain name for our UPN suffix". An admin with
+limited AD experience is likely to be unaware of the fact you can have as many
+UPN suffixes as you like by adding them in the domains and trusts MMC, they've
+only seen that the one that was there is the name of the domain, therefore they
+must use their external domain. Once these myths are dispelled, and as far as I
+know there is a counter argument to every `reason' for using the external
+domain, it's quite clear that using your primary external domain name is not
+the way to go.
+</p>
+
+<p>
+So how should we name our AD domains? There are two common schools of thought
+on this subject, either using the .local extension or using a sub domain of
+your external domain (or a new, public domain).
+</p>
+
+<p>
+The use of the .local extension came about because it allowed the separation of
+the AD domain from the registered internet domain without having to purchase
+another, at the time, expensive public domain. It's an easy way to get AD setup
+without worrying about purchasing a public domain. It's also easy to get an SSL
+certificate for a .local domain from a trusted SSL vendor, should you need one
+for internal resources. The alternative to this for companies who do not want
+to buy a domain is to use a real TLD as their extension and risk someone else
+buying that domain at a later date, very risky.
+</p>
+
+<p>
+So here's a working solution, with no extra cost, perfect! Or maybe not, there
+are problems with using the .local domain. Firstly, it's not a reserved TLD.
+While it's unlikely, it's possible that ICAAN could choose to delegate this
+TLD, opening it up for registration and causing potential name conflicts. The
+use of .local can also cause problems if you have Apple computers on the
+network, as it is used by the Bonjour service. Finally, because .local domains
+are not controlled by a registrar, someone else could be using the same domain
+name. This is not often a problem, unless you find yourself in a position where
+you need to establish a trust, or merge your domain with one with the same
+name, and by this point it's way too late to be changing names without
+problems.
+</p>
+
+<p>
+Despite these problems, the use of .local is still popular, especially in small
+companies. Microsoft's Small Business server even suggests using this extension
+when using its configuration wizard to create an AD domain (not that this makes
+it right!).
+</p>
+
+<p>
+The second option is to use a sub domain of your existing external domain, such
+as ad.foo.com, or an entirely new domain for just your AD infrastructure, such
+as corpfoo.com. This gives you the benefit of knowing you own and control that
+domain, so nothing's going to happen to it (unless you forget to renew it)
+whilst keeping things separate from your company's website. Using this method
+means that your AD DNS server is only responsible for this (sub) domain and
+will happily forward on requests for your external websites to your external
+servers. This method is the most commonly used method nowadays. With the
+current prices of domain names, there are few reason not to own one to ensure
+your AD domain name is reserved. This is the method Microsoft now recommends,
+and is my first choice too.
+</p>
+
+<p>
+Whilst AD naming seems easy, rushing straight in and doing what seems to be
+obvious can lead to problems later down the line. These problems might not be
+immediately obvious, but as your network grows and you do more things with it,
+they can start to appear.
+</p>
+
+<p>
+Setting up an AD infrastructure should be planned carefully, and domain name
+choice should be a significant part of this planning. Consider how your network
+will be used, and how it will grow over time. If you don't own a public domain
+name, is it worth purchasing one now so you can ensure your AD domain name is
+reserved, even if you never use it on the internet. If you do have an external
+domain name already, try and keep your internal and external DNS separate,
+you'll appreciate it in the long run. Finally, never use a public domain name
+that you don't own, you never know who might snap it up and cause you problems!
+</p>
+
+Further reading:
+
+Choosing a Future-Proof Internal DNS Domain Name: Mission Impossible?
+http://blogs.sepago.de/helge/2008/09/15/choosing-a-future-proof-internal-dns-domain-name-mission-impossible/
+
+Why .com is a bad choice for a Windows Active Directory domain name.
+http://blog.completenetworkcare.com/blog2.php/2009/04/24/why-com-is-a-bad-choice-for-a-windows-do
+
+DNS and Active Directory
+http://msdn.microsoft.com/en-us/library/ms954396.aspx
+
+ 
