@@ -22,7 +22,7 @@ lockfile="/tmp/cronhelper.lock.$JOBNAME"
 
   if [ ! -z "$SLEEPYSTART" ] ; then
     sleeptime=$(echo "scale=8; ($RANDOM / 32768) * $SLEEPYSTART" | bc | cut -d. -f1)
-    echo "Sleeping for $sleeptime before starting."
+    echo "Sleeping for $sleeptime seconds before starting."
     sleep $sleeptime
   fi
 

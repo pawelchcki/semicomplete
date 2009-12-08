@@ -80,9 +80,7 @@ if [ "$code" -ne 0 ] ; then
   rm $output
   exit $code
 fi
-rm $output
-</b>
-</pre>
+rm $output</b></pre>
 
 <h4> All output should be logged somewhere </h4>
 
@@ -154,33 +152,66 @@ mysqldump ...
 
 <h4> Combining everything </h4>
 
-Now let's combine all of the above into one super script. Let's call this
-"cronhelper.sh"
+<p>
+Now let's combine all of the above into one super script. Doing all of the
+above cleanly and safely in bash is not the most trivial thing. Here is the
+result:
+</p>
+
+<p>
+<a href="http://semicomplete.googlecode.com/svn/sysadvent/2009/day08/cronhelper.sh">cronhelper.sh</a>
+</p>
+
+<p>
+Using cronhelper.sh is simple. It takes options as environment variables.
+Here's an example:
 
 <pre>
-#!/bin/bash
-# cronhelper.sh
-# usage: cronhelper.sh &lt;timeout&gt; &lt;startupdelay&gt; &lt;command ... &gt;
+% TIMEOUT=5 JOBNAME=helloworld cronhelper.sh sh -c "echo hello world; sleep 10"
+Job failed with status 254 (command: sh -c echo hello world; sleep 10)
+hello world
+/home/jls/bin/alarm.rb: Execution expired (timeout == 5.0)
 
-output=$(mktemp) # for output capture
-# $SLEEPYSTART and $TIMEOUT come from environment
-
-# use a subshell to capture all command output
-( 
-  # redirect stderr to stdout for everything in this subshell.
-  exec 2&gt;&amp;1
-
-  if [ ! -z "$SLEEPYSTART" ] ; then
-    sleeptime=$(echo "scale=8; ($RANDOM / 32768) * $SLEEPYSTART" | bc | cut -d. -f1)
-    echo "Sleeping for $sleeptime before starting backupmysql."
-    sleep $sleeptime
-  fi
-
-  if [ -z "$TIMEOUT" ] ; then
-    exec "$@"
-  else
-    exec alarm.rb $TIMEOUT "$@"
-  fi
-) | tee $output | logger -t "| logger -t "backupmysql"
-
+# and in /var/log/messages:
+Dec  8 02:58:02 snack helloworld[19565]: hello world
+Dec  8 02:58:07 snack helloworld[19565]: /home/jls/bin/alarm.rb: Execution expired (timeout == 5.0)
+Dec  8 02:58:07 snack helloworld[19573]: Job failed with status 254 (command: sh -c echo hello world; sleep 10)
 </pre>
+
+<p>
+Now armed with cronhelper.sh and alarm.rb, we can modify our cron job. Let us
+choose an 8 hour timeout and a 1 hour random startup delay:
+</p>
+
+<pre>
+0 0,12 * * * JOBNAME="backupmysql" SLEEPYSTART=3600 TIMEOUT=28800 cronhelper.sh backupmysql.sh
+</pre>
+
+The new cron entry is now:
+<ul>
+  <li> logging any output to syslog </li>
+  <li> only outputting to stdout when there's been a failure (and thus only emailing us on failures) </li>
+  <li> staggering startup across an hour </li>
+  <li> aborting after 8 hours if not finished </li>
+  <li> locking so overlapping runs are impossible </li>
+</ul>
+
+<p>
+Downloads:
+</p>
+
+<ul>
+  <li> <a href="http://semicomplete.googlecode.com/svn/sysadvent/2009/day08/cronhelper.sh">cronhelper.sh</a> </li>
+  <li> <a href="http://semicomplete.googlecode.com/svn/sysadvent/2009/day08/alarm.rb">alarm.rb</a> </li>
+</ul>
+
+<p>
+Further reading:
+</p>
+
+<ul>
+  <li> <a href="http://sysadvent.blogspot.com/2008/12/day-9-lock-file-practices.html">Sysadvent 2008 - Day 9 - Lock File Practices</a> </li>
+  <li> <a href="http://en.wikipedia.org/wiki/Cron#History">Cron's history</a> on Wikipedia</li>
+  <li> <a href="http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html">mysqldump docs</a> </li>
+  <li> <a href="http://en.wikipedia.org/wiki/At_(Unix_command)">The at(8) command</a> - related to cron, but you schedule things once, not periodically. </li>
+</ul>
