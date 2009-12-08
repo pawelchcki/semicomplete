@@ -26,6 +26,7 @@ lockfile="/tmp/cronhelper.lock.$JOBNAME"
     sleep $sleeptime
   fi
 
+  # you'll want to use 'lockf -t 0' on FreeBSD
   flock="flock -w 0 $lockfile" 
   if [ -z "$TIMEOUT" ] ; then
     exec $flock "$@"
