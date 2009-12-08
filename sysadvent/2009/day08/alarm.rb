@@ -32,6 +32,9 @@ rescue Timeout::Error
   STDERR.puts "#{$0}: Execution expired (timeout == #{timeout})"
   # kill the process if it's still alive.
   if pid
+    # Kill child child processes
+    system("pkill -TERM -P #{pid}")
+    # Now kill the child process
     Process.kill('TERM', pid)
   end
   exit 254
