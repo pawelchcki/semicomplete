@@ -1,5 +1,8 @@
 #!/bin/bash
 # cronhelper.sh
+# Author: Jordan Sissel
+# License: BSD
+#
 # usage: cronhelper.sh <command [arg1 ...]>
 
 # You should set the following environment variables:
