@@ -26,12 +26,11 @@ lockfile="/tmp/cronhelper.lock.$JOBNAME"
     sleep $sleeptime
   fi
 
-  echo "Starting job"
-
+  flock="flock -w 0 $lockfile" 
   if [ -z "$TIMEOUT" ] ; then
-    exec "$@"
+    exec $flock "$@"
   else
-    exec alarm.rb $TIMEOUT "$@"
+    exec $flock alarm.rb $TIMEOUT "$@"
   fi
 ) | tee $output | logger -it "$JOBNAME"
 
@@ -40,7 +39,11 @@ lockfile="/tmp/cronhelper.lock.$JOBNAME"
 jobstatus=${PIPESTATUS[0]}
 
 if [ "$jobstatus" -ne 0 ] ; then
-  echo "exit code $jobstatus from $@" | tee /dev/stderr | logger -it "$JOBNAME"
+  echo "Job failed with status $jobstatus (command: $@)" | tee /dev/stderr | logger -it "$JOBNAME"
+  # flock(1) on linux fails with exit code 1 if lock cannot be obtained.
+  if [ "$jobstatus" -eq 1 ] ; then
+    echo "Exit status ($jobstatus) may indicate lockfile is held."
+  fi
   cat $output
   rm $output
   exit $jobstatus
