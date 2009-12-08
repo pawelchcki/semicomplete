@@ -1,0 +1,98 @@
+Cron best practices
+
+Cron is just about everywhere. It's behavior is pretty standard.
+
+Cron's behavior is pretty standard across platforms:
+* every <scheduled time>, it runs your command as some user
+* output gets emailed to MAILTO= or $USER
+
+Here's what I want:
+* to prevent the same job from having overlapping execution.
+* want emailed output only on failures.
+* all output to be logged somewhere.
+* some jobs to timeout if they run too long.
+* randomize startup time
+
+It's easiest to address each of these features individually.
+
+For this example, we'll show various improvements to the following cron job
+that does a twice-daily backup of mysql. 
+<pre>
+0 0,12 * * * backupmysql.sh
+</pre>
+
+The contents of our backupmysql.sh are:
+<pre>
+#!/bin/sh
+
+mysqldump ...
+</pre>
+
+For simplicity, we omit the mysqldump arguments. Let's get on to addressing individual problems.
+
+<h4> Overlapping jobs - Locks </h4>
+
+<p>
+Overlapping jobs can be prevented using locking. Last year, we covered <a
+  href="http://sysadvent.blogspot.com/2008/12/day-9-lock-file-practices.html">lock
+  file practices</a> which can be applied to solve this. Simply pick a unique
+lockfile for each cronjob and wrap your cron job with flock(1) (or lockf(1) on FreeBSD).
+</p>
+
+Let's prevent two backups from running simultaneously. Additionally, we want to
+abort if we can't grab the lock. flock(1) defaults to waiting indefinitely, so
+let's set the wait time to 0 and use "/tmp/cron.backupmysql" as the lockfile:
+
+<pre>
+#!/bin/sh
+
+# per 2008's lock file guide, re-exec ourselves wrapped in flock
+# unless we are already wrapped
+<b>
+lockfile="/tmp/cron.backupmysql"
+if [ -z "$flock" ] ; then
+  exec env flock=1 flock -w 0 $lockfile $0 "$@"
+fi
+</b>
+
+mysqldump ...
+</pre>
+
+<h4> Emailed output only on failures </h4>
+You don't necessarily need an email every time your job runs and succeeds.
+Personally, I only want to be contacted if there's a failure. In this case, we
+want to capture output somewhere and only emit the output if the exit status of
+something is nonzero.
+
+<pre>
+#!/bin/sh
+
+<b>output=$(mktemp)</b>
+mysqldump ... <b>&gt; $output 2&gt;&amp;1</b>
+<b>
+code=$?
+
+if [ "$code" -ne 0 ] ; then
+  echo "mysqldump exited with nonzero status: $code"
+  cat $output
+  rm $output
+  exit $code
+fi
+rm $output
+</b>
+</pre>
+
+<h4> All output should be logged somewhere </h4>
+
+Regardless of exit status, I always want the output of the job to be logged so
+we can audit it later. This is easily done with the logger(1) command.
+
+<pre>
+#!/bin/sh
+
+mysqldump ... <b> 2&gt;&amp;1 | logger -t "backupmysql"</b>
+</pre>
+
+* all output to be logged somewhere.
+* some jobs to timeout if they run too long.
+* randomize startup time
