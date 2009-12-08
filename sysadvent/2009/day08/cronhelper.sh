@@ -1,6 +1,6 @@
 #!/bin/bash
 # cronhelper.sh
-# usage: cronhelper.sh &lt;timeout&gt; &lt;startupdelay&gt; &lt;command ... &gt;
+# usage: cronhelper.sh <command [arg1 ...]>
 
 # You should set the following environment variables:
 # SLEEPYSTART - sleeps at startup a random number from 0 to $SLEEPYSTART seconds
