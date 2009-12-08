@@ -1,19 +1,21 @@
 Cron best practices
 
-Cron is just about everywhere. It's behavior is pretty standard.
-
-Cron's behavior is pretty standard across platforms:
-* every <scheduled time>, it runs your command as some user
-* output gets emailed to MAILTO= or $USER
+Cron is just about everywhere. It's configuration and behavior is pretty similar across any platform:
+<ul>
+  <li> every &lt;scheduled time&gt;, it runs your command as some user</li>
+  <li> output gets emailed to <code>MAILTO=</code> or <code>$USER</code> </li>
+</ul>
 
 Here's what I want:
-* to prevent the same job from having overlapping execution.
-* want emailed output only on failures.
-* all output to be logged somewhere.
-* some jobs to timeout if they run too long.
-* randomize startup time
+<ul>
+  <li> to prevent the same job from having overlapping execution. </li>
+  <li> want emailed output only on failures. </li>
+  <li> all output to be logged somewhere. </li>
+  <li> some jobs to timeout if they run too long. </li>
+  <li> randomize startup time to avoid resource contention. </li>
+</ul>
 
-It's easiest to address each of these features individually.
+It's easiest to first discuss each of these features individually.
 
 For this example, we'll show various improvements to the following cron job
 that does a twice-daily backup of mysql. 
@@ -90,9 +92,95 @@ we can audit it later. This is easily done with the logger(1) command.
 <pre>
 #!/bin/sh
 
+# pipe all output to syslog with tag 'backupmysql'
 mysqldump ... <b> 2&gt;&amp;1 | logger -t "backupmysql"</b>
 </pre>
 
-* all output to be logged somewhere.
-* some jobs to timeout if they run too long.
-* randomize startup time
+<h4> Some jobs need timeouts </h4>
+
+Run-away cronjobs are bad. If you use locking as above to prevent overlaps, a
+stuck or frozen cron job can prevent any future jobs from running without
+manual intervention.
+
+For this, we'll need a tool to interrupt execution of a program. I don't know
+if there's a canonical, so I wrote one for this artcle.
+
+<p>
+<a href="http://semicomplete.googlecode.com/svn/sysadvent/2009/day08/alarm.rb">Download alarm.rb</a>.
+
+<p>
+You'll need ruby, but that's it. We can now apply this to our backup script:
+
+<pre>
+#!/bin/sh
+
+<b>alarm.rb 28800</b> mysqldump ...
+</pre>
+
+This will abort if the mysqldump runtime exceeds 8 hours (28800 seconds). My alarm.rb will exit nonzero on timeouts, so if we use the email-on-error tip from above, we'll get notified on job timeouts.
+
+<h4> Randomized startup </h4>
+
+<p>
+If you have lots of hosts all doing backups at the same time, your backup server may get overloaded. You can hand-schedule all your similar jobs to not run simultaneously on multiple hosts, or you can take a shortcut and randomize the startup time.
+</p>
+
+<p>
+In this example, let's have all jobs in cron configured to start at "0 0,12 * *
+*" and then sleep for a random interval on startup.
+</p>
+
+<p>
+To do this in a shell script, you'll need something to generate random numbers
+for you. Doing this explicitly in shell requires a shell that can generate
+random numbers: bash, Solaris ksh, and zsh support the magic variable $RANDOM
+which evaluates to a random number between 0 and 32767. You'll also need
+something to applying your random value to your sleep duration, we'll use bc(1)
+and bash(1) here (Even though zsh's $(( )) math operations support floats,
+bash seems more common).
+</p>
+
+<pre>
+#!/bin/<b>bash</b>
+
+<b>
+maxsleep=3600
+sleeptime=$(echo "scale=8; ($RANDOM / 32768) * 3600" | bc | cut -d. -f1)
+echo "Sleeping for $sleeptime before starting backupmysql."
+sleep $sleeptime
+</b>
+mysqldump ...
+</pre>
+
+<h4> Combining everything </h4>
+
+Now let's combine all of the above into one super script. Let's call this
+"cronhelper.sh"
+
+<pre>
+#!/bin/bash
+# cronhelper.sh
+# usage: cronhelper.sh &lt;timeout&gt; &lt;startupdelay&gt; &lt;command ... &gt;
+
+output=$(mktemp) # for output capture
+# $SLEEPYSTART and $TIMEOUT come from environment
+
+# use a subshell to capture all command output
+( 
+  # redirect stderr to stdout for everything in this subshell.
+  exec 2&gt;&amp;1
+
+  if [ ! -z "$SLEEPYSTART" ] ; then
+    sleeptime=$(echo "scale=8; ($RANDOM / 32768) * $SLEEPYSTART" | bc | cut -d. -f1)
+    echo "Sleeping for $sleeptime before starting backupmysql."
+    sleep $sleeptime
+  fi
+
+  if [ -z "$TIMEOUT" ] ; then
+    exec "$@"
+  else
+    exec alarm.rb $TIMEOUT "$@"
+  fi
+) | tee $output | logger -t "| logger -t "backupmysql"
+
+</pre>

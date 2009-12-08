@@ -22,28 +22,31 @@ lockfile="/tmp/cronhelper.lock.$JOBNAME"
 
   if [ ! -z "$SLEEPYSTART" ] ; then
     sleeptime=$(echo "scale=8; ($RANDOM / 32768) * $SLEEPYSTART" | bc | cut -d. -f1)
-    echo "Sleeping for $sleeptime before starting $1."
+    echo "Sleeping for $sleeptime before starting."
     sleep $sleeptime
   fi
+
+  echo "Starting job"
 
   if [ -z "$TIMEOUT" ] ; then
     exec "$@"
   else
     exec alarm.rb $TIMEOUT "$@"
   fi
-) | tee $output | logger -t "$JOBNAME"
+) | tee $output | logger -it "$JOBNAME"
 
 # bash has "pipestatus" so we can get the exit status of the first command in
 # the pipe. Normal /bin/sh does not support this.
 jobstatus=${PIPESTATUS[0]}
 
 if [ "$jobstatus" -ne 0 ] ; then
-  echo "exit code $jobstatus from $@"
+  echo "exit code $jobstatus from $@" | tee /dev/stderr | logger -it "$JOBNAME"
   cat $output
   rm $output
   exit $jobstatus
 fi
 
+echo "job ran successfully"
 rm $output
 
 
