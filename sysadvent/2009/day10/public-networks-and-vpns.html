@@ -1,7 +1,16 @@
+<i> This article was written by <a href="http://www.cmdln.org/">Nick
+    Anderson</a>.</i>
+  
+<p>
+<i>  Editor's note: I was going to make pretty diagrams as
+  alternates to the ascii art below, but time ran out, so I wrapped them in
+  cowsay instead. Please enjoy.  </i>
+</i>
+
 <p>
 Most people are not lucky enough to deal with only private networks.
 Information needs to be accessible to a wide range of consumers. Weather its
-working from home, or accessing a website how does one minimize exposure?
+working from home, or accessing a website how do you minimize exposure?
 </p>
 
 <p>
@@ -24,124 +33,170 @@ interfaces with two databases.
 </p>
 
 <p>
-I've run into (and even setup in my earlier days shhh don't tell anyone)
+I've run into (and even setup in my earlier days ... shhh don't tell anyone)
 topologies that look like this.
 </p>
 
 <pre>
-(INTERNET)
------------
-          |----(www1)
-          |---------(db1)
-          |---------(db2)
+ _____________________________
+/                             \
+|   (INTERNET)                |
+|   -----------               |
+|             |----(www1)     |
+|             |---------(db1) |
+|             |---------(db2) |
+\                             /
+ -----------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
 </pre>
 
 <p>
-www1 is the host that serves omg-estore.com, db1 and db2 are master and slave
-databases for redundancy (yes I have ignored redundant application servers
-here, stop being so picky).
+<code>www1</code> is the host that serves omg-estore.com, and <code>db1</code>
+and <code>db2</code> are master and slave databases. (Yes, I have ignored
+redundant application servers here; stop being so picky). All three machines
+are directly on the public network and talk to each other over the public
+network. 
 </p>
 
 <p>
-All three machines are directly on the public network and talk to each other
-over the public network. Now one may say that remote shell access can be
-restricted to specific ips , or that the databases are or should be configured
-to only take connections from the web server. But the fact remains that
-exposure is larger with this topology.
+For security reasons, you probably don't want your databases accessible to the
+world, so how do we fix that? We can enable firewall policies: restrict remote
+shell access to specific ips and only allow database connections from
+<code>www1</code>. This isn't the best solution, though, as your servers are
+still on the public network. A firewall misconfiguration can expose your
+databases, so you should make security choices that are hard to accidentally
+break in a way that exposes you.
 </p>
 
 <p>
-The first thing one should do is push the databases to a private network. This
-can be done with the simple addition of a dedicated nic, or just bringing up a
+The first thing you should do is push the databases to a private network. This
+can be done with the simple addition of a dedicated nic or just bringing up a
 virtual interface (eth0:1) with the private subnet information. I prefer to use
 a dedicated nic as they can then connect to a fully private switch, and have
-access to a full nics worth of bandwidth for database communications.
+access to a nics worth of bandwidth for database communications.
 </p>
 
 The first step:
 
 <pre>
-(INTERNET)
------------            (privnet)
-          |----(www1)-----|
-                          |---------(db1)
-                          |---------(db2)
+ ___________________________________________
+/                                           \
+| (INTERNET)                                |
+| -----------            (private net)      |
+|           |----(www1)-----|               |
+|                           |---------(db1) |
+|                           |---------(db2) |
+\                                           /
+ -------------------------------------------
+                               ,__,    /      
+                           ____(oo)  /        
+                         /(    (..)           
+                        * ||--||              
 </pre>
 
 <p>
-Now thats quite an improvement. The database servers are no longer directly
-accessible on the internet, this decreased exposure by 2/3. Of course to manage
-the db servers or the application server you will have to log in through the
-public facing application server. This makes the public (and well known about
-web server) the largest exposure. To decrease exposure a bit more remote access
-to the public interface can be disabled. Before disabling the only remote
-access a way to connect to the private network is needed. Enter the VPN. If its
-not obvious at this point, your database servers should no longer have apublic
-interface, if they do they should be configured to only listen on the private
-network, or you should drop all connections on the left over public interface.
-Remember the goal here is to only expose the services that really _need_ to be
-customer facing on the public net.
+This is much better: the database servers are no longer directly
+accessible on the internet. This change has decreased our exposed surface area
+by 2/3. Of course, to manage the db servers or the application server you will
+have to log in through the public facing application server. This makes the
+application server the a risk. To decrease exposure further, remote access to
+the public interface can be disabled.
 </p>
 
+<p>
+Before disabling public remote shell access, you'll need to create a new access method. Enter the VPN. If it's not obvious at this point, your database
+servers should no longer have a public interface. If they do they should be
+configured to only listen on the private network, or you should drop all
+connections on the left over public interface.  The goal here is to
+only expose the services that need to serve public traffic.
+</p>
+
+The second step:
 <pre>
-The second step
-(INTERNET)
------------            (privnet)
-          |----(www1)-----|
-          |               |---------(db1)
-          |               |---------(db2)
-          |----(vpn1)-----|
+ ___________________________________________
+/                                           \
+| (INTERNET)                                |
+| -----------            (private net)      |
+|           |----(www1)-----|               |
+|           |               |---------(db1) |
+|           |               |---------(db2) |
+|           |----(vpn1)-----|               |
+\                                           /
+ -------------------------------------------
+  \
+   \
+       __     
+      UooU\.'@@@@@@`.
+      \__/(@@@@@@@@@@)
+           (@@@@@@@@)
+           `YY~~~~YY'
+            ||    ||
 </pre>
 
 <p>
 This setup decreases exposure the most. Remote login is disabled on the public
-interfaces of www1 and vpn1. In order to log into any machines a vpn account is
-required on vpn1. Once logged into the vpn access to the private interfaces of
-all machines can be gained.
+interfaces of <code>www1</code> and <code>vpn1</code>. In order to log into any
+machines a vpn account is required on <code>vpn1</code>. Once on the vpn,
+access to the private interfaces of all machines can be gained.
 </p>
 
 <p>
 This does not replace the need for continuing to follow best practices inside
-the privnet. Database connections to the db servers should be limited to hosts
-that really need to connect to them. Host based firewalls can also be
+the private network. Database connections to the db servers should be limited
+to hosts that really need to connect to them. Host based firewalls can also be
 configured to limit source addresses of remote shell sessions.
 </p>
 
 <p>
-Great now that all the theory is in place what software allows actual
-implementation?
+Great! Now that all the theory is in place what software options are available
+to help us implement this?
 </p>
 
 <p>
-First be sure to choose a private subnet that is not in use anywhere else.
+First, ensure you choose a private subnet that is not in use anywhere else.
 Common subnets to avoid include 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24,
 172.16.0.0/16, 10.0.0.0/8. The first three being commonly used in SOHO
-equipment (think 4 port linksys/netgear router at home). Perhaps something like
-192.168.30.0/24. Now that a subnet has been chosen the VPN needs to be
-configured.
+equipment (think consumer-grade linksys/netgear home routers). Perhaps
+something like 192.168.30.0/24. Now that a subnet has been chosen, the VPN needs
+to be configured.
 </p>
 
 <p>
-Luckily some great open source tools make it pretty simple. Openvpn
-http://openvpn.net/index.php/open-source.html is a great solution. Openvpn is
-an SSL based vpn so blocked access from a hotel or corporate firewall is
-unlikely (this is good for us admins that are on-call 24/7/365). The clients
-are cross platform (Windows, Mac, Linux) and the setup is not difficult. In
-fact check out OpenVPN Access Server
-http://openvpn.net/index.php/access-server/download-openvpn-as.html. Its a
-package that adds a nice web interface and portal for VPN users plus adds
-simple administration of the VPN. It is free for 2 concurrent connections, if
-more than 2 concurrent connections are required the cost is 5 bucks per
-concurrent connection. Licenses must be purchased in packs of 10 at minimum, so
-a total cost to allow up to 12 concurrent connections is 50 bucks. Not a bad
-price at all IMHO.
+
+Luckily, some great open source tools make it pretty simple. <a href="http://openvpn.net/index.php/open-source.html">OpenVPN</a>
+is one such example. OpenVPN is
+an SSL-based VPN, so blocked access from a hotel or corporate firewall is
+unlikely (this is good for us admins that are on-call 24/7/365). Additionally,
+the clients are cross platform (Windows, Mac, Linux) and the setup is not
+difficult. In fact check out 
+<a href="http://openvpn.net/index.php/access-server/download-openvpn-as.html">OpenVPN Access Server</a>.
+OpenVPN Access Server is a package that adds a nice web interface and portal
+for VPN users in addition to giving you simple administration of giving you the
+VPN. It is free for 2 concurrent connections, if more than 2 concurrent
+connections are required the cost is five bucks per concurrent connection.
+Licenses must be purchased in packs of 10 at minimum, so a total cost to allow
+up to 12 concurrent connections is 50 bucks.
 </p>
 
-Quick Review
-============
-Q. What is gained from the addition of a private network?
-A. Another layer of security and a decrease in overall exposure.
 
-Q. What is gained from using a VPN?
-A. A single choke point to restrict user access and secure remote access.
+<p>
+Putting your backend servers on a private, hidden network is an important step
+in reducing your public network <a
+  href="http://en.wikipedia.org/wiki/Attack_surface">attack surface</a>. Since
+your private network is, well, private, you'll need to implement an access
+mechanism to permit you and others to manage the servers in the private
+network. Using a VPN to provide this access helps you secure external access to
+the private network.
+
+<p>
+
+Further reading:
+<ul>
+  <li> <a href="http://handsonhowto.com/virt.html">Virtual Ethernet Interfaces</a> in Linux and Solaris</li>
+  <li> <a href="http://www.nog.net/~tony/warez/cowsay.shtml">cowsay</a> </li>
+</ul>
 
