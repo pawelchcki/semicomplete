@@ -1,0 +1,33 @@
+Good sysadmins use <strong>automation</strong> and <strong>monitoring</strong>, but good sysadmins don&#39;t rely on them. The problem with automated monitoring, as we know from the movie <em>Jurassic Park</em>, is that you only find what you&#39;re looking for.
+ 
+<div style="float:right;padding:20px;text-align:center"><p><img src="http://bitfieldconsulting.com/sites/bitfieldconsulting.com/files/jurassic-park.jpg"></p><p><em>Jurassic Park</em>: when monitoring isn&#39;t enough.</p></div> 
+ 
+The other night I was looking at the process list on a server, and saw there were several copies of the nightly backup script running. I found that the script was trying to upload the backup tarball to a remote NAS, and as part of this process it tried to delete the previous week&#39;s tarball. This didn&#39;t exist, so the command was failing, but the script wasn&#39;t smart enough to handle this, so just kept retrying. As a result, the backup never got properly copied offsite, and the machine was starting to become overloaded with backup jobs.
+ 
+Why is this important? Many monitoring systems would not pick up this condition. Would yours? You may want to improve your monitoring to detect at least the following:
+ 
+<ul> 
+  <li>Check that the job actually ran, by looking at the modified date on the logfile.</li> 
+  <li>Check that the job terminated (look for a completion message in its log) and check its exit status.</li> 
+  <li>If the job creates a file, check for the existence and the size of this file.</li> 
+  <li>If something gets copied offsite, check the offsite copy and make sure it exists and matches the source file.</li> 
+</ul> 
+ 
+You get the idea. No automated monitoring system is perfect. A great way to improve it is to look at your servers with an open mind, and when you find problems you didn&#39;t expect, add monitoring checks to catch them. Jordan&#39;s article on <a href="http://sysadvent.blogspot.com/2009/12/cron-practices.html" target="_blank">Cron Practices</a> is a good place to start improving the reliability of your cron jobs.
+ 
+I found several other little gotchas in the script which needed fixing. It&#39;s easy to assume that a script that&#39;s been in production for years is free of bugs. That&#39;s almost certainly not the case, and many of those bugs won&#39;t be found until you go through the script with a critical eye. If you use <strong>version control</strong> and <strong>test-driven development</strong> for your scripts, as recommended by <a href="http://saintaardvarkthecarpeted.com/blog/" target="_blank">Hugh Brown</a> in his <a href="http://sysadvent.blogspot.com/2009/12/day-3-development-for-sysadmins.html" target="_blank">Development for Sysadmins</a> article, this will be a big help.
+ 
+A good sysadmin is a good detective. You should make time as part of your job to pick on a machine every so often and examine it forensically, like a crime scene. What&#39;s here that shouldn&#39;t be? Are things working like they&#39;re supposed to? Are there any problems with this machine that have gone unnoticed by the automatic monitoring?
+ 
+Here are some places to look:
+ 
+<ul> 
+  <li><a href="http://www.logwatch.org/" target="_blank">Logwatch</a> output (ideally, have this mailed to you and read it every day).</li> 
+  <li>Root&#39;s <strong>mailbox</strong>: errors from cron jobs will come here, as will mail bounces.</li> 
+  <li>The <strong>syslog</strong> is a great resource, but often very large and hard to read. Try configuring your syslog.conf to send messages from different subsystems (mail, for example) to different logfiles.</li> 
+  <li>The <strong>process list</strong> (<code>ps</code> or <code>top</code>). What&#39;s running that you don&#39;t expect to see? Is anything using an unusual amount of CPU? Is the machine spending more time in iowait than it should (may indicate a disk problem or a degraded RAID array).</li> 
+  <li>The <strong>crontab</strong> (not all jobs may run as root, so go looking in the <code>/etc/cron.*</code> directories and <code>/var/spool/cron</code>). What jobs are running? Are they working? Should they be there? Is their output logged and monitored?</li> 
+  <li>Places you (and I) wouldn&#39;t think of. Go snooping. See what catches your eye. A detective looks without preconceptions, so she&#39;s ready to spot the unexpected.</li> 
+</ul> 
+ 
+I hope the above makes you suspicious and paranoid, in a good way - a way that makes you a better sysadmin. Anything that can go wrong will go wrong, and is going wrong somewhere on your network, right now. Get into the habit of looking for trouble. You&#39;re sure to find it!
