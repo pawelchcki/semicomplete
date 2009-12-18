@@ -30,6 +30,7 @@ def main(args)
 
   mech = WWW::Mechanize.new
   url = "http://#{nagioshost}/nagios/cgi-bin/extinfo.cgi?type=0"
+  page = nil
   begin
     Timeout.timeout(HTTP_TIMEOUT) do
       page = mech.get(url)
