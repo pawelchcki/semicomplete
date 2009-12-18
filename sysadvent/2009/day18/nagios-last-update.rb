@@ -3,7 +3,7 @@
 # License: BSD
 #
 # Usage:
-# nagios-last-update.rb -- <nagioshost> <maxage>
+# nagios-last-update.rb <nagioshost[:port]> <maxage>
 #   nagioshost should be the web server in front of nagios
 #   maxage is a value in seconds.
 #
