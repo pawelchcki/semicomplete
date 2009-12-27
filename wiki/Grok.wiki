@@ -1,4 +1,4 @@
-#summary A powerful pattern-matching/reacting tool.
+﻿#summary A powerful pattern-matching/reacting tool.
 
 = Introduction =
 
@@ -18,12 +18,12 @@ The grok library is a great choice when you need the pattern matching features o
 = What can I use Grok for? =
 
   * reporting errors and other patterns from logs and processes
-  * parsing complex text output and converting it to json external processing
+  * parsing complex text output and converting it to json for external processing
   * apply 'write-once use-everywhere' to regular expressions
 
 = Download Grok =
 
-  * Latest: http://semicomplete.googlecode.com/files/grok-20091103.tar.gz
+  * Latest: http://semicomplete.googlecode.com/files/grok-20091227.01.tar.gz
   * Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
 
 = Getting Help =
