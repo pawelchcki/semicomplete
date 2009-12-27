@@ -1,4 +1,4 @@
-#summary A tutorial covering the features of the grok program
+﻿#summary A tutorial covering the features of the grok program
 
 = Hello World =
 
@@ -12,7 +12,7 @@ program {
     # match anything
     pattern: ".*"
 
-    # the reaction is what to emit on a 
+    # the reaction is what to emit on a match
     reaction: "Got: %{@LINE}"
   }
 }
@@ -20,7 +20,7 @@ program {
 
 Output:
 {{{
-% grok helloworld.grok
+% grok -f helloworld.grok
 Got: Hello World
 }}}
 
@@ -43,7 +43,7 @@ program {
 
 The output looks like this:
 {{{
-% grok samples/ifconfig.grok
+% grok -f samples/ifconfig.grok
 Found: 192.168.0.97
 Found: 127.0.0.1
 Found: 192.168.250.1
@@ -74,7 +74,7 @@ program {
 
 Output:
 {{{
-% grok samples/numberpredicate.grok
+% grok -f samples/numberpredicate.grok
 Found: 21
 Found: 22
 Found: 23

@@ -79,5 +79,19 @@
       # this line.  the default is false.
       break-if-match: true
     }
+
+    # You can also have a reaction if no match occurs throughout the entire
+    # execution. This is only really valid on exec and files without follow set.
+    # If you use no-match on a followed file, 'no-match' can be executed
+    # every time the file is read again.
+    # 
+    # The same options are valid in a no-match block as in a match, except
+    # for 'pattern' and 'break-if-match' which are meaningless here.
+    no-match {
+      reaction: "there was no match!"
+
+      # Similar options are available in no-match as are in match blocks.
+      shell: "logger -t grokgrokgrok"
+    }
   }
 }}}
