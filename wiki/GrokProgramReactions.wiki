@@ -42,7 +42,7 @@ output:
   "PID": "", "INT": "" }
 }}}
 
-JSON_COMPLEXZ example:
+JSON_COMPLEX example:
 {{{
   pattern: "%{SYSLOGBASE} .*"
   reaction: "%{@JSON_COMPLEX}"
