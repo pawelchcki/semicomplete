@@ -28,4 +28,3 @@ The grok library is a great choice when you need the pattern matching features o
 
 = Getting Help =
   * mail: grok-users@googlegroups.com
-  * irc: #grok on efnet
