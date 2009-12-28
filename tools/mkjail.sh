@@ -12,8 +12,8 @@ if [ $1 = "make" ]; then
 
 	cp -v /libexec/* /misc/libexec
 else
-if [ $1 = "link" ]; then
-	cd /misc
-	ldd -f "%p\n" bin/* sbin/* usr/sbin/* usr/bin/* | sort | uniq | xapply -f 'cp -v %1 /misc/%1' -
-fi
+  if [ $1 = "link" ]; then
+    cd /misc
+    ldd -f "%p\n" bin/* sbin/* usr/sbin/* usr/bin/* | sort | uniq | xapply -f 'cp -v %1 /misc/%1' -
+  fi
 fi
