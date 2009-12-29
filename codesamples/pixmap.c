@@ -1,3 +1,16 @@
+/* Sample code which creates a window and a pixmap.
+ * It draws to the pixmap and uses XCopyArea to copy to the window.
+ *
+ * This the best way to do X drawing as your handling of the Expose event 
+ * now becomes a trivial XCopyArea function call. Delicious.
+ *
+ * Compile and run:
+ *   gcc -lX11 -o pixmap pixmap.c
+ *   ./pixmap
+ *
+ * Author: Jordan Sissel
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

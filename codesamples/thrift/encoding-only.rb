@@ -8,7 +8,7 @@ i = StringIO.new
 o = StringIO.new
 
 transport = Thrift::IOStreamTransport.new(i, o)
-protocol = Thrift::BinaryProtocolFactory.new.get_protocol(transport)
+protocol = Thrift::BinaryProtocolAcceleratedFactory.new.get_protocol(transport)
 
 x = UserProfile.new
 x.uid = 3

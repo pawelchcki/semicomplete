@@ -21,6 +21,7 @@ int main() {
   f->three = "Hello world";
   tctreeput(tree, "foo", 3, f, sizeof(struct foo));
 
+  f->one = 200;
   tctreeiterinit(tree);
   const char *key;
   while (key = tctreeiternext2(tree)) {

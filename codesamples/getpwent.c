@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     perror("getpwnam");
     return 2;
   }
-  printf("Passwd for %s is '%s'\n", pw->pw_passwd);
+  printf("Passwd for %s is '%s'\n", argv[1], pw->pw_passwd);
 
   return 0;
 }
