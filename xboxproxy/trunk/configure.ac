@@ -45,7 +45,7 @@ case $host in
 	LDFLAGS="-pthread" ;;
 *)
 	AC_CHECK_LIB(pthread,pthread_create,
-					 [LD_FLAGS="$LDFLAGS -lpthread"],
+					 [LDFLAGS="$LDFLAGS -lpthread"],
 					 [AC_MSG_ERROR([pthread library not found... perhaps you should fix that?])]
 					)
 esac
