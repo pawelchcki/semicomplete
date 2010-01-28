@@ -1,0 +1,14 @@
+
+Running:
+  ruby calmond.rb
+
+Config is 'calmond.yaml'
+  Hosts can have services and tests.
+  Services can have hosts and tests.
+  Tests are just commands, run like this:
+    /bin/sh -c <command>
+    With your command as argv[2]. No escaping is necessary.
+    We set environment variables based on what caused the test to run:
+      * Host data is prefixed with HOST_, like HOST_NAME
+      * Service data is prefixed with SERVICE_, like SERVICE_NAME
+      * Test data is prefixed with TEST_, like TEST_COMMAND

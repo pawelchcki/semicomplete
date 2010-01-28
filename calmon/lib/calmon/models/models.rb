@@ -32,5 +32,13 @@ class Calmon; class Models; class Test
     @command = (kwds[:command] or nil)
   end
 
+  def to_hash
+    return {
+      "name" => @name,
+      "command" => @command,
+      "interval" => @interval,
+    }
+  end
+
 end; end; end # class Calmon::Models::Tests
 

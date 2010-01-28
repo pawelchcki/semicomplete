@@ -66,18 +66,18 @@ end
 root.children = entities
 
 def process(schedule, root, parents=[], tests=[])
-  #puts "  " * (parents.length) + "#{root}"
   (tests + root.tests).each do |test|
     ancestry = parents + [root]
     t = Calmon::Tests::Exec.new( { :interval => (rand * 30).to_i,
                                     :command => test.command,
                                     :parents => ancestry,
+                                    :test => test,
                                 } )
     have_host = ancestry.any? { |e| Calmon::Models::Host === e }
     have_service = ancestry.any? { |e| Calmon::Models::Service === e }
 
     puts ancestry.collect { |e| e.name || e.class }.join(", ")
-    if (have_host and have_service) 
+    if (have_host) # and have_service) 
       schedule << t
     end
   end

@@ -7,6 +7,7 @@ class Calmon; class Tests; class Exec < Calmon::Test
     super
     @command = (kwds[:command] or nil)
     @parents = (kwds[:parents] or nil)
+    @test = (kwds[:test] or nil)
     @format = (kwds[:format] or nil)
   end # def initialize
 
@@ -19,7 +20,7 @@ class Calmon; class Tests; class Exec < Calmon::Test
     #require 'pp'
     #puts @parents.collect { |e| e.name or e.class }.join(", ")
     child = fork do
-      @parents.each do |entity|
+      (@parents + [@test]).each do |entity|
         entclass = entity.class.to_s.gsub(/^.*::/, "").upcase
         entity.to_hash.each do |k,v|
           next if v == nil
