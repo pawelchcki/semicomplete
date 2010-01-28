@@ -2,6 +2,7 @@ require 'calmon/test'
 require 'calmon/testresult'
 
 class Calmon; class Tests; class Exec < Calmon::Test
+  attr_reader :command
   def initialize(kwds)
     super
     @command = (kwds[:command] or nil)

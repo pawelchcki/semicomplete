@@ -10,6 +10,12 @@ services:
   pingable:
     tests:
     - ping
+  webserver:
+    hosts:
+    - www.google.com
+    tests:
+    - http
   
 tests:
-  ping: fping -c 1 $HOST_NAME
+  ping: fping -c 1 "$HOST_NAME"
+  http: /usr/lib/nagios/plugins/check_http -H "$HOST_NAME"

@@ -42,10 +42,10 @@ class Calmon; class Scheduler
 
           # sleep a bit between each test
           # This should help space out events, over time, more evenly.
-          puts "ran #{event} (#{now - next_time} seconds behind schedule)"
-          puts "Result: #{result.status}"
-          puts "Output"
-          puts result.output.split("\n").collect {|x| "   #{x}"}.join("\n")
+          puts "#{event.command} (#{now - next_time} behind)"
+          puts "  Result: #{result.status}"
+          puts "  Output"
+          puts result.output.split("\n").collect {|x| "  > #{x}"}.join("\n")
           puts
           sleep(0.2)
         end # if now >= next_time
