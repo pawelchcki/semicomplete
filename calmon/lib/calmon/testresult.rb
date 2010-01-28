@@ -8,8 +8,10 @@ class Calmon; class TestResult
   TIMEOUT = :timeout
 
   attr_accessor :status
+  attr_accessor :output
 
   def initialize
     @status = nil
+    @output = nil
   end
 end; end # class Calmon::TestResult

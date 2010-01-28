@@ -1,0 +1,15 @@
+hosts:
+  snack.home:
+    services:
+    - pingable
+  www.google.com:
+    services:
+    - pingable
+
+services:
+  pingable:
+    tests:
+    - ping
+  
+tests:
+  ping: fping -c 1 $HOST_NAME

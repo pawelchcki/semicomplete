@@ -10,26 +10,23 @@ class Calmon; class Scheduler
 
   def <<(event)
     if !event.respond_to?(:interval)
-      raise ArgumentError.new("#{event.class} has not method 'interval'")
+      raise ArgumentError.new("#{event.class} has no method 'interval'")
     end
 
-    # TODO(sissel): ADD EVENT HOOK HERE :: EVENT REGISTER
-    @events[event] = Time.now
+    # TODO(sissel): ADD EVENT HOOK HERE :: EVENT ADDITION
+    schedule(event)
   end # def <<
 
   def run
-    @runner = Thread.new { schedule_runner }
-  end # def run
-
-  def schedule_runner
     loop do
       # This is probably best implemented as a tree that sorts on 'next run time'
       # like rbtree
       
+      # TODO(sissel): Should use a worker-pool model so one test won't
+      # block another test from running.
       @events.each do |event, next_time|
         now = Time.now
         if now >= next_time
-          puts "running #{event} for #{next_time}\n  (#{now - next_time} seconds behind)"
           result = nil
           begin
             # TODO(sissel): ADD EVENT HOOK HERE :: TEST START
@@ -41,11 +38,15 @@ class Calmon; class Scheduler
             result.status = Calmon::TestResult::TIMEOUT
           end # rescue Timeout::Error
 
-          # TODO(sissel): ADD EVENT HOOK HERE :: TEST END
-          @events[event] = now + event.interval
+          schedule(event, result)
 
           # sleep a bit between each test
           # This should help space out events, over time, more evenly.
+          puts "ran #{event} (#{now - next_time} seconds behind schedule)"
+          puts "Result: #{result.status}"
+          puts "Output"
+          puts result.output.split("\n").collect {|x| "   #{x}"}.join("\n")
+          puts
           sleep(0.2)
         end # if now >= next_time
       end # @events.each
@@ -53,12 +54,17 @@ class Calmon; class Scheduler
       sleep(1)
     end
   end # def schedule_runner
-end; end # class Calmon::Scheduler
 
-if $0 == __FILE__
-  require 'test_exec'
-  sched = Calmon::Scheduler.new
-  sched << Calmon::Tests::Exec.new( { :interval => 10 } )
-  sched << Calmon::Tests::Exec.new( { :interval => 15 } )
-  sched.schedule_runner
-end
+  # naive default scheduler. Simply schedules the next time for this event
+  # to happen at now + event.interval, unless this is a new event.
+  def schedule(event, result=nil)
+    # TODO(sissel): ADD EVENT HOOK HERE :: EVENT SCHEDULE
+    if @events.include?(event)
+      # TODO(sissel): can make scheduling decisions about the next run-time
+      # based on the last result.
+      @events[event] = Time.now + event.interval
+    else
+      @events[event] = Time.now
+    end
+  end # def schedule
+end; end # class Calmon::Scheduler
