@@ -2,6 +2,8 @@ hosts:
   snack.home:
     services:
     - pingable
+    tests:
+    - stuff
   www.google.com:
     services:
     - pingable
@@ -19,3 +21,4 @@ services:
 tests:
   ping: fping -c 1 "$HOST_NAME"
   http: /usr/lib/nagios/plugins/check_http -H "$HOST_NAME"
+  stuff: echo "$HOST_NAME / $SERVICE_NAME"
