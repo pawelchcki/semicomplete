@@ -17,7 +17,19 @@ class Calmon; class Models; class Entity
 end; end; end # class Calmon::Models::Entitty
 
 class Calmon::Models::Host < Calmon::Models::Entity
-end
+  attr_accessor :address
+
+  def initialize(kwds = {})
+    super
+    @address = (kwds[:address] or @name)
+  end # def initialize
+
+  def to_hash
+    return super.merge({
+      "address" => @address
+    })
+  end
+end # class Calmon::Models::Host
 
 class Calmon::Models::Service < Calmon::Models::Entity
 end
