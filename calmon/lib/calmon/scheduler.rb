@@ -1,4 +1,5 @@
 require 'timeout'
+require 'calmon/models/testresult'
 
 class Calmon; class Scheduler
   TIMEOUT = 30
@@ -37,16 +38,11 @@ class Calmon; class Scheduler
             result = Calmon::TestResult.new
             result.status = Calmon::TestResult::TIMEOUT
           end # rescue Timeout::Error
+          result.duration = Time.now - now
+          result.start_time = now
 
+          record(event, result)
           schedule(event, result)
-
-          # sleep a bit between each test
-          # This should help space out events, over time, more evenly.
-          puts "#{event.command} (#{now - next_time} behind)"
-          puts "  Result: #{result.status}"
-          puts "  Output"
-          puts result.output.split("\n").collect {|x| "  > #{x}"}.join("\n")
-          puts
           sleep(0.2)
         end # if now >= next_time
       end # @events.each
@@ -67,4 +63,20 @@ class Calmon; class Scheduler
       @events[event] = Time.now
     end
   end # def schedule
+
+  def record(event, result)
+    tr = Calmon::Models::TestResult.new
+    tr.status = result.status
+    tr.command = result.command
+    tr.output = result.output
+    tr.duration = result.duration
+    tr.start_time = result.start_time
+    tr.save
+
+    puts Calmon::Models::TestResult.all.size
+    puts tr.command
+    puts tr.status
+    puts tr.output
+    puts
+  end
 end; end # class Calmon::Scheduler
