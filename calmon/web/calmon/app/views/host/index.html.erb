@@ -1,0 +1,9 @@
+You're in index of the Host controller.
+
+<hr>
+
+<ul>
+<% @hosts.each do |host| %>
+  <li> <%= link_to host, "/host/show/#{host.id}" %> </li>
+<% end %>
+</ul>

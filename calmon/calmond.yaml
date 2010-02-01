@@ -1,31 +1,38 @@
 hosts:
   snack.home:
     address: 192.168.0.97
-    services:
-    - pingable
-    - env
+    classes:
+    - server
   dell:
     address: 192.168.0.22
-    services:
+    classes:
     - pingable
     - env
   google:
     address: www.google.com
-    services:
+    classes:
     - pingable
 
-services:
+classes:
+  server:
+    tests:
+    - ping
+    - ssh
   pingable:
-    #tests:
-    #- ping
+    tests:
+    - ping
   webserver:
     tests:
     - http
   env:
     tests: 
     - env
+  ssh:
+    tests:
+    - ssh
   
 tests:
   ping: fping -c 1 "$HOST_ADDRESS"
   http: /usr/lib/nagios/plugins/check_http -H "$HOST_NAME"
-  env: env | egrep "^(HOST|SERVICE|TEST)_" | sort
+  env: env | egrep "^(HOST|CLASS|TEST)_" | sort
+  ssh:  /usr/lib/nagios/plugins/check_ssh "$HOST_NAME"

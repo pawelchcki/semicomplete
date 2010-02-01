@@ -1,27 +1,41 @@
 require 'dm-core'
 
-class Calmon; class Models; class Entity
+class Calmon; class Models; class Host
   include DataMapper::Resource
 
   property :name, String, :key => true
-  property :type, Discriminator
+  property :address, String, :required => false
+  has n, :tests, :through => Resource
+  has n, :classes, :through => Resource
 
-  property :parent_id, Integer, :required => false
-  has n, :children, :model => 'Entity', :child_key => [ :parent_id ]
-  belongs_to :parent, :model => 'Entity', :child_key => [ :parent_id ]
-  has n, :attributes
-  #has n, :tests, :model => 'Entity', :child_key => [ :parent_id ]
+  def to_hash
+    return { 
+      "name" => @name,
+      "address" => (@address or @name)
+    }
+  end
+
+  def to_s
+    if ![nil, @name].include?(@address)
+      return "#{@name} (#{@address})"
+    end
+    return @name
+  end # def to_s
+end; end; end # class Calmon::Models::Entitty
+
+class Calmon::Models::Class
+  include DataMapper::Resource
+
+  property :name, String, :key => true
   has n, :tests, :through => Resource
 
   def to_hash
     return { "name" => @name }
   end
-end; end; end # class Calmon::Models::Entitty
 
-class Calmon::Models::Host < Calmon::Models::Entity
-end # class Calmon::Models::Host
-
-class Calmon::Models::Service < Calmon::Models::Entity
+  def to_s
+    return @name
+  end # def to_s
 end
 
 class Calmon::Models::Attribute
@@ -47,4 +61,8 @@ class Calmon; class Models; class Test
       "interval" => @interval,
     }
   end
+
+  def to_s
+    return @name
+  end # def to_s
 end; end; end # class Calmon::Models::Tests
