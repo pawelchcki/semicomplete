@@ -6,6 +6,8 @@
 
 = Introduction =
 
+This is a work in progress. Many, many things are yet undefined.
+
 == Background ==
 
 There are things I like about nagios. There are things I do not like. From my
@@ -193,6 +195,14 @@ Test results include test output, exit status, duration, and start time.
 
   * Event handlers (ruby, python, whatever, scripts)
   * 
+
+= API Features =
+
+TBD
+
+= Dashboard Features =
+
+TBD
 
 = Misc =
 
