@@ -3,17 +3,25 @@
 
 = Introduction =
 
-There are things I like about nagios. There are things I do not like. From my
-experiences, it solves about half of my monitoring needs, not including the
-need for other tools: munin, collectd, cacti, monit, etc. Implementing a
-one-size-fits-all monitoring system is unrealistic. Focusing on core features, perhaps in separate, useful components, is realistic.
-
 == Background ==
 
-Monitoring is hard to get right.
-A complex computer system will need to monitor individuals as well as groups, and aggregate data from multiple sources to correlate failures with causes.
+There are things I like about nagios. There are things I do not like. From my
+experiences, it solves about half of my monitoring needs, not including the
+need for other tools: munin, collectd, cacti, monit, etc. Many other monitoring
+systems (some commercial, some free) are simply forks of Nagios and provide
+little on top of what nagios already provides. Those that are not direct
+descendants of Nagios fall to other design problems such as only supporting
+discovery instead of directly defining them (see Source of Truth below).
+Few addressing notifications, acknowledgements, and escalations. Fewer still
+support aggregates or estimations easily. This goes way beyond the problems
+that any given monitoring tool has a poor dashboard or UI.
+
+Monitoring is hard to get right. Monitoring system metrics is important. Monitoring business metrics is also important.
+
+A complex computer system will need to monitor things as well as groups of things
+and aggregate data from multiple sources to correlate failures with causes.
 A good monitoring system allows you to check for health, test assumptions,
-correlate data, and automate actions.
+correlate data, and automate reactions.
 
 There are many monitoring tools ranging from narrow to wide scopes. Some are
 complete, others are incomplete. None I have found have enough of the features I
@@ -27,6 +35,7 @@ easily.
 
   * Improve the status quo of monitoring.
   * Make easy things easy, hard things possible.
+  * Apply things learned from the past decades of monitoring tools.
 
 == Considerations ==
 
