@@ -115,6 +115,8 @@ Monitoring systems generally include a few active components:
   * Agent -  Runs tests on a node, reports data. May act on data.
   * Server - schedules, dispatches, and records test data. Acts on data.
   * Proxy - Forwards requests between agents and servers
+  * Dashboard - Provides a view on the monitored data.
+  * API - API for querying statuses, adding silences, making notes, etc.
 
 Other components:
   * notification and escalation management
@@ -135,6 +137,20 @@ logged for historical viewing.
 The server should also manage notifications, silences, escalations, etc.
 
 The server can also act like a proxy.
+
+=== Dashboard ===
+
+  * Meaningful visuals
+  * Monitoring status
+  * Managing alerts/notifications/silences/etc.
+  * Search interface
+
+=== API ===
+
+An API, probably networked, is required for allowing calmon to be easily used
+and abused by other tools.
+
+API should also provide search features.
 
 === Proxy ===
 
