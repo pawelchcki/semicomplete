@@ -1,0 +1,94 @@
+﻿
+= Calmon - a monitoring system =
+
+= Introduction =
+
+There are things I like about nagios. There are things I do not like. From my
+experiences, it solves about half of my monitoring needs, not including the
+need for other tools: munin, collectd, cacti, monit, etc. Implementing a
+one-size-fits-all monitoring system is unrealistic. Focusing on core features, perhaps in separate, useful components, is realistic.
+
+== Background ==
+
+Monitoring is hard to get right.
+A complex computer system will need to monitor individuals as well as groups, and aggregate data from multiple sources to correlate failures with causes.
+A good monitoring system allows you to check for health, test assumptions,
+correlate data, and automate actions.
+
+There are many monitoring tools ranging from narrow to wide scopes. Some are
+complete, others are incomplete. None I have found have enough of the features I
+want in the basic system.
+
+Some monitoring tools help you from check to notification, but don't adequately
+handle common alert methods and don't take feedback (acknowledgements, etc)
+easily.
+
+== Goals ==
+
+  * Improve the status quo of monitoring.
+  * Make easy things easy, hard things possible.
+
+== Considerations ==
+
+=== Source of Truth ===
+
+You need a source of truth to define what hosts have which services, and which
+services are important, and which devices are unimportant, etc. In Nagios, for
+example, you define truth in the config files by defining hosts, services,
+commands, contacts, schedules, etc. In OpenNMS, some truth comes from the network
+through discovery (ping sweeps to find hosts, etc).
+
+Truth is important for any automated system to reflect the intentions of its
+users. Truth comes from humans. Truth is how you define the system.
+
+There are two main philosophies about where this source of truth comes from:
+
+First philosophy is that the network serves as your source of truth. You know
+that a switch's port 34 belongs to 'host foo' because you put that in the port
+description. You know that the server foo.example.com is a fileserver because
+you noted that in /etc/motd, or because nfsd is active. Any truth is
+discoverable by simply asking systems about themselves, because you spread your
+truth across all nodes and devices in your network of datacenters, systems,
+etc.
+
+The second philosophy is to centrally store your source of truth. Any truth
+queries (What host am I? What packages do I need? What vlans belong on this
+switch port?) are answerable from this central authority. As above, server
+foo.example.com is a fileserver because you told the central truth source that
+it is a fileserver and thus should have nfsd running and configured
+appropriately.
+
+How to store truth is out of scope for Calmon. Thus, since there are two fairly
+different philosophies, it is not realistic for Calmon to provide either method
+of truth storage. Instead, Calmon should provide a way to plug your own source of truth into it, feeding it host, service, test, and other information.
+
+== Push vs Pull ==
+
+In this context, push means that one networked process sends data to another
+process; pull means that one networked process requests data of another
+process.
+
+Fundamentally, the end result is the same: data is transferred. The only
+decision is then to choose which node initiates the connection.
+
+Both push and pull are valid methods. In some situations, one may be required
+due to firewall rules. In other situations, it make make more sense to use pull
+if only to centralize where scheduling decisions are made (nagios does this,
+for example).
+
+From this point of view, it seems necessary to support both push and pull for
+sending data and requests between monitoring nodes.
+
+= Architecture =
+
+== Components ==
+
+Monitoring systems generally include a few active components:
+  * Agent -  Runs tests on a node, reports data. May act on data.
+  * Server - schedules, dispatches, and records test data. Acts on data.
+  * Proxy - Forwards requests between agents and servers
+
+Other components:
+  * notification and escalation management
+
+-- not finished yet --
