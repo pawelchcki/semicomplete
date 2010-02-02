@@ -61,7 +61,8 @@ You need a source of truth to define what hosts have which services, and which
 services are important, and which devices are unimportant, etc. In Nagios, for
 example, you define truth in the config files by defining hosts, services,
 commands, contacts, schedules, etc. In OpenNMS, some truth comes from the network
-through discovery (ping sweeps to find hosts, etc). In other systems you might have a SQL database that has devices, network information, etc.
+through discovery (ping sweeps to find hosts, etc). In other systems you might
+have a SQL database that has devices, network information, etc.
 
 Truth is important for any automated system to reflect the intentions of its
 users. Truth comes from humans. Truth is how you define the system.
@@ -85,7 +86,8 @@ appropriately.
 
 How to store truth is out of scope for Calmon. Thus, since there are two fairly
 different philosophies, it is not realistic for Calmon to provide either method
-of truth storage. Instead, Calmon should provide a way to plug your own source of truth into it, feeding it host, service, test, and other information.
+of truth storage. Instead, Calmon should provide a way to plug your own source
+of truth into it, feeding it host, service, test, and other information.
 
 === Push vs Pull ===
 
@@ -116,6 +118,9 @@ Monitoring systems generally include a few active components:
 Other components:
   * notification and escalation management
 
+Undecided ownership:
+  * Automatic corrective action (such as a service restart, etc). Should this be configured on the agent, or configured on the server which tells the agent which action to take?
+
 === Agent ===
 
 The agent allows you to run tests and do collection on individual nodes. This
@@ -126,7 +131,7 @@ is similar to Nagios NRPE in idea.
 Receives or collects (push vs pull)  data from agents and tests. This data is
 logged for historical viewing.
 
-The server should also manage contacts, notifications, silences, escalations, etc.
+The server should also manage notifications, silences, escalations, etc.
 
 The server can also act like a proxy.
 
@@ -155,4 +160,39 @@ Some options are available:
   * Allow easy, temporary system-wide notification silencing. 
   * Detect flooding and attempt to thwart by summarizing or by throttling. A summary could include a message like "SUPERCRITICAL - X services failed in last Y minutes"
 
+== Schema ==
+
+  * Hosts have Services.
+  * Services have Tests.
+  * Hosts have Tests.
+  * Tests are what are exceuted.
+  * Test Results are keyed by (host, service, test)
+
+Test results include test output, exit status, duration, and start time.
+
+  * Where should we define scheduling (how often to run, what times of day/week to run or not run).
+
+== Addons, Plugins, Extensions ==
+
+  * Event handlers (ruby, python, whatever, scripts)
+  * 
+
+= Misc =
+
+== Nomenclature for Nagios users ==
+
+|| *Nagios term* || *Calmon term* ||
+|| service || test ||
+|| servicegroup || service ||
+|| host  || host ||
+|| plugin(*) || test command ||
+
+Nagios calls 'plugins' what I would call any given program.
+
+For example, in Nagios you may define a service that runs a nagios plugin
+'check_tcp' on port 22. In Calmon, we call that a test that runs a command
+'check_tcp' on port 22.
+
+Services are much more than single tests, so it makes sense to make Service a
+collection of tests.
 
