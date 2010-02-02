@@ -44,9 +44,9 @@ easily.
 
 == Nomenclature ==
 
-* node, host, device? - a network addressable system that can be tested
-* service, class, tag? - a collection of tests, can be applied to a node
-* test - a single test to run against a host or service.
+  * node, host, device? - a network addressable system that can be tested
+  * service, class, tag? - a collection of tests, can be applied to a node
+  * test - a single test to run against a host or service.
 
 XXX How do we define a group of hosts? Or a group of host:service pairs?
 
