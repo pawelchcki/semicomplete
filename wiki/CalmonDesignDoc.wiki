@@ -75,17 +75,18 @@ There are two main philosophies about where this source of truth comes from:
 First philosophy is that the network serves as your source of truth. You know
 that a switch's port 34 belongs to 'host foo' because you put that in the port
 description. You know that the server foo.example.com is a fileserver because
-you noted that in /etc/motd, or because nfsd is active. Any truth is
-discoverable by simply asking systems about themselves, because you spread your
-truth across all nodes and devices in your network of datacenters, systems,
-etc.
+you noted that in /etc/motd, or because nfsd is active. In this philosophy, any
+truth is knowable by simply asking systems about themselves because you
+spread your truth across all nodes and devices in your network of datacenters,
+systems, etc.
 
 The second philosophy is to centrally store your source of truth. Any truth
 queries (What host am I? What packages do I need? What vlans belong on this
 switch port?) are answerable from this central authority. As above, server
 foo.example.com is a fileserver because you told the central truth source that
 it is a fileserver and thus should have nfsd running and configured
-appropriately.
+appropriately. In practice, centralized truth can range from a simple yaml file
+to an database-backed web app.
 
 How to store truth is out of scope for Calmon. Thus, since there are two fairly
 different philosophies, it is not realistic for Calmon to provide either method
@@ -96,7 +97,7 @@ of truth into it, feeding it host, service, test, and other information.
 
 In this context, push means that one networked process sends data to another
 process; pull means that one networked process requests data of another
-process.
+process. In a monitoring system, this usually describers how tests or checks are invoked and how results are moved around.
 
 Fundamentally, the end result is the same: data is transferred. The only
 decision is then to choose which node initiates the connection.
