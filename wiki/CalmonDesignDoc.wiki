@@ -14,12 +14,13 @@ need for other tools: munin, collectd, cacti, monit, etc. Many other monitoring
 systems (some commercial, some free) are simply forks of Nagios and provide
 little on top of what nagios already provides. Those that are not direct
 descendants of Nagios fall to other design problems such as only supporting
-discovery instead of directly defining them (see Source of Truth below).
-Few addressing notifications, acknowledgements, and escalations. Fewer still
-support aggregates or estimations easily. This goes way beyond the problems
-that any given monitoring tool has a poor dashboard or UI.
+discovery instead of directly defining nodes or devices (see Source of Truth
+below). Few address notifications, acknowledgements, and escalations. Fewer
+still support aggregates or estimations easily. This goes way beyond the
+problems that any given monitoring tool has a poor dashboard or UI.
 
-Monitoring is hard to get right. Monitoring system metrics is important. Monitoring business metrics is also important.
+Monitoring is hard to get right. Monitoring system metrics is important.
+Monitoring business metrics is also important.
 
 A complex computer system will need to monitor things as well as groups of things
 and aggregate data from multiple sources to correlate failures with causes.
