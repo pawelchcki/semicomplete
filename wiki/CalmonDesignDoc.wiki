@@ -1,4 +1,5 @@
-﻿
+﻿#summary Design document for the Calmon monitoring project
+
 = Calmon - a monitoring system =
 
 = Introduction =
