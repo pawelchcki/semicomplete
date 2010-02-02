@@ -2,6 +2,8 @@
 
 = Calmon - a monitoring system =
 
+<wiki:toc max_depth="2" />
+
 = Introduction =
 
 == Background ==
