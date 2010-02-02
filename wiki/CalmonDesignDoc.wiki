@@ -169,6 +169,8 @@ tertiary.
 Escalation should continue trying to alert people in the rotation (primary,
 secondary, etc) until someone acknowledges.
 
+Additionally, acknowledging a page doesn't mean you acknowledge a problem.
+
 === Notification Management ===
 
 Sometimes problem in a single system  (such as database failures) can cause
