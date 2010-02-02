@@ -39,8 +39,21 @@ easily.
   * Improve the status quo of monitoring.
   * Make easy things easy, hard things possible.
   * Apply things learned from the past decades of monitoring tools.
+  * Automatable
+  * Pluggable
+
+== Nomenclature ==
+
+* node, host, device? - a network addressable system that can be tested
+* service, class, tag? - a collection of tests, can be applied to a node
+* test - a single test to run against a host or service.
+
+XXX How do we define a group of hosts? Or a group of host:service pairs?
 
 == Considerations ==
+
+The following are considerations made which impact the design and feature set
+of Calmon.
 
 === Source of Truth ===
 
@@ -48,7 +61,7 @@ You need a source of truth to define what hosts have which services, and which
 services are important, and which devices are unimportant, etc. In Nagios, for
 example, you define truth in the config files by defining hosts, services,
 commands, contacts, schedules, etc. In OpenNMS, some truth comes from the network
-through discovery (ping sweeps to find hosts, etc).
+through discovery (ping sweeps to find hosts, etc). In other systems you might have a SQL database that has devices, network information, etc.
 
 Truth is important for any automated system to reflect the intentions of its
 users. Truth comes from humans. Truth is how you define the system.
@@ -74,7 +87,7 @@ How to store truth is out of scope for Calmon. Thus, since there are two fairly
 different philosophies, it is not realistic for Calmon to provide either method
 of truth storage. Instead, Calmon should provide a way to plug your own source of truth into it, feeding it host, service, test, and other information.
 
-== Push vs Pull ==
+=== Push vs Pull ===
 
 In this context, push means that one networked process sends data to another
 process; pull means that one networked process requests data of another
@@ -103,4 +116,43 @@ Monitoring systems generally include a few active components:
 Other components:
   * notification and escalation management
 
--- not finished yet --
+=== Agent ===
+
+The agent allows you to run tests and do collection on individual nodes. This
+is similar to Nagios NRPE in idea.
+
+=== Server ===
+
+Receives or collects (push vs pull)  data from agents and tests. This data is
+logged for historical viewing.
+
+The server should also manage contacts, notifications, silences, escalations, etc.
+
+The server can also act like a proxy.
+
+=== Proxy ===
+
+Proxies act as store-and-forward systems between agents and servers. They are
+not necessarily needed in all situations. 
+
+=== Escalation Management ===
+
+Very common to have a situation where you have a primary and secondary on-call
+person. If the primary does not acknowledge a page within a time threshold, it
+should escalate to the secondary person. Other cases may eventually want a
+tertiary.
+
+Escalation should continue trying to alert people in the rotation (primary,
+secondary, etc) until someone acknowledges.
+
+=== Notification Management ===
+
+Sometimes problem in a single system  (such as database failures) can cause
+problems in multiple applications, causing massive floods of notifications from
+monitoring systems. This sucks.
+
+Some options are available:
+  * Allow easy, temporary system-wide notification silencing. 
+  * Detect flooding and attempt to thwart by summarizing or by throttling. A summary could include a message like "SUPERCRITICAL - X services failed in last Y minutes"
+
+
