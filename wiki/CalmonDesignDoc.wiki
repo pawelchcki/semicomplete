@@ -181,24 +181,43 @@ Some options are available:
 
 == Schema ==
 
-  * Hosts have Services.
-  * Services have Tests.
+In general, we will be checking various things for health. Each check we will
+call a test. From software engineering unit testing, you have a test that is
+part of a test suite. Multiple test suites may exist for a given product.
+
+In Calmon:
+
+  * Hosts have Services. (Perhaps we should use 'node' or 'device' instead of 'host' ?)
+  * Services have Tests. Services describe a set of expected behavior/functionality.
+  * Services have Services?
   * Hosts have Tests.
   * Tests are what are exceuted.
   * Test Results are keyed by (host, service, test)
 
 Test results include test output, exit status, duration, and start time.
 
-  * Where should we define scheduling (how often to run, what times of day/week to run or not run).
+A host is a network-addressable device. It can be a switch, router, firewall, storage node, plain server, blade, etc. 
+
+? Given virtual machines and blades, would it make sense to allow hosts to have
+host children?
+
+? A service, such as 'production master database,' has certain behaviors that
+need to be verified. Each behavior could be represented as one or more tests.
+Since some behavior testing is reusable, such as "mysql" we should allow for
+services to have services.
+
+? Where should we define scheduling (how often to run, what times of day/week to run or not run).
 
 == Addons, Plugins, Extensions ==
 
-  * Event handlers (ruby, python, whatever, scripts)
-  * 
+Calmon should be easy to extend, hook, and abuse.
+
+  * Event handlers (ruby, python, whatever, scripts) should be possible.
+  * What other extensions should we plan for?
 
 = API Features =
 
-TBD
+HTTP(S) + REST?
 
 = Dashboard Features =
 
