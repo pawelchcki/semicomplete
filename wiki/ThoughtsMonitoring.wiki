@@ -13,13 +13,13 @@ If you can, please share with me the following:
 
   * A description (or diagram) of your infrastructure including network, servers, services, storage, etc.
   * What you are using now for monitoring (can be any number of tools)
-  ** Why you like them
-  ** Why you don't like them
-  ** What you'd rather have, if anything
+    * Why you like them
+    * Why you don't like them
+    * What you'd rather have, if anything
   * What tools are missing that you wish existed? 
   * Would more documentation on monitoring, in general, help?
   * Do you carry a pager? If not, why not? If so, what does it support? (email, sms, html email, mobile web, normal web)
-  ** Better documentation on how to monitor the things you need to monitor?
-  ** Best practices for monitoring various scenarios?
+    * Better documentation on how to monitor the things you need to monitor?
+    * Best practices for monitoring various scenarios?
 
 Any thoughts, please email me jls-calmon@semicomplete.com - I'll be collecting this data into my design document, which you can view in unfinished form, here: [CalmonDesignDoc]
