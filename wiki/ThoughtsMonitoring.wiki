@@ -1,8 +1,9 @@
 ﻿
 I'm working on a new monitoring system because I can't find one that solves
-enough of my problems.
+enough of my problems. It's going to be free and have an unrestricted open
+source license.
 
-Interested in helping?
+I could use your help.
 
 At this stage, the best way you can help is to make sure I get lots of data
 about various infrastructure architectures, monitoring needs, reporting needs,
