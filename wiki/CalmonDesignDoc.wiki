@@ -233,11 +233,13 @@ Calmon should be easy to extend, hook, and abuse.
 
 = API Features =
 
-HTTP(S) + REST?
+HTTP(S) + REST? TBD.
 
 = Dashboard Features =
 
-TBD
+  * Searchable
+  * Support for iphone/android/other browsers would be awesome.
+  * Other things? TBD.
 
 = Misc =
 
