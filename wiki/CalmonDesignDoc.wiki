@@ -132,6 +132,19 @@ Undecided ownership:
 The agent allows you to run tests and do collection on individual nodes. This
 is similar to Nagios NRPE in idea.
 
+It also seems reasonable that an agent could be standalone (a la NRPE) or
+embedded into any number of applications. Embedded agents would give you
+invaluable white-box testing in your live production environment.
+
+Agents can push test reports or have test reports requested. 
+
+Pull scenarios make sense for periodic checks orchestrated by a master server.
+
+Push scenarios make sense for a local agent to push report information as soon
+as it has it. For example, you could embed agent functionality into your own
+software that, upon known-important exceptions or failures, will push reports
+up to the calmon server which can result in an immediate notification.
+
 === Server ===
 
 Receives or collects (push vs pull)  data from agents and tests. This data is
