@@ -133,9 +133,11 @@ want to make it easy/possible to do less common infrastructures.
 Anyway, I need more descriptions of infrastructures and services and how you
 would ideally monitor them before I can really pick a common set of targets.
 
-Some infrastructure scenarios that need monitoring:
+Some infrastructure scenarios:
+  * Multitenant hosting services
   * Networking only (ie, you have a netops team)
   * Services only (ie, you have an SRE team that doesn't care about hosts or network, only services)
+  * Hardware only (ie, you have a dedicated hardware support team)
   * Hosts, Networking, and Services (ie; ops/sa group monitoring everything in production)
   * Corp/IT services (internal support/helpdesk/other services)
   * Cloud stuff, like EC2. (see below)
