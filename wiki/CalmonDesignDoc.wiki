@@ -110,18 +110,30 @@ for example).
 From this point of view, it seems necessary to support both push and pull for
 sending data and requests between monitoring nodes.
 
-== Scaling ==
+== Scaling Perforamance ==
 
 Scale everything. Do it well, or reasonably well.
 
 This includes, but is not necessarily limited to:
   * Should work well with 1, 10, 1000, or 10000 nodes.
   * Executing lots of tests on lots of nodes with reasonable performance and low impact.
-  * Preventng pager storms
+  * Preventing pager storms
   * Multiple teams/views for notification and dashboarding
   * Don't bottleneck on the dashboard: Crappy reporting and visualization is not acceptable.
   * Don't skimp on search abilities.
   * Provide good APIs
+
+== Scaling Usability ==
+
+Small/simple infrastructures have different needs than large or complex infrastructures.
+
+In order to support both, we can treat all infrastructures as large and
+complex, since small and/or simple is a subset. The way to shield the
+complexity in configuration for a simple environment is to provide a healthy
+set of sane defaults.
+
+This means we'll need to provide a standard library and apply some default
+decisions to some of our objects (hosts/devices, contacts, notifications, etc).
 
 = Configuration Targets =
 
