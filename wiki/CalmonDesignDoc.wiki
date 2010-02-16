@@ -136,6 +136,14 @@ set of sane defaults.
 This means we'll need to provide a standard library and apply some default
 decisions to some of our objects (hosts/devices, contacts, notifications, etc).
 
+For any non-trivial number of things monitored, it must be easy to search for
+things in the system.
+
+Rollup and aggregates must be easy to use. That is, it should be easy to
+configure a thing called 'frontends' that encompasses all your frontends.
+Further, it should be easy to view this aggregate in the dashboard and query it
+from the API.
+
 = Configuration Targets =
 
 TBD
