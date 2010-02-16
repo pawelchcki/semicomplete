@@ -6,7 +6,7 @@
 
 = Introduction =
 
-This is a work in progress. Many, many things are yet undefined.
+This is a work in progress. Many, many things are yet undefined. You can help. Email comments to jls-calmon@semicomplete.com
 
 == Background ==
 
@@ -97,7 +97,8 @@ of truth into it, feeding it host, service, test, and other information.
 
 In this context, push means that one networked process sends data to another
 process; pull means that one networked process requests data of another
-process. In a monitoring system, this usually describers how tests or checks are invoked and how results are moved around.
+process. In a monitoring system, this usually describers how tests or checks
+are invoked and how results are moved around.
 
 Fundamentally, the end result is the same: data is transferred. The only
 decision is then to choose which node initiates the connection.
@@ -146,12 +147,12 @@ Anyway, I need more descriptions of infrastructures and services and how you
 would ideally monitor them before I can really pick a common set of targets.
 
 Some infrastructure scenarios:
-  * Multitenant hosting services
-  * Networking only (ie, you have a netops team)
-  * Services only (ie, you have an SRE team that doesn't care about hosts or network, only services)
-  * Hardware only (ie, you have a dedicated hardware support team)
+  * Multitenant hosting services (multiple users with restricted views). The biggest feature here would be ACLs for each tenant and possible multiple accounts with different restrictions for a single tenant.
+  * Networking only (ie, you have a netops team). Good SNMP support required.
+  * Services only (ie, you have an SRE team that doesn't care about hosts or network, only services).
+  * Hardware/facility only (ie, you have a dedicated hardware support team). Temperature, SNMP, etc.
   * Hosts, Networking, and Services (ie; ops/sa group monitoring everything in production)
-  * Corp/IT services (internal support/helpdesk/other services)
+  * Corp/IT services (internal support/helpdesk/other services). 
   * Cloud stuff, like EC2. (see below)
 
 The main differences between cloud and noncloud is, in my mind, simply a
