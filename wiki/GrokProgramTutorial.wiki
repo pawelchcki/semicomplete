@@ -28,7 +28,7 @@ Got: Hello World
 
 In grok patterns, you specify a named pattern with %{name}, where 'name' is the name of your pattern. Grok comes with a handful of patterns already defined in the [http://code.google.com/p/semicomplete/source/browse/grok/patterns/base# grok/patterns/base file].
 
-For example, a grok match that should capture the MAC addresses from the output of ifconfig:
+For example, a grok match that should capture the IP addresses from the output of ifconfig:
 {{{
 program {
   load-patterns: "patterns/base"
