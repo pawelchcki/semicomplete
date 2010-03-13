@@ -40,7 +40,17 @@ int main() {
   imlib_context_set_drawable(root);
   image = imlib_create_image_from_drawable(0, 0, 0, screen->width, screen->height, 1);
   imlib_context_set_image(image);
-  imlib_image_set_format("png");
-  imlib_save_image("screenshot.png");
+  Imlib_Color color;
+
+  int x, y;
+  for (x = 0; x < screen->width; x++) {
+    for (y = 0; y < screen->height; y++) {
+      imlib_image_query_pixel(x, y, &color);
+      //printf("#%02x%02x%02x\n", color.red, color.green, color.blue);
+    }
+  }
+
+  //imlib_image_set_format("bmp");
+  //imlib_save_image("/home/jls/public_html/screenshot.bmp");
   return 0;
 }
