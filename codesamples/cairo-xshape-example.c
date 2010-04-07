@@ -25,6 +25,7 @@ void paint(Window w) {
   cairo_set_line_width(cairo, 1);
   cairo_set_source_rgb(cairo, 255, 255, 0);
   cairo_rectangle(cairo, 20, 20, 50, 50);
+  cairo_rectangle(cairo, 80, 80, 50, 50);
   cairo_stroke(cairo);
 
   cairo_text_extents_t textext;
@@ -51,6 +52,7 @@ void shapeit(Window w) {
   cairo_set_line_width(shape_cairo, 1);
   cairo_set_operator(shape_cairo, CAIRO_OPERATOR_OVER);
   cairo_rectangle(shape_cairo, 20, 20, 50, 50);
+  cairo_rectangle(shape_cairo, 80, 80, 50, 50);
   cairo_stroke(shape_cairo);
 
   cairo_text_extents_t textext;
@@ -86,7 +88,6 @@ int main() {
   cairo = cairo_create(surface);
 
   shape = XCreatePixmap(dpy, w, 200, 200, 1);
-  //shape_surface = cairo_xlib_surface_create(dpy, w, DefaultVisual(dpy, 0), 200, 200);
   shape_surface = cairo_xlib_surface_create_for_bitmap(dpy, shape, 
                                                        DefaultScreenOfDisplay(dpy),
                                                        200, 200);
