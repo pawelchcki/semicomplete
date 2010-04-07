@@ -21,7 +21,7 @@ int cmp(const void *a, const void *b) {
 
 void w(const void *node, const VISIT which, const int depth) {
   foo_t *f;
-  f = (foo_t *)node;
+  f = *(foo_t **)node;
   printf("%s: %d\n", f->name, f->value);
 }
 
@@ -45,6 +45,7 @@ int main() {
   ret = tsearch(val, &root, cmp);
   printf("val2 result: %d\n", (*(foo_t **)ret)->value);
 
+  printf("Walking with twalk\n");
   twalk(root, w);
   return 0;
 
