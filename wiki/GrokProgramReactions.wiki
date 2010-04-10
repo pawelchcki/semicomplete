@@ -14,7 +14,7 @@ If there are multiple %{FOO} patterns in your match, the first %{FOO} is given i
 
 == Any subname ===
 
-If your pattern was '%{FOO:bar}' you can access the value by subname only as '%{bar}'
+If your pattern was '%{FOO:bar}' you can access the value with this shorthand '%{bar}' - or you can use the full name '%{FOO:bar}'
 
 == Special names ==
 
