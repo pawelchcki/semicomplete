@@ -11,7 +11,12 @@ event-driven using EventMachine. The log agents mainly get their data from
 logfiles. To that end, we needed a way to treat log files as a stream.
 
 There's a ruby gem 'file-tail' that implements tailing, but not in an
-event-driven way. To fix that
+event-driven way. This makes it hard to use in EventMachine programs.
+
+Thus, eventmachine-tail was born.
+
+Further, the usage patterns for logstash required the ability to watch a
+directory (or a file pattern) for new log files.
 
 = Implementation Details = 
 
@@ -55,4 +60,5 @@ generated files as they are generated.
 
 = Sample Code =
 
-[http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/glob-tail.rb glob tailing example]
+* [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/tail.rb simple tail example]
+* [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/glob-tail.rb glob tailing example]
