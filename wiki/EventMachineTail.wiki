@@ -2,6 +2,8 @@
 
 = Introduction =
 
+eventmachine-tail implements file tailing with EventMachine.
+
 == Why? ==
 
 For [http://code.google.com/p/logstash/ logstash], the log agents were
@@ -9,9 +11,20 @@ event-driven using EventMachine. The log agents mainly get their data from
 logfiles. To that end, we needed a way to treat log files as a stream.
 
 There's a ruby gem 'file-tail' that implements tailing, but not in an
-event-driven way.
+event-driven way. To fix that
 
 = Implementation Details = 
+
+== "Don't block the reactor" ==
+
+EventMachine::FileTail will only read one chunk (64K by default) from any file
+for each tick of the reactor. This helps ensure we don't spend too much time 
+reading from the file.
+
+A consequence of not reading the file "as fast as possible until eof" can cause
+longer data sets to take longer to read since there will be a small delay
+between each read since the reactor only runs about once every 50ms (depending
+on the polling features used).
 
 == EOF Handling ==
 
