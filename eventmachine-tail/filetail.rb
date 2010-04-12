@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 
 require "rubygems" if __FILE__ == $0
-require "set"
 require "eventmachine"
-require "ap"
 require "logger"
 
 EventMachine.epoll if EventMachine.epoll?
@@ -23,17 +21,13 @@ class EventMachine::FileTail
     open
 
     @fstat = File.stat(@path)
-    #if startpos == :end
-      @file.seek(0, IO::SEEK_END)
-    #else
-      #@file.seek(startpos, IO::SEEK_SET)
-    #end
+    @file.seek(0, IO::SEEK_END)
     watch
   end # def initialize
 
   public
   def notify(status)
-    @logger.info("#{status} on #{path}")
+    @logger.debug("#{status} on #{path}")
     if status == :modified
       schedule_next_read
     elsif status == :moved
