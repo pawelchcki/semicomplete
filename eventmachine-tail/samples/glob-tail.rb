@@ -8,7 +8,10 @@
 # matching files which will additionally be watched.
 #
 # Usage example:
-#   glob-tail.rb /var/log/*.log /var/log/httpd/*.log
+#   glob-tail.rb "/var/log/*.log" "/var/log/httpd/*.log"
+#
+# (Important to use quotes or otherwise escape the '*' chars, otherwise
+#  your shell will interpret them)
 
 require "rubygems"
 require "eventmachine"

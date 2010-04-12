@@ -15,6 +15,6 @@ Gem::Specification.new do |spec|
   spec.require_paths << "lib"
   spec.author = "Jordan Sissel"
   spec.email = "jls@semicomplete.com"
-  spec.homepage = "http://code.google.com/p/semicomplete/wiki/EventMachine-Tail"
+  spec.homepage = "http://code.google.com/p/semicomplete/wiki/EventMachineTail"
 end
 
