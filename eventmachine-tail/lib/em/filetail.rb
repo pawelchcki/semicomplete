@@ -22,7 +22,7 @@ class EventMachine::FileTail
     open
 
     @fstat = File.stat(@path)
-    @file.seek(0, IO::SEEK_END)
+    @file.sysseek(0, IO::SEEK_END)
     watch
   end # def initialize
 
@@ -101,7 +101,7 @@ class EventMachine::FileTail
       open # Reopen if the filesystem device changed
     elsif (fstat.size < @fstat.size)
       @logger.info("File likely truncated... #{path}")
-      @file.seek(0, IO::SEEK_SET)
+      @file.sysseek(0, IO::SEEK_SET)
       schedule_next_read
     end
     @fstat = fstat
