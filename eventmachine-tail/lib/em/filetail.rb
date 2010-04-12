@@ -94,6 +94,7 @@ class EventMachine::FileTail
     handle_fstat(fstat)
   end # def eof
 
+  private
   def handle_fstat(fstat)
     if (fstat.ino != @fstat.ino)
       open # Reopen if the inode has changed
