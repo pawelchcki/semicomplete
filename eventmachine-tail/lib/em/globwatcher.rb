@@ -1,18 +1,17 @@
 #!/usr/bin/env ruby
 
-require "rubygems" if __FILE__ == $0
 require "set"
 require "eventmachine"
-require "ap"
 require "logger"
-
-require "filetail"
+require "em/filetail"
 
 class EventMachine::FileGlobWatch
   def initialize(pathglob, handler, interval=60)
     @pathglob = pathglob
     @handler = handler
     @files = Set.new
+    @logger = Logger.new(STDOUT)
+    @logger.level = Logger::WARN
 
     EM.next_tick do
       find_files
@@ -36,14 +35,13 @@ class EventMachine::FileGlobWatch
   end # def find_files
 
   def watch(path)
-    puts "Watching #{path}"
+    @logger.info "Watching #{path}"
     @files.add(path)
     @handler.file_found(path)
   end # def watch
 end # class EventMachine::FileGlobWatch
 
-class EventMachine::FileGlobWatchHandler
-  LOGGER = Logger.new(STDOUT)
+class EventMachine::FileGlobWatchTail
   def initialize(handler=nil)
     @handler = handler
   end
@@ -60,28 +58,9 @@ end # class EventMachine::FileGlobWatchHandler
 module EventMachine
   def self.glob_tail(glob, handler=nil, *args)
     handler = EventMachine::FileGlobHandler if handler == nil
-    klass = klass_from_handler(EventMachine::FileGlobWatchHandler, handler, *args)
+    klass = klass_from_handler(EventMachine::FileGlobWatchTail, handler, *args)
     c = klass.new(*args)
     yield c if block_given?
     return c
-  end
-end
-
-if __FILE__ == $0
-  class Reader < EventMachine::FileTail
-    def initialize(*args)
-      super(*args)
-      @buffer = BufferedTokenizer.new
-    end
-
-    def receive_data(data)
-      @buffer.extract(data).each do |line|
-        ap [path, line]
-      end
-    end
-  end
-
-  EventMachine.run do
-    EventMachine::FileGlobWatch.new("/var/log/*.log", EventMachine::FileGlobWatchHandler.new(Reader))
   end
 end

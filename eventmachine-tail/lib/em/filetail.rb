@@ -16,6 +16,7 @@ class EventMachine::FileTail
   def initialize(path, startpos=0)
     @path = path
     @logger = Logger.new(STDOUT)
+    @logger.level = Logger::WARN
 
     #@need_scheduling = true
     open
@@ -112,6 +113,7 @@ class EventMachine::FileTail::FileWatcher < EventMachine::FileWatch
   def initialize(filestream)
     @filestream = filestream
     @logger = Logger.new(STDOUT)
+    @logger.level = Logger::WARN
   end
 
   def file_modified
@@ -141,22 +143,3 @@ module EventMachine
     return c
   end # def self.file_tail
 end # module EventMachine
-
-if __FILE__ == $0
-  class Reader < EventMachine::FileTail
-    def initialize(*args)
-      super(*args)
-      @buffer = BufferedTokenizer.new
-    end
-
-    def receive_data(data)
-      @buffer.extract(data).each do |line|
-        ap [path, line]
-      end
-    end
-  end
-
-  EventMachine::run do
-    fw = EventMachine::filestream("/var/log/user.log", Reader)
-  end
-end # if __FILE__ == $0

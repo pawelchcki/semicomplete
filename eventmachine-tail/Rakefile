@@ -1,0 +1,6 @@
+task :default => [:package]
+
+task :package do
+  system("svn up")
+  system("gem build eventmachine-tail.gemspec")
+end

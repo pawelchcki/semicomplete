@@ -1,7 +1,7 @@
 require "rubygems"
 require "eventmachine"
 require "eventmachine-tail"
-require "awesome_print"
+require "ap"
 
 class Reader < EventMachine::FileTail
   def initialize(*args)
@@ -16,8 +16,18 @@ class Reader < EventMachine::FileTail
   end
 end
 
-EventMachine.run do
-  EventMachine::FileGlobWatch.new("/var/log/*.log",
-                                  EventMachine::FileGlobWatchHandler.new(Reader))
-end
+def main(args)
+  if args.length == 0
+    puts "Usage: #{$0} <path_or_glob> [path_or_glob2] [...]"
+    return 1
+  end
 
+  EventMachine.run do
+    handler = EventMachine::FileGlobWatchTail.new(Reader)
+    args.each do |path|
+      EventMachine::FileGlobWatch.new(path, handler)
+    end
+  end
+end # def main
+
+exit(main(ARGV))
