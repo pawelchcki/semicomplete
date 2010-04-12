@@ -1,3 +1,15 @@
+#!/usr/bin/env ruby
+#
+# Sample that uses eventmachine-tail to watch a file or set of files.
+# Basically, this example implements 'tail -f' but can accept globs
+# that are also watched.
+#
+# For example, '/var/log/*.log' will be periodically watched for new
+# matching files which will additionally be watched.
+#
+# Usage example:
+#   glob-tail.rb /var/log/*.log /var/log/httpd/*.log
+
 require "rubygems"
 require "eventmachine"
 require "eventmachine-tail"
