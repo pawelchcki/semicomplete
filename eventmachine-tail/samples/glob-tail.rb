@@ -13,7 +13,7 @@
 require "rubygems"
 require "eventmachine"
 require "eventmachine-tail"
-require "ap"
+require "ap" # from rubygem awesome_print
 
 class Reader < EventMachine::FileTail
   def initialize(*args)
