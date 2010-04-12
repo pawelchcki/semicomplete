@@ -60,5 +60,5 @@ generated files as they are generated.
 
 = Sample Code =
 
-* [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/tail.rb simple tail example]
-* [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/glob-tail.rb glob tailing example]
+   * [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/tail.rb simple tail example]
+   * [http://code.google.com/p/semicomplete/source/browse/eventmachine-tail/samples/glob-tail.rb glob tailing example]
