@@ -43,14 +43,14 @@ int main() {
   Imlib_Color color;
 
   int x, y;
-  for (x = 0; x < screen->width; x++) {
-    for (y = 0; y < screen->height; y++) {
-      imlib_image_query_pixel(x, y, &color);
+  //for (x = 0; x < screen->width; x++) {
+    //for (y = 0; y < screen->height; y++) {
+      //imlib_image_query_pixel(x, y, &color);
       //printf("#%02x%02x%02x\n", color.red, color.green, color.blue);
-    }
-  }
+    //}
+  //}
 
-  //imlib_image_set_format("bmp");
-  //imlib_save_image("/home/jls/public_html/screenshot.bmp");
+  imlib_image_set_format("png");
+  imlib_save_image("/home/jls/public_html/screenshot.png");
   return 0;
 }

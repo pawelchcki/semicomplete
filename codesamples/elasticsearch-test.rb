@@ -5,7 +5,7 @@ require 'rubygems'
 require 'em-http'
 require 'eventmachine'
 
-AMOUNT = 100
+AMOUNT = 1000
 EventMachine.run do
   count = 0
   http = EventMachine::HttpRequest.new("http://127.0.0.1:9200/log/stash")
