@@ -42,12 +42,13 @@ class EventMachine::FileGlobWatch
 end # class EventMachine::FileGlobWatch
 
 class EventMachine::FileGlobWatchTail
-  def initialize(handler=nil)
+  def initialize(handler=nil, *args)
     @handler = handler
+    @args = args
   end
 
   def file_found(path)
-    EventMachine::file_tail(path, @handler)
+    EventMachine::file_tail(path, @handler, *@args)
   end
 
   def file_removed(path)
