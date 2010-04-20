@@ -23,7 +23,7 @@ The grok library is a great choice when you need the pattern matching features o
 
 = Download Grok =
 
-  * Latest: http://semicomplete.googlecode.com/files/grok-20091227.01.tar.gz
+  * Latest: [http://semicomplete.googlecode.com/files/grok-1.20100419.2840.tar.gz grok-1.20100419.2840.tar.gz]
   * Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
 
 = Getting Help =
