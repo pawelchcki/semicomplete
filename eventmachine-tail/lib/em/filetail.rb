@@ -6,14 +6,32 @@ require "logger"
 
 EventMachine.epoll if EventMachine.epoll?
 
+# Tail a file.
+#
+# Example
+#   class Tailer < EventMachine::Tail
+#     def receive_data(data)
+#       puts "Got #{data.length} bytes"
+#     end
+#   end
+#
+#   # Now add it to EM
+#   EM.run do
+#     EM.file_tail("/var/log/messages", Tailer)
+#   end
+#
+#   # Or this way:
+#   EM.run do
+#     Tailer.new("/var/log/messages")
+#   end
 class EventMachine::FileTail
   CHUNKSIZE = 65536 
   MAXSLEEP = 2
 
   attr_reader :path
-
+  
   public
-  def initialize(path, startpos=0)
+  def initialize(path, startpos=-1)
     @path = path
     @logger = Logger.new(STDOUT)
     @logger.level = Logger::WARN
@@ -22,7 +40,10 @@ class EventMachine::FileTail
     open
 
     @fstat = File.stat(@path)
-    @file.sysseek(0, IO::SEEK_END)
+    if (startpos == -1)
+      @file.sysseek(0, IO::SEEK_END)
+    end
+
     watch
   end # def initialize
 
@@ -136,6 +157,12 @@ end # class EventMachine::FileTail::FileWatch < EventMachine::FileWatch
 
 # Add EventMachine::file_tail
 module EventMachine
+  
+  # Tail a file.
+  #
+  # path is the path to the file to tail.
+  # handler should be a module implementing 'receive_data' or
+  # must be a subclasses of EventMachine::FileTail
   def self.file_tail(path, handler=nil, *args)
     args.unshift(path)
     klass = klass_from_handler(EventMachine::FileTail, handler, *args);
