@@ -26,7 +26,7 @@ EventMachine.run do
       req.callback do |response|
         count += 1
         if count % AMOUNT == 0
-          puts "count: #{count}. Rate: #{count / (Time.now - start)}"
+          puts "pid[#{$$}] count: #{count}. Rate: #{count / (Time.now - start)}"
           #start = Time.now
         end
       end # http response callback
