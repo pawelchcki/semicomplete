@@ -19,7 +19,7 @@ int cmp(const void *a, const void *b) {
   return strcmp(fa->name, fb->name);
 }
 
-void w(const void *node, const VISIT which, const int depth) {
+void walker(const void *node, const VISIT which, const int depth) {
   foo_t *f;
   f = *(foo_t **)node;
   printf("%s: %d\n", f->name, f->value);
@@ -46,7 +46,7 @@ int main() {
   printf("val2 result: %d\n", (*(foo_t **)ret)->value);
 
   printf("Walking with twalk\n");
-  twalk(root, w);
+  twalk(root, walker);
   return 0;
 
 }
