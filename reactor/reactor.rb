@@ -54,6 +54,7 @@ class Reactor
   attr_accessor :interval
   attr_accessor :keys
   attr_accessor :threshold
+  attr_accessor :round_time_to_interval
 
   def initialize(config)
     @action = config["action"]
@@ -61,6 +62,7 @@ class Reactor
     # TODO(sissel): Accept yaml sequence, too, for keys?
     @keys = config["key"].split(",")
     @threshold = config["threshold"].to_i
+    @round_time_to_interval = config["timestamp-round"].to_i
 
     if config.has_key?("timestamp-key")
       @timeparser = TimeParser.new(config["timestamp-format"],
@@ -72,43 +74,75 @@ class Reactor
     #@history = HistoryTracker.new
     @history = Hash.new { |h,k| h[k] = [] }
     @value = Hash.new { |h,k| h[k] = 0 }
+
+    @@counter = 0
   end
 
   def feed(input)
     return unless @keys.collect { |k| input.has_key?(k) }.reduce { |a,b| a & b }
     filtered_input = process(input)
     key = keygen(filtered_input)
-    @value[key] += 1
 
     rd = ReactorData.new
     rd.input = input
     rd.timestamp = @timeparser ? @timeparser.parse(input) : Time.now
-    @history[key] << rd
+    #puts input["@LINE"]
+    #puts "#{@value[key]}: #{key.inspect}"
 
     # If we hit interval, react on this key exactly as if we had hit the
     # threshold.
     trimtime = rd.timestamp - @interval
-    @history.each do |histkey,histdata|
-      while histdata.length > 0 && histdata[0].timestamp < trimtime
-        @value[histdata[0]] -= 1
-        histdata.shift
+
+    if (@threshold == 0 && @interval > 0)
+      # Check all entries for interval expiration
+      @history.each do |histkey,histdata| 
+        lastentry = histdata[-1]
+        if lastentry && lastentry.timestamp < trimtime
+          react(keygen(process(lastentry.input)), lastentry.timestamp)
+        end
       end
+    else
+      trim_history(key, trimtime)
     end
 
+    @value[key] += 1
     threshold_exceeded = ((@threshold > 0) and (@value[key] >= @threshold))
     #puts [threshold_exceeded, @threshold, @value[key]].join(" / ")
     if (threshold_exceeded)
       react(key, rd.timestamp)
     end
+
+    @@counter += 1
+    if @@counter > 1000
+      @history.each do |histkey,histdata|
+        trim_history(histkey, trimtime)
+      end
+      @@counter = 0 
+    end
+    @history[key] << rd
+  end
+
+  def trim_history(key, trimtime)
+    histdata = @history[key]
+    while histdata.length > 0 && histdata[0].timestamp < trimtime
+      k = process(keygen(histdata[0].input))
+      @value[k] -= 1
+      histdata.shift
+    end
   end
 
   def react(key, timestamp=nil)
     timestamp = Time.now unless timestamp
+    if @round_time_to_interval
+      etime = timestamp.to_i
+      timestamp = Time.at(etime - (etime % @interval))
+    end
     #puts "Threshold exceeded: #{@value[key]} > #{@threshold}"
-    puts "#{@value[key]}: #{key.inspect} / #{timestamp}"
-    puts "Start: #{@history[key][0].timestamp}"
-    puts "End: #{@history[key][-1].timestamp}"
-    #puts @action
+    $stderr.puts "#{@value[key]}: #{key.inspect} / #{timestamp}"
+    value = @value[key]
+
+    eval("puts \"#{@action}\"")
+    $stdout.flush
     @value[key] = 0
     @history[key].clear
   end
