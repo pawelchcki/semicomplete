@@ -1,4 +1,8 @@
 #!/bin/sh
+# Run a new xterm with a randomly-chosen dark background
+# Also, if no arguments are given, start with 'screen -RR'
+#   screen -RR will reattach to the first 'detached' screen,
+#   or will otherwise create a new screen session.
 
 export RANGE=40
 export OFFSET=`expr 255 - $RANGE`
