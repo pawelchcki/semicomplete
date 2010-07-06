@@ -4,6 +4,7 @@ You're in index of the Host controller.
 
 <ul>
 <% @hosts.each do |host| %>
-  <li> <%= link_to host, "/host/show/#{host.id}" %> </li>
+  <li> <%= link_to host, "/host/show/#{host.name}" %> 
+  </li>
 <% end %>
 </ul>

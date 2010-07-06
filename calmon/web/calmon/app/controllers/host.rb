@@ -6,6 +6,7 @@ class Host < Application
   end
 
   def show
+    @host = Calmon::Models::Host.get(params[:id])
     render
   end
   

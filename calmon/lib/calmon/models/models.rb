@@ -1,6 +1,6 @@
 require 'dm-core'
 
-class Calmon; class Models; class Host
+class Calmon::Models::Host
   include DataMapper::Resource
 
   property :name, String, :key => true
@@ -21,7 +21,7 @@ class Calmon; class Models; class Host
     end
     return @name
   end # def to_s
-end; end; end # class Calmon::Models::Entitty
+end # class Calmon::Models::Entitty
 
 class Calmon::Models::Class
   include DataMapper::Resource

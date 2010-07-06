@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 $: << "./lib"
 
 require 'rubygems'
@@ -8,33 +10,29 @@ require 'dm-core'
 require 'pp'
 require 'yaml'
 
-#DataMapper::Logger.new(STDOUT, :debug)
 DataMapper.setup(:default, 'sqlite3:calmond.db')
-#DataMapper.setup(:default, 'sqlite3::memory:')
 DataMapper.auto_migrate!
 sched = Calmon::Scheduler.new
 conf = YAML::load(File.open("calmond.yaml").read)
 
-deferred = Hash.new { |h,k| h[k] = Array.new }
+deferred = Hash.new { |h,k| h[k] = Hash.new }
 entities = []
 tests = []
-(conf["hosts"] or []).each do |name, data|
+(conf["hosts"] or {}).each do |name, data|
   host = Calmon::Models::Host.new(:name => name)
 
   if data != nil
     address = data["address"]
     host.address = address
-    #host.attributes.new(:name => "address", :value => address)
-    deferred[[host, :classes]] += data["classes"] if Array === data["classes"] 
-    #deferred[[host, :children]] += data["hosts"] if Array === data["hosts"] 
-    deferred[[host, :tests]] += data["tests"] if Array === data["tests"] 
+    deferred[[host, :classes]].merge!(data["classes"]) if Hash === data["classes"] 
+    deferred[[host, :tests]].merge!(data["tests"]) if Hash === data["tests"] 
   end
 
   host.save
   entities << host
 end
 
-(conf["classes"] or []).each do |name, data|
+(conf["classes"] or {}).each do |name, data|
   puts "Class: #{name}"
   oclass = Calmon::Models::Class.new(:name => name)
   oclass.save
@@ -44,15 +42,14 @@ end
       STDERR.puts "Bad data for class #{name}. Expected Hash, got #{data.class}"
       exit 1
     end
-    deferred[[oclass, :classes]] += data["classes"] if Array === data["classes"]
-    #deferred[[oclass, :children]] += data["hosts"] if Array === data["hosts"] 
-    deferred[[oclass, :tests]] += data["tests"] if Array === data["tests"] 
+    deferred[[oclass, :classes]].merge!(data["classes"]) if Hash === data["classes"]
+    deferred[[oclass, :tests]].merge!(data["tests"]) if Hash === data["tests"] 
   end
 
   entities << oclass
 end
 
-(conf["tests"] or []).each do |name, data|
+(conf["tests"] or {}).each do |name, data|
   test = Calmon::Models::Test.new(:name => name)
   test.command = data
   test.save
@@ -62,7 +59,7 @@ end
 
 deferred.each do |key, deferredlist|
   object, method = key
-  deferredlist.each do |name|
+  deferredlist.each do |name, attrs|
     realobj = nil
     case method
     when :tests
@@ -72,13 +69,6 @@ deferred.each do |key, deferredlist|
         exit 1
       end
       object.tests << realobj
-    #when :children
-      #realobj = Calmon::Models::Host.first(:name => name)
-      #if realobj == nil
-        #STDERR.puts "No such host) named '#{name}'!"
-        #exit 1
-      #end
-      #object.children << realobj
     when :classes
       realobj = Calmon::Models::Class.first(:name => name)
       if realobj == nil
