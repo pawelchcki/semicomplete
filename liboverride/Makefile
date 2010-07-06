@@ -1,4 +1,4 @@
-CFLAGS=-fPIC -I/usr/local/include -g
+CFLAGS+=-fPIC -I/usr/local/include -g
 PACKAGE=liboverride
 FILES=Makefile funcdefs *.over
 
