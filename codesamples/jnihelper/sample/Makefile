@@ -2,6 +2,8 @@ JAVA_HOME?=/usr/lib/jvm/java-6-sun
 MACHINE?=amd64
 LD_LIBRARY_PATH=$(JAVA_HOME)/jre/lib/$(MACHINE)/server:$(JAVA_HOME)/jre/lib/$(MACHINE) 
 
+default: JNIHelperExample.class
+
 libJNIHelperExample.so: JNIHelperExample.c
 	JAVA_HOME=$(JAVA_HOME) \
   LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) \

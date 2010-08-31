@@ -5,7 +5,7 @@
 JNIEXPORT void JNICALL 
 Java_JNIHelperExample_abort(JNIEnv *env, jobject obj)
 {
-  printf("abort!\n");
+  abort();
   return;
 }
 
