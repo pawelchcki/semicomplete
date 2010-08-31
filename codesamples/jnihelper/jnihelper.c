@@ -107,8 +107,8 @@ int main(int argc, char **argv) {
     goto destroy;
   }
 
+  /* TODO(sissel): convert argv -> java String[] to pass to main(...) */
   stringClass = (*env)->FindClass(env, "java/lang/String");
-
   jstr = (*env)->NewStringUTF(env, " from C!");
   if (jstr == NULL) {
     goto destroy;
