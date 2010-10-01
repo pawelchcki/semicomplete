@@ -10,6 +10,7 @@
  * it at runtime with the normal 'java' tool */
 
 static JNIEnv *g_env;
+static JavaVM *g_jvm;
 void java_stacktrace(JNIEnv *env);
 
 /* Override libc's abort() with our own, then try to call libc's abort.
@@ -30,8 +31,9 @@ void abort() {
   real_func = dlsym(handle, "abort");
 
   {
-    java_stacktrace(g_env);
     printf("aborting!\n");
+    printf("Stack trace\n");
+    java_stacktrace(g_env);
   }
 
   real_func();
@@ -42,19 +44,22 @@ void java_stacktrace(JNIEnv *env) {
   jmethodID method_id;
   jobject obj;
 
-  cls = (*env)->FindClass(env, "java/lang/Thread");
+  JNIEnv *env2; 
+  int res = (*g_jvm)->AttachCurrentThread(g_jvm, (void **)&env2, NULL);
+
+  cls = (*env2)->FindClass(env2, "java/lang/Thread");
   if (cls == NULL) {
     fprintf(stderr, "Cound not find class: java/lang/Thread\n");
     return;
   }
   /* method ()V */
 
-  method_id = (*env)->GetStaticMethodID(env, cls, "dumpStack", "()V");
+  method_id = (*env2)->GetStaticMethodID(env2, cls, "dumpStack", "()V");
   if (method_id == NULL) {
     fprintf(stderr, "Cound not find public static methed 'dumpStack' in class: Thread\n");
     return;
   }
-  (*env)->CallStaticVoidMethod(env, cls, method_id);
+  (*env2)->CallStaticVoidMethod(env2, cls, method_id);
   return;
 }
 
@@ -65,7 +70,6 @@ void java_stacktrace(JNIEnv *env) {
 
 int main(int argc, char **argv) {
   JNIEnv *env;
-  JavaVM *jvm;
   jint res;
   jclass cls;
   jmethodID method_id;
@@ -86,7 +90,7 @@ int main(int argc, char **argv) {
   vm_args.ignoreUnrecognized = JNI_TRUE;
 
   JNI_GetDefaultJavaVMInitArgs(&vm_args); 
-  res = JNI_CreateJavaVM(&jvm, (void**)&env, &vm_args);
+  res = JNI_CreateJavaVM(&g_jvm, (void**)&env, &vm_args);
   if (res < 0) { 
     fprintf(stderr, "Failed creating Java VM\n");
     return 1;
@@ -127,6 +131,6 @@ int main(int argc, char **argv) {
     (*env)->ExceptionDescribe(env);
   }
 
-  (*jvm)->DestroyJavaVM(jvm);
+  (*g_jvm)->DestroyJavaVM(g_jvm);
 }
 
