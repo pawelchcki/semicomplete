@@ -49,7 +49,6 @@ module EventMachine
     end # def unsubscribe
 
     def push(*items)
-      puts "Pushing: #{items}"
       items.each { |item| @queue << item }
       # TODO(sissel): write one signal per item?
       @writer.syswrite("1")
@@ -78,22 +77,44 @@ module EventMachine
 end # module EventMachine
 
 if $0 == __FILE__
+  delay_threshold = 0.040
+
+  case ARGV[0]
+  when "fast"
+    channelclass = EventMachine::FastChannel
+  when "normal"
+    channelclass = EventMachine::Channel
+  else
+    puts "Usage: #{$0} <fast|normal> [delay_threshold_in_seconds]"
+    puts "Default threshold is #{delay_threshold}"
+    puts "Example: #{$0} fast 0.010"
+    exit 1
+  end
+  if ARGV.length >= 2
+    delay_threshold = ARGV[1].to_f
+  end
+
   queue = Queue.new
   EventMachine.schedule do
-    channel = EventMachine::FastChannel.new
+    channel = channelclass.new
     channel.subscribe do |item| 
       queue << item 
     end
-    EventMachine.add_periodic_timer(1) { 
-      puts "Adding item"
-      channel.push(Time.now) 
-    }
+    Thread.new do 
+      while true
+        channel.push(Time.now) 
+      end
+    end
   end
   Thread.new { EventMachine.run }
 
   while true
     item = queue.pop
-    puts "Delay: #{Time.now - item}"
+    delay = Time.now - item
+
+    if delay > delay_threshold
+      puts "Delay > #{delay_threshold}: #{Time.now - item}"
+    end
   end
 
 end
