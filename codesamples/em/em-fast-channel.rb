@@ -62,6 +62,7 @@ module EventMachine
 
     def notify_readable
       while !@queue.empty?
+        @reader.sysread(1)
         item = @queue.pop
 
         @subscription_lock.synchronize do
@@ -100,21 +101,25 @@ if $0 == __FILE__
     channel.subscribe do |item| 
       queue << item 
     end
+
     Thread.new do 
       while true
         channel.push(Time.now) 
+        sleep(0.002)
       end
     end
   end
   Thread.new { EventMachine.run }
 
+  count = 0
   while true
     item = queue.pop
     delay = Time.now - item
 
     if delay > delay_threshold
-      puts "Delay > #{delay_threshold}: #{Time.now - item}"
+      puts "[msg##{count}] delay > #{delay_threshold}: #{Time.now - item}"
     end
+    count += 1
   end
 
 end
