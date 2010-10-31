@@ -23,8 +23,13 @@ The grok library is a great choice when you need the pattern matching features o
 
 = Download Grok =
 
-  * Latest: [http://semicomplete.googlecode.com/files/grok-1.20100419.2840.tar.gz grok-1.20100419.2840.tar.gz]
+  * Latest: [http://semicomplete.googlecode.com/files/grok-1.20101030.3088.tar.gz grok-1.20101030.3088.tar.gz]
   * Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
+
+= Building =
+
+  * Standard 'make' and 'make install'
+  * If you want to build a debian package, you can do 'make package-debian'
 
 = Getting Help =
   * mail: grok-users@googlegroups.com
