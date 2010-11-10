@@ -25,6 +25,11 @@ module EventMachine
       @reader, @writer = IO.pipe
       @uid = 0
       @queue = ::Queue.new   # use thread's Queue, not EventMachine's
+
+      # I know, using locks in EM code. This is so we can more easily
+      # use EM code (like AMQP) safely in non-EM code.
+      # TODO(sissel): Allow disabling of the lock if we agree to not
+      # access us from threads.
       @subscription_lock = Mutex.new
       @subscriptions = {}
       @watcher = EventMachine.watch(@reader, Reader, self)
@@ -61,7 +66,10 @@ module EventMachine
     end
 
     def notify_readable
-      while !@queue.empty?
+      maxrounds = 30
+      rounds = 0
+      while !@queue.empty? && rounds < maxrounds
+        rounds += 1
         @reader.sysread(1)
         item = @queue.pop
 
@@ -78,7 +86,7 @@ module EventMachine
 end # module EventMachine
 
 if $0 == __FILE__
-  delay_threshold = 0.040
+  delay_threshold = 0.010
 
   case ARGV[0]
   when "fast"
