@@ -12,6 +12,7 @@ The grok library is a great choice when you need the pattern matching features o
   * GrokProgram - If you want documentation about the grok program.
     * GrokExamples - Examples of using grok in the real world
     * GrokConfig - Documentation on grok configs
+    * GrokPredicates - Applying additional conditions (string, numerical compare, etc) to a matched group
     * GrokProgramTutorial - A gentle introduction to grok.
   * GrokLibrary - If you want documentation about using the grok library api
   * GrokDiscovery - Automatic pattern discovery
