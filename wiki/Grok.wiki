@@ -14,12 +14,16 @@ The grok library is a great choice when you need the pattern matching features o
     * GrokConfig - Documentation on grok configs
     * GrokProgramTutorial - A gentle introduction to grok.
   * GrokLibrary - If you want documentation about using the grok library api
+  * GrokDiscovery - Automatic pattern discovery
+
+Grok is also available for Ruby (gem install jls-grok)
 
 = What can I use Grok for? =
 
   * reporting errors and other patterns from logs and processes
   * parsing complex text output and converting it to json for external processing
   * apply 'write-once use-everywhere' to regular expressions
+  * automatically providing patterns for unknown text inputs (logs you want patterns generated for future matching)
 
 = Download Grok =
 
