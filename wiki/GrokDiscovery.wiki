@@ -2,11 +2,9 @@
 
 = Introduction =
 
-Grok makes regular expressions easier to manage, but what if you didn't have to write them at all? Grok can help you with that.
+Grok makes regular expressions easier to manage, but what if you didn't have to write them at all? Grok can help you with that from libgrok or from ruby (jls-grok)
 
 Given an input, grok can try to come up with a pattern that best matches your input.
-
-= Examples (from discogrok program)
 
 = Examples (from ruby) =
 
