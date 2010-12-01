@@ -120,7 +120,7 @@ You can achieve this by modifying /etc/network/interfaces as such:
     auto br0
     iface br0 inet dhcp
            bridge_ports eth0
-           brdige_fd 0
+           bridge_fd 0
            bridge_maxwait 0
 
 To configure cgroups, you need a special mount (its much like the proc or sys
