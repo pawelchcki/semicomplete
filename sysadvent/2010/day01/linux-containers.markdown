@@ -34,7 +34,7 @@ conservatism, of course), and I feel that it deserves some well earned
 attention.
 
 Platform vs. OS-level virtualisation
-=======================================
+-------------------------------------
 
 LXC, as mentioned, provides operating system-level virtualisation. For better
 or worse this means programs still run in the main OS, so only one kernel is
@@ -66,7 +66,7 @@ This means you can have LXC containers inside KVM for example, allowing you to
 create quite interesting mixes of the technologies.
 
 The Technology
-================
+-------------------------------------
 
 LXC works to provide instance isolation and resource control by using several
 techniques:
@@ -99,7 +99,7 @@ virtual machine) but really the processes and functions within it run within
 the host os's kernel.
 
 Installation
-============
+-------------------------------------
 
 This installation guide here is based around Ubuntu or Debian. A lot of the
 concepts are the same however on other distributions, and the user space tools
@@ -138,7 +138,7 @@ settings. Later we'll talk about how resource management can be controlled
 using lxc user space tools.
 
 Manipulating Containers
-=======================
+-------------------------------------
 
 Once you have done the preliminary steps, you can now start creating and working
 with containers. Try creating a container named 'vm0' by typing the following
@@ -224,7 +224,7 @@ Finally - if you wish to destroy your vm, simply do this with:
 This will delete the rootfs and configuration permanently.
 
 Resource Management
-===================
+-------------------------------------
 
 Resource management is taken care of by the cgroups kernel feature.
 
@@ -263,7 +263,7 @@ There are lots of settings regarding resource management. Its recommended to
 read the cpuset.txt documentation (see references) for futher details.
 
 Other Cool Stuff
-================
+-------------------------------------
 
 For those cases where you want to pause a container, freezing and unfreezing
 instances can be done simply with:
@@ -286,15 +286,10 @@ lxc-fedora which installs a mini Fedora root for you to use inside Debian
 and Ubuntu.
 
 Conclusion
-==========
+-------------------------------------
 
 I have only touched upon a number of functions within this LXC introduction,
-and I recommend researching further if you wish to implement this in the wild.
-
-As you can see, LXC is pretty straight-forward. I recommend trying the
-alternatives container types I listed as well, as LXC may not suite your needs
-(or taste) exactly. And as usual, anything new and adventurous should be
-thoroughly tested before production deployment to avoid late night adventures.
+so I recommend researching further if you wish to implement this in the wild.
 
 In the mass-hysteria that is the 'Cloud' it's easy to forget that the solution
 is all about the problem, not the other way around. There is no doubt that at
@@ -302,13 +297,19 @@ times containers and LXC will provide a neat alternative to platform
 virtualisation but sometimes this will be the other way around. This of course
 as usual depends on the problem at hand.
 
-References
+As you can see, LXC is pretty straight-forward. Be sure to try alternative
+container tools I listed as well, as LXC may not suite your needs (or taste)
+exactly. Lasty, anything new and adventurous should be thoroughly tested
+before production deployment to avoid late night adventures.
 
- 1. [LXC at wiki.debian.org](http://wiki.debian.org/LXC)
- 2. [LXC on Wikipedia](http://en.wikipedia.org/wiki/Lxc)
- 3. [cgroups on Wikipedia](http://en.wikipedia.org/wiki/Cgroups)
- 4. [cgroups documentation](http://www.mjmwired.net/kernel/Documentation/cgroups.txt)
- 5. [A Five Minute Guide to LXC for Debian](http://nigel.mcnie.name/blog/a-five-minute-guide-to-linux-containers-for-debian)
- 6. [IBM developerWorks on LXC](http://www.ibm.com/developerworks/linux/library/l-lxc-containers/)
- 7. [fakeroot - a userland hack for faking root privileges for file manipulation](http://linux.die.net/man/1/fakeroot)
+
+Further reading:
+
+ * [LXC at wiki.debian.org](http://wiki.debian.org/LXC)
+ * [LXC on Wikipedia](http://en.wikipedia.org/wiki/Lxc)
+ * [cgroups on Wikipedia](http://en.wikipedia.org/wiki/Cgroups)
+ * [cgroups documentation](http://www.mjmwired.net/kernel/Documentation/cgroups.txt)
+ * [A Five Minute Guide to LXC for Debian](http://nigel.mcnie.name/blog/a-five-minute-guide-to-linux-containers-for-debian)
+ * [IBM developerWorks on LXC](http://www.ibm.com/developerworks/linux/library/l-lxc-containers/)
+ * [fakeroot - a userland hack for faking root privileges for file manipulation](http://linux.die.net/man/1/fakeroot)
 
