@@ -1,6 +1,6 @@
 # Using PAL to Analyse Perfmon Data
 
-_This article was written by [Sam Cogan](http://samcogan.com)_
+_This article was written by [Sam Cogan](http://samcogan.com) ([@samcogan](http://twitter.com/samcogan))_
 
 You've got a performance problem: your Windows server or application isn't
 performing as well as it should. You need to find out why. When Task Manager
@@ -57,7 +57,7 @@ To understand how to use PAL, we need to look at it's 4 main components
 3. Questions
 4. The End Result
 
-So, let's download PAL, fire up the GUI, and get two work!
+So, let's download PAL, fire up the GUI, and get to work!
 
 Log Files
 -----------
