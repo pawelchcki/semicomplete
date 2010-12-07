@@ -1,6 +1,6 @@
 # Website Performance Optimization
 
-_This article was written by [Bob Feldbauer](http://www.completefusion.com)_
+_This article was written by [Bob Feldbauer](http://www.completefusion.com) ([@bobfeldbauer](http://twitter.com/bobfeldbauer))_
 
 Optimizing website performance can dramatically increase conversions and
 loyalty, and decrease costs. Although it may be traditionally viewed as a
