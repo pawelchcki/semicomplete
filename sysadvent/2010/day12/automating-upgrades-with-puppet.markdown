@@ -160,11 +160,14 @@ you become more flexible and agile. I use extlookup for:
 * package versions. Of note, for developer systems, I set some package
   values to "absent" so developer activity won't be overwritten by puppet
   trying to deploy our internal apps.
-* application flags and tuning. For production, we want to do backups to Amazon S3. For random development systems, we don't.
+* application flags and tuning. For production, we want to do backups to Amazon
+  S3. For random development systems, we don't. In general, I use this for
+  helping generate production application configs.
 * syslog configuration (what remote syslog host to ship logs to, per deployment)
 * database information (database name, credentials, etc)
 * some dns automation (what certain internal CNAME records point to)
-* nagios contact configuration (example: notify pager in prod 24/7, only during daytime for staging, but never for development)
+* nagios contact configuration (example: notify pager in prod 24/7, only during
+  daytime for staging, but never for development)
 
 In closing, separating your model from your inputs increases the testability
 and maintainability of your infrastructure automation. Further, combining human
