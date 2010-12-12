@@ -240,3 +240,4 @@ Further reading
 
 * [Wireshark and the Art of Debugging Networks](http://blogs.usenix.org/2010/11/08/wireshark-and-the-art-of-debugging-networks/)
 * [tcpdump primer](http://danielmiessler.com/study/tcpdump/)
+* [strace and tcpdump - SysAdvent 2008 Day 1](http://sysadvent.blogspot.com/2008/12/sysadmin-advent-day-1.html)
