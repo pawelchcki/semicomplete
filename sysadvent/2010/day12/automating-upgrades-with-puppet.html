@@ -4,11 +4,11 @@
 
 <p>This article is about separating your configuration model from your
 configuration inputs. You might have the same service (like frontend,
-loadbalancer, etc) in multiple environments but versions, accounts, ownership,
-etc, may change between them. The 'scale' part is that having
-independent inputs and models is related to scaling operability and sanity. I
-use Puppet features to show how, but this idea is applicable to any config
-management tool.</p>
+loadbalancer, etc) in multiple environments, but versions, accounts, members,
+etc, may change between them. The 'scale' part, here, is that having
+inputs separate from models helps to scale operability and sanity. I use
+Puppet features to show how this is done, but this idea is applicable to any
+config management tool.</p>
 
 <p>Puppet and other configuration tools help you describe your infrastructure.
 Puppet's model is resources: files, users, packages, etc. Each resource has
@@ -147,12 +147,14 @@ package/nginx,latest
 <ul>
 <li><p>You want to clone production:</p>
 
-<p>% cp production.csv productionclone.csv
-  # Or, accept 'testing' as good, and ship it to production:
-  % cp testing.csv production.csv</p></li>
+<pre><code>% cp production.csv productionclone.csv
+# Or, accept 'testing' as good, and ship it to production:
+% cp testing.csv production.csv
+</code></pre></li>
 <li><p>A security vulnerability makes you want to know what nginx versions you are installing:</p>
 
-<p>% grep 'package/nginx' <em>/</em>.csv</p></li>
+<pre><code>% grep 'package/nginx' */*.csv
+</code></pre></li>
 <li>Tune settings per machine, per environment, etc.</li>
 <li>All of your truth inputs are concentrated in one place. This has an
 additional benefit of allowing non-puppet users (in this example) to upgrade
