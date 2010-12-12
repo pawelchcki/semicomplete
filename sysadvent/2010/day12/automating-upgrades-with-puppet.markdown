@@ -1,4 +1,4 @@
-# Scale by Separating Inputs and Models
+# Scaling Operability
 
 This primarily is primarily about separating your configuration model from
 your configuration inputs. You might have the same service model in multiple
@@ -147,9 +147,12 @@ you become more agile:
   of the internals of your module.
 
 In closing, separating your model from your inputs increases testability and
-maintainability of your infrsatructure automation. Further, adding a human
+maintainability of your infrastructure automation. Further, adding a human
 input source (truth) in addition to machine inputs (facts) can help you tune
-your infrastructure for any situation.
+your infrastructure for any situation. Having a separate truth input allows you
+to abstract tunables in your infrastructure and opens up maintenance
+possibilities to non-experts (like developers managing their own clusters),
+which might just gain you some extra time to work on other problems.
 
 Further reading:
 
