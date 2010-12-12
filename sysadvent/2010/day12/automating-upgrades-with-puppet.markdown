@@ -1,9 +1,10 @@
-# Automating Upgrades with Puppet
+# Scale by Separating Inputs and Models
 
 This primarily is primarily about separating your configuration model from
 your configuration inputs. You might have the same service model in multiple
 environments but versions, accounts, ownership, etc, may change between them.
-The idea of separ
+The 'scale' portion is that having independent inputs and models is related
+to scaling operability and sanity.
 
 Puppet and other configuration tools help you describe your infrastructure.
 Puppet's model is resources: files, users, packages, etc. Each resource has
@@ -98,15 +99,19 @@ The values in `%{ ... }` are evaluated with each node's facts. This lets you
 put all production environment data in
 `/etc/puppet/manifests/extdata/environments/**production**.csv`.
 
-You data format extlookup uses currently is
-[csv](http://en.wikipedia.org/wiki/Comma-separated_values) files for values.
+With the above configuration, I can easily add per-node and per-environment
+package versions for nginx. If all else fails, I can provide a default package
+version in the 'common' setting above. You can also easily extend the configuration
+to include more sources without modifying your infrastructure model.
 
-It's basically a bunch of key-value pairs you can query with a precedence
-order. For example, the above config would look in `nodes/somehostname.csv` first, which
-would allow you to override environment-specific configuration values per host, but
-if no `nodes/somehostname.csv` file exists or the requested value is not present, it will
-fall down to the next file in the list. You can also specify default values in extlookup,
-but that is outside the scope of this article.
+You data format extlookup uses currently is
+[csv](http://en.wikipedia.org/wiki/Comma-separated_values) files.  It's
+basically a bunch of key-value pairs you can query with a precedence order. For
+example, the above config would look in `nodes/somehostname.csv` first, which
+would allow you to override environment-specific configuration values per host,
+but if no `nodes/somehostname.csv` file exists or the requested value is not
+present, it will fall down to the next file in the list. You can also specify
+default values in extlookup, but that is outside the scope of this article.
 
 Building on the examples above, here is what your extlookup files would look like:
 
@@ -119,11 +124,11 @@ Building on the examples above, here is what your extlookup files would look lik
     # /etc/puppet/manifests/extdata/environments/dev.csv
     package/nginx,latest
 
-At work, I use extlookup for:
+I use extlookup for:
 
 * package versions. Of note, for developer systems, I set some package
-  'ensure' values to "absent" so developer activity won't be overwritten by
-  puppet trying to deploy our internal apps.
+  values to "absent" so developer activity won't be overwritten by puppet
+  trying to deploy our internal apps.
 * application flags and tuning. For production, we want to do backups to Amazon S3. For random development systems, we don't.
 * syslog configuration (what remote syslog host to ship logs to, per deployment)
 * database information (database name, credentials, etc)
@@ -131,13 +136,23 @@ At work, I use extlookup for:
 * nagios contact configuration (example: notify pager in prod 24/7, only during daytime for staging, but never for development)
 
 Point is, once you separate your model from your inputs (facts, truth, etc),
-you become more agile. Tune settings per machine, per environment, or per any
-value.  You get the idea. One important note is that all of the things I use
-extlookup for are truth, aka human-based, inputs.
+you become more agile: 
+
+* You can then tune settings per machine, per environment, or per any other value,
+* All of your truth inputs are concentrated in one place. This has an
+  additional benefit of allowing non-puppet users (in this example)  to upgrade or tune
+  values without needing puppet knowledge.
+* If you author puppet modules, you can release modules with extlookup support
+  and document the values used. This allows users of your module to be happily ignorant
+  of the internals of your module.
+
+In closing, separating your model from your inputs increases testability and
+maintainability of your infrsatructure automation. Further, adding a human
+input source (truth) in addition to machine inputs (facts) can help you tune
+your infrastructure for any situation.
 
 Further reading:
 
 * [Puppet facts with Facter](http://www.puppetlabs.com/puppet-3/related-projects/facter/)
 * [Chef facts with Ohai](http://wiki.opscode.com/display/chef/Ohai)
 * [Complex data and Puppet](http://www.devco.net/archives/2009/08/31/complex_data_and_puppet.php)
-
