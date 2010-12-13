@@ -1,4 +1,6 @@
-# Don't Be a Keyboard
+# Don't Be a Human Keyboard
+
+_Written by [Jordan Sissel](http://semicomplete.com) ([@jordansissel](http://twitter.com/jordansissel))_
 
 There are few things that quite irritate me more than when I accidentally take
 part in building a habit (or a culture) that treats people like human
@@ -6,7 +8,7 @@ keyboards.
 
 Humans are not meant to be buttons for pushing or functions for calling.
 
-What does it mean to not be a human keyboard? Imagine for the moment, that
+What does it mean to not be a human keyboard? Imagine for the moment that
 instead of typing on a keyboard or using a mouse, you had to speak at a person
 to perform any task? 
 
@@ -46,7 +48,7 @@ user? I observe that you are the keyboard, here, and Frank (above) is the user.
 What happens if "install Postgres on that server" is obeyed correctly, but
 doesn't solve Frank's problem? Even though, in this instance, "Frank" is
 between the chair and keyboard (you), you may be blamed for his errors. That
-sucks.
+sucks, and you waste energy in a blame game rather than getting work done.
 
 Another example of this is if a coworker asks you, rather than asking that
 well-publicized dashboard your team maintains, "is mysql down?" If you answer
@@ -86,3 +88,9 @@ write that FAQ, make that dashboard, or add that ticket flow. You'll end up
 with less stress and more happy coworkers and users. The business will end up with
 higher quality support, faster turn-around times for simple requests, and better 
 ideas about the kinds of things asked of you and your team.
+
+Further reading:
+
+* [Stashboard](http://www.stashboard.org/) - Open Source status/dashboard 
+* [MediaWiki](http://www.mediawiki.org/wiki/MediaWiki) - a wiki for documenting
+  things (like that FAQ you could write)
