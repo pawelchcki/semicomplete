@@ -20,9 +20,14 @@ to perform any task?
 
 > "I want to reply to this email."
  
-This sounds silly, right? Yet, other, very similar situations occur quite often
-in business as interactions between employees making requests of each other. In
-[2008, SysAdvent day
+Imagine the terrible impact on productivity and agility by using such a
+computer interface! Further, your "check email" flow now requires two people
+(you + the human keyboard) - that means double the cost, double the
+typos/communication problems, etc! Yet, despite the silliness of this example,
+other, very similar situations occur quite often in business as interactions
+between employees making requests of each other. 
+
+In [2008, SysAdvent day
 22](http://sysadvent.blogspot.com/2008/12/day-22-whats-problem.html) reported a
 subset of this problem - where people may tell you to implement a solution
 rather than telling you what problem they need solved. When Frank (fictional
@@ -33,14 +38,15 @@ a function being called and a result is expected. What result? You don't know
 the problem and lack context!
 
 Let's ignore, for this situation, situations where it may be correct to accept
-input as "install this software."
+input as "install this software." (or other examples)
 
 The social problem with being treated like a keyboard is interesting. In the
 great acronym, [PEBKAC](http://en.wikipedia.org/wiki/User_error), who is the
-user? I would say, you are the keyboard, and Frank (above) is the user. What happens
-if "install Postgres on that server" is obeyed correctly, but doesn't solve
-Frank's problem? Even though, in this instance, "Frank" is between the chair
-and keyboard (you), you may be blamed for his errors.
+user? I observe that you are the keyboard, here, and Frank (above) is the user.
+What happens if "install Postgres on that server" is obeyed correctly, but
+doesn't solve Frank's problem? Even though, in this instance, "Frank" is
+between the chair and keyboard (you), you may be blamed for his errors. That
+sucks.
 
 Another example of this is if a coworker asks you, rather than asking that
 well-publicized dashboard your team maintains, "is mysql down?" If you answer
