@@ -1,14 +1,6 @@
+<h1>Jails</h1>
 
-<html>
-
-<head>
-
-<title>Jails</title>
-</head>
-
-<body>
-
-<h2>Introduction</h2>
+<i>This article was written by <a href="http://www.atarininja.org/">Wesley Shields</a></i>
 
 <p>The first day of SysAdvent talked about Linux Containers (LXC), and how they
 are an "operating system level virtualization", as opposed to "platform
@@ -19,7 +11,7 @@ FreeBSD and how they achieve a similar goal.</p>
 
 <p>If you think of a traditional OS it looks something like this:</p>
 
-<img src="http://www.atarininja.org/~wxs/jails/regularOS.png">
+<img src="http://lh6.ggpht.com/_u-5lMShiO40/TQc1Tt-cm9I/AAAAAAAAAGY/yFidrZrxWF0/regularOS.png">
 
 <p>Among other things, the kernel controls access to hardware, makes sure
 processes are not stomping all over each other's memory, does the necessary
@@ -40,7 +32,7 @@ from what most people are familiar with. To be consistent with the earlier
 article I'll call it "platform virtualization." That solution looks something
 like this:</p>
 
-<img src="http://www.atarininja.org/~wxs/jails/vm.png">
+<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TToQ6KI/AAAAAAAAAGU/3kATbAJpIf8/vm.png">
 
 <p>There are different approaches but it is essentially the same goal.  Insert
 a small "virtual machine monitor" (VMM) layer - often called a hypervisor -
@@ -67,7 +59,7 @@ but, for some environments, it may still hold true.</p>
 <p>Jails are best thought of as a means to contain and isolate processes
 from each other, even if those processes are privileged.</p>
 
-<img src="http://www.atarininja.org/~wxs/jails/jails.png">
+<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TbJ0LeI/AAAAAAAAAGQ/xHX4joMtzM4/jails.png">
 
 <p>In this case, we are running multiple processes, but the kernel has been
 modified to limit the resources that each process can affect or view. This
