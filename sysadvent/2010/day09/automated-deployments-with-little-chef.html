@@ -1,4 +1,6 @@
 <h1>Automated deployments with LittleChef</h1>
+<p><em>Written by <a href="http://agiletesting.blogspot.com/">Grig Gheorghiu</a>
+(<a href="http://www.twitter.com/griggheo">@griggheo</a>)</em></p>
 <h2>Prologue</h2>
 <p><strong>Sysadmin #1</strong> (to Sysadmin #2): So...I need you to tell me....what is Devops?</p>
 <p><strong>Syadmin #2</strong>: Devops? I don't know....I didn't expect a kind of Devops
@@ -14,8 +16,6 @@ procrastination...and an almost fanatical devotion to vi.... Our <em>four</em>..
 <em>Amongst</em> our weapons.... Amongst our weaponry...are such elements as
 collaboration, automated deployments.... I'll come in again.</p>
 <h2>Automated deployment systems: push vs. pull</h2>
-<p><em>Written by <a href="http://agiletesting.blogspot.com/">Grig Gheorghiu</a>
-(<a href="http://www.twitter.com/griggheo">@griggheo</a>)</em></p>
 <p>I don't need the Devops Inquisition to tell me that I need to use automated
 deployment/configuration management systems. They are indeed a critical part of
 a self-respecting sysadmin's weaponry. Without them, the activities of
@@ -377,23 +377,26 @@ kitchen/roles:</p>
    }
  }
 </code></pre>
-<p>Several things to note in this role definition:
-<em> the run_list stanza specifies the recipes that need to be executed by nodes
+<p>Several things to note in this role definition:</p>
+<ul>
+<li>the run_list stanza specifies the recipes that need to be executed by nodes
    belonging to this role (the order of the recipes is also preserved, which is
    nice); in this example, the recipe defined in default.rb in the acme
    cookbook will be executed, followed by the recipe defined in nginx.rb in the
    acme cookbook, followed by the recipe defined in default.rb in the memcached
-   cookbook
-</em> because the acme cookbook depends on other cookbooks listed in its metadata
+   cookbook</li>
+<li>because the acme cookbook depends on other cookbooks listed in its metadata
    file (screen, python, git, build-essential and ntp), the default recipes in
    those cookbooks will be executed before the default acme cookbooks recipe
-   gets executed
-* we use the default_attributes stanza to override the memcached memory from
+   gets executed</li>
+<li>we use the default_attributes stanza to override the memcached memory from
    the default value of 64 MB (set as we mentioned before in
    cookbooks/memcached/attributes/default.rb) to a value of 1024 MB; I refer
-   the reader to the <a href="http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributeTypeandPrecedence">"Attribute Type and Precedence"</a> wiki page from the Opscode
-   documentation for more details on how attributes can be set and overridden
-   at various levels</p>
+   the reader to the <a href="http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributeTypeandPrecedence">"Attribute Type and
+   Precedence"</a>
+   wiki page from the Opscode documentation for more details on how attributes
+   can be set and overridden at various levels</li>
+</ul>
 <p>Now we have to associate the node app1 with the role appserver. We can just
 modify the file nodes/app1.json like this:</p>
 <pre><code>$ cat nodes/app1.json
@@ -462,15 +465,13 @@ that really all it is?</p>
 Sysadmin. Confess! Confess! Confess! Confess!</p>
 <p><strong>Biggles</strong>: I confess!</p>
 <p><strong>Ximinez</strong>: Not you!</p>
-<p>So, Sysadmin, if you take one thing away from this blog post, make it this one:
-if you don't have an automated deployment/configuration management strategy,
-then you'd better confess and start working on that strategy. I shudder to
-think of what the consequences of that would be, so you'd better roll up your
-sleeves and roll out an automated deployment system like LittleChef for your
-infrastructure TODAY! </p>
+<p>So, Sysadmin, if you don't have an automated deployment/configuration
+management strategy yet, and if you want to avoid torture in the Comfy
+Aeron Chair, then roll up your sleeves and roll out a deployment
+system like LittleChef for your infrastructure TODAY!</p>
 <p>Further reading</p>
 <ol>
-<li>[Opscode Chef wiki](http://wiki.opscode.com/display/chef/Home0</li>
+<li><a href="http://wiki.opscode.com/display/chef/Home">Opscode Chef wiki</a></li>
 <li>Some blog posts of mine on <a href="http://agiletesting.blogspot.com/2010/07/chef-installation-and-minimal.html">"Chef Installation and Minimal Configuration"</a>,
    <a href="http://agiletesting.blogspot.com/2010/07/working-with-chef-cookbooks-and-roles.html">"Working with Chef Cookbooks and Roles"</a>,
    <a href="http://agiletesting.blogspot.com/2010/07/bootstrapping-ec2-instances-with-chef.html">"Bootstrapping EC2 Instances with Chef"</a>,

@@ -11,7 +11,7 @@ FreeBSD and how they achieve a similar goal.</p>
 
 <p>If you think of a traditional OS it looks something like this:</p>
 
-<img src="http://lh6.ggpht.com/_u-5lMShiO40/TQc1Tt-cm9I/AAAAAAAAAGY/yFidrZrxWF0/regularOS.png">
+<img src="http://lh6.ggpht.com/_u-5lMShiO40/TQc1Tt-cm9I/AAAAAAAAAGs/0UXezGSG2uk/regularOS.jpg">
 
 <p>Among other things, the kernel controls access to hardware, makes sure
 processes are not stomping all over each other's memory, does the necessary
@@ -32,7 +32,7 @@ from what most people are familiar with. To be consistent with the earlier
 article I'll call it "platform virtualization." That solution looks something
 like this:</p>
 
-<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TToQ6KI/AAAAAAAAAGU/3kATbAJpIf8/vm.png">
+<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TToQ6KI/AAAAAAAAAGk/eOXao_KMA2g/vm.jpg">
 
 <p>There are different approaches but it is essentially the same goal.  Insert
 a small "virtual machine monitor" (VMM) layer - often called a hypervisor -
@@ -59,7 +59,7 @@ but, for some environments, it may still hold true.</p>
 <p>Jails are best thought of as a means to contain and isolate processes
 from each other, even if those processes are privileged.</p>
 
-<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TbJ0LeI/AAAAAAAAAGQ/xHX4joMtzM4/jails.png">
+<img src="http://lh5.ggpht.com/_u-5lMShiO40/TQc1TbJ0LeI/AAAAAAAAAGc/HMOE3W6xHYs/jails.jpg">
 
 <p>In this case, we are running multiple processes, but the kernel has been
 modified to limit the resources that each process can affect or view. This
@@ -344,5 +344,3 @@ the omnipotent root</a></li>
 <li><a
 href="http://www.amazon.com/Design-Implementation-FreeBSD-Operating-System/dp/0201702452/ref=sr_1_1?ie=UTF8&s=books&qid=1292172506&sr=8-1">The Design and Implementation of the FreeBSD Operating System</a></li>
 </ul>
-</body>
-</html>

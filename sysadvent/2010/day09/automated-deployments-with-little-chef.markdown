@@ -1,5 +1,8 @@
 # Automated deployments with LittleChef
  
+_Written by [Grig Gheorghiu](http://agiletesting.blogspot.com/)
+([@griggheo](http://www.twitter.com/griggheo))_
+ 
 ## Prologue
  
 **Sysadmin #1** (to Sysadmin #2): So...I need you to tell me....what is Devops?
@@ -22,9 +25,6 @@ collaboration, automated deployments.... I'll come in again.
 
 ## Automated deployment systems: push vs. pull
 
-_Written by [Grig Gheorghiu](http://agiletesting.blogspot.com/)
-([@griggheo](http://www.twitter.com/griggheo))_
- 
 I don't need the Devops Inquisition to tell me that I need to use automated
 deployment/configuration management systems. They are indeed a critical part of
 a self-respecting sysadmin's weaponry. Without them, the activities of
@@ -428,6 +428,7 @@ kitchen/roles:
      }
  
 Several things to note in this role definition:
+
 * the run_list stanza specifies the recipes that need to be executed by nodes
    belonging to this role (the order of the recipes is also preserved, which is
    nice); in this example, the recipe defined in default.rb in the acme
@@ -441,9 +442,10 @@ Several things to note in this role definition:
 * we use the default_attributes stanza to override the memcached memory from
    the default value of 64 MB (set as we mentioned before in
    cookbooks/memcached/attributes/default.rb) to a value of 1024 MB; I refer
-   the reader to the ["Attribute Type and Precedence"](http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributeTypeandPrecedence) wiki page from the Opscode
-   documentation for more details on how attributes can be set and overridden
-   at various levels
+   the reader to the ["Attribute Type and
+   Precedence"](http://wiki.opscode.com/display/chef/Attributes#Attributes-AttributeTypeandPrecedence)
+   wiki page from the Opscode documentation for more details on how attributes
+   can be set and overridden at various levels
  
 Now we have to associate the node app1 with the role appserver. We can just
 modify the file nodes/app1.json like this:
@@ -526,16 +528,15 @@ Sysadmin. Confess! Confess! Confess! Confess!
 
 **Ximinez**: Not you!
  
-So, Sysadmin, if you take one thing away from this blog post, make it this one:
-if you don't have an automated deployment/configuration management strategy,
-then you'd better confess and start working on that strategy. I shudder to
-think of what the consequences of that would be, so you'd better roll up your
-sleeves and roll out an automated deployment system like LittleChef for your
-infrastructure TODAY! 
+So, Sysadmin, if you don't have an automated deployment/configuration
+management strategy yet, and if you want to avoid torture in the Comfy
+Aeron Chair, then roll up your sleeves and roll out a deployment
+system like LittleChef for your infrastructure TODAY!
+
  
 Further reading
  
-1. [Opscode Chef wiki](http://wiki.opscode.com/display/chef/Home0
+1. [Opscode Chef wiki](http://wiki.opscode.com/display/chef/Home)
 2. Some blog posts of mine on ["Chef Installation and Minimal Configuration"](http://agiletesting.blogspot.com/2010/07/chef-installation-and-minimal.html),
    ["Working with Chef Cookbooks and Roles"](http://agiletesting.blogspot.com/2010/07/working-with-chef-cookbooks-and-roles.html),
    ["Bootstrapping EC2 Instances with Chef"](http://agiletesting.blogspot.com/2010/07/bootstrapping-ec2-instances-with-chef.html),

@@ -143,9 +143,11 @@ This scales in meaningful ways. Common cases:
         % cp production.csv productionclone.csv
         # Or, accept 'testing' as good, and ship it to production:
         % cp testing.csv production.csv
+
 * A security vulnerability makes you want to know what nginx versions you are installing:
 
         % grep 'package/nginx' */*.csv
+
 * Tune settings per machine, per environment, etc.
 * All of your truth inputs are concentrated in one place. This has an
   additional benefit of allowing non-puppet users (in this example) to upgrade

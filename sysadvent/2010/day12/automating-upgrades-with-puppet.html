@@ -125,20 +125,21 @@ package/nginx,latest
 # Or, accept 'testing' as good, and ship it to production:
 % cp testing.csv production.csv
 </code></pre>
-<ul>
+</li>
 <li>
 <p>A security vulnerability makes you want to know what nginx versions you are installing:</p>
-<p>% grep 'package/nginx' <em>/</em>.csv
-<em> Tune settings per machine, per environment, etc.
-</em> All of your truth inputs are concentrated in one place. This has an
+<pre><code>% grep 'package/nginx' */*.csv
+</code></pre>
+</li>
+<li>
+<p>Tune settings per machine, per environment, etc.</p>
+</li>
+<li>All of your truth inputs are concentrated in one place. This has an
   additional benefit of allowing non-puppet users (in this example) to upgrade
-  or tune values without needing puppet knowledge.
-* If you author puppet modules, you can release modules with extlookup support
+  or tune values without needing puppet knowledge.</li>
+<li>If you author puppet modules, you can release modules with extlookup support
   and document the values used. This allows users of your module to be happily ignorant
-  of the internals of your module.</p>
-</li>
-</ul>
-</li>
+  of the internals of your module.</li>
 </ul>
 <p>Point is, once you separate your model from your inputs (facts, truth, etc),
 you become more flexible and agile. I use extlookup for:</p>

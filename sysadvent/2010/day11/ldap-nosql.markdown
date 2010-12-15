@@ -4,7 +4,7 @@ _Written by Michael Stahnke ([@stahnma](http://twitter.com/stahnma))_
 
 ## The N00b 
 
-When  was first learning about being a Unix Admin, I just wanted to know what
+When I was first learning about being a Unix Admin, I just wanted to know what
 systems my team supported, so that when I got called at 2 AM, I could either
 make some weak attempt at getting online and fixing a problem (I was new...very
 new), or promptly help that application analyst find the correct support team
@@ -12,7 +12,7 @@ pager number.  It was the week before I first went into our pager rotation that
 I realized something was very wrong.  I had no idea what systems we actually
 supported.  I wasn't the only one.
 
-There had recently been some form reorganization right before I hired in at
+There had recently been some form of reorganization right before I hired in at
 this company.  What was once four teams (IBM AIX, HP-UX, Sun Solaris and Red
 Hat Linux), was becoming three teams (Capacity Planning, Systems Implementation
 and Systems operations).  However, there were still other server teams at other
