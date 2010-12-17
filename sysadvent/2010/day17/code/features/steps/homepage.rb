@@ -5,23 +5,16 @@ require 'rspec'
 BROWSER = Celerity::Browser.new
 TIMEOUT = 20
 
-class ContentNotFoundException < Exception;
-  def initialize(message = nil, duration = TIMEOUT)
-    message ||= "Content not found in #{duration} seconds"
-    super(message)
-  end
-end;
-
 # this is a simple utility function I use to find content on a page
 # even if it might not appear straight away
 def check_for_presence_of(content)
   begin
-      timeout(TIMEOUT) do
-        sleep 1 until BROWSER.html.include? content
-      end
-    rescue Timeout::Error
-      raise ContentNotFoundException
+    timeout(TIMEOUT) do
+      sleep 1 until BROWSER.html.include? content
     end
+  rescue Timeout::Error
+    raise "Content not found in #{TIMEOUT} seconds"
+  end
 end
 
 Given /^I'm on the homepage$/ do
