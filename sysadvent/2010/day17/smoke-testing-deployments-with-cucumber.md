@@ -153,10 +153,10 @@ Start Simple
 A more complex example might step through a multi-stage form to test the
 purchase of a product, or it could conduct a series of searches to check a
 search index has been populated. Smoke testing and Cucumber are not just for
-web apps either, you could check smtp services or a message queue server.
-Unlike lower level testing you want to touch as many individual parts of the
-app as possible, including testing that third party API's or parts of your
-infrastructure are up and running. You definitely don't want to
+web apps either. You should be testing all of your important services and
+systems.  Unlike lower level testing you want to touch as many individual parts
+of the app as possible, including testing that third party API's or parts of
+your infrastructure are up and running. You definitely don't want to
 [mock](http://en.wikipedia.org/wiki/Mock_object) out your database calls and
 then find that the app actually fails due to a problem with the database coming
 back up after a deployment.
@@ -168,14 +168,15 @@ integrating the output into a reporting tool like nagios might work well for
 your team, too. Automated deployment followed by a smoke test failure could
 invoke an automated rollback.
 
-Deployment actions are still a time of higher-than-average risk for most projects.
-Strong smoke tests are important regardless of your deployment frequency.
-If you have only a few machines, then smoke testing might tell you that you
-need to roll back a deployment immediately. If you have a larger
+Deployment actions are still a time of higher-than-average risk for most projects,
+and strong smoke tests are important regardless of your deployment frequency or
+project size. If you have only a few machines, then smoke testing might tell
+you that you need to roll back a deployment immediately. If you have a larger
 infrastructure, then smoke testing a newly upgraded application server before
-it's put back into a load balancer could save you from any ill effects in
-production at all.
+putting it back into a load balancer rotation could save you from any ill
+effects in production at all.
 
 Further reading:
 
 * [Smoke Testing](http://en.wikipedia.org/wiki/Smoke_testing) on wikipedia 
+* [Sample code](http://code.google.com/p/semicomplete/source/browse/sysadvent/2010/day17/code#code%2Ffeatures) for this article

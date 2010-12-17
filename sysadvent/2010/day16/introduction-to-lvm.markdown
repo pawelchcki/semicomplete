@@ -1,4 +1,8 @@
-﻿Logical volume management (LVM) is not a new concept -- it first appeared in
+﻿# Introduction to LVM
+
+_This was written by [Ben Cotton](http://www.funnelfiasco.com/) ([@funnelfiasco](http://twitter.com/funnelfiasco))_
+
+Logical volume management (LVM) is not a new concept -- it first appeared in
 Linux in 1998 and had existed in HP-UX before then.  Still, some sysadmins, new
 and old, aren't familiar with it.  LVM is a form of storage virtualization that
 allows for more configuration flexibility than the traditional on-disk
