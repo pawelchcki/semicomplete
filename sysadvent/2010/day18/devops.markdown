@@ -1,24 +1,23 @@
 # DevOps for the Systems Administrator #
 
-## Intro ##
+_This article was written by [Brandon Burton][solarce]_
 
-This article is part one of a two part series by [Brandon Burton][solarce]
-which explores what [DevOps][devops] is and what it means for the Systems
-Administrator (in all his/her many forms), where it has come since Brandon's
+This article is part one of a two part series which explores what                           [DevOps][devops] is, what it means for the Systems Administrator (in all
+his/her many forms), where it has come since Brandon's
 [article][reliamdevops] in July, and where you should be looking if you want to
 be involved.
 
 Part one focuses on what DevOps and what it means for the Systems
 Administrator.
 
-## DevOps and what it means for the Systems Administrator ##
+## DevOps ##
 
 DevOps is really just a label for a a rallying point around a variety of trends
 (primarily lead by Web Operations) that have begun to coalesce over the last
 couple of years. These trends, ideas, and tools have existed in various forms
 and have been adopted to various extents for many years, but have seen a huge
 coming together in the last two years. Early voices in this area include  [John
-Allspaw's][allspaw] [talk at Velocity 2009][allspawtalk]] and [Patrick
+Allspaw's][allspaw] [talk at Velocity 2009][allspawtalk] and [Patrick
 Debois's][patrick] [coining][devopscoin] of the 'DevOps' term, and
 is covered well by a [writeup][camspost] by [John M. Willis][john]
 
@@ -29,10 +28,14 @@ pillars of DevOps.  `CAMS` is:
 
 #### Culture ####
 
->People and process first.  If you don’t have culture, all automation attempts
->will be fruitless.
+>People and process first.  If you don't have culture, all automation attempts
+>will be fruitless. 
+
 
 #### Automation ####
+
+>This is one of the places you start once you understand your culture.  At this
+"devops.markdown" 109L, 4806C written                                     27,1          Top
 
 >This is one of the places you start once you understand your culture.  At this
 >point, the tools can start to stitch together an automation fabric for DevOps.
@@ -42,10 +45,9 @@ pillars of DevOps.  `CAMS` is:
 
 #### Measurement ####
 
->If you can’t measure, you can’t improve.  A successful DevOps implementation
->will measure everything it can as often as it can… performance metrics,
-process
->metrics, and even people metrics.
+>If you can't measure, you can't improve.  A successful DevOps implementation
+>will measure everything it can as often as it can: performance metrics,
+>process metrics, and even people metrics.
 
 #### Sharing ####
 
@@ -67,11 +69,6 @@ says, "I'm going to make a difference, I'm going to cooperate and communicate,
 and I'm going to understand that in the business of delivering great software,
 we're all in it together."
 
-DevOps is important because DevOps-centric user groups, conferences, and
-discussions are where you will see the next wave of thoughts, tools, and best
-practices come out of in the coming years, particularly in the web
-operations/web application space.
-
 ### For the Systems Administrator ###
 
 Don't let any potential *hype* or the the fact that the discussion seems
@@ -91,8 +88,13 @@ reach a wider audience and wider adoption.
 
 ## Where to go from here? ##
 
-In [part 2][part2] I'll explore what has happened since July and where to learn
+In part 2, I'll explore what has happened since July and where to learn
 more and get involved
+
+Further reading:
+
+* [Multi-part devops series of articles](http://www.agileweboperations.com/category/devops)
+* [DevOps] on Wikipedia(http://www.agileweboperations.com/category/devops)
 
 [solarce]: http://www.twitter.com/solarce
 [devops]: http://www.jedi.be/blog/2010/02/12/what-is-this-devops-thing-anyway/
@@ -103,4 +105,5 @@ more and get involved
 [allspawtalk]: http://velocityconf.com/velocity2009/public/schedule/detail/7641
 [patrick]: http://twitter.com/#!/patrickdebois
 [devopscoin]: http://www.jedi.be/blog/2009/11/15/devopsdays09-two-weeks-later/
-[part2]: http://
+
+
