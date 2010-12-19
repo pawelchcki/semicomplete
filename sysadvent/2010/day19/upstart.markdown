@@ -8,10 +8,10 @@ year, Ubuntu started shipping its release with a new init system called Upstart
 that has babysitting built in, so let's talk about that. I'll be doing all of
 these examples on Ubuntu 10.04, but any upstart-using system should work.
 
-For me, the most important two features of Upstart are events and babysitting.
-Upstart lets you configure tasks to respond to arbitrary events. It also
-supports the simple runner scripts that daemontools, supervisord, and other
-similar-class tools support.
+For me, the most important two features of Upstart are babysitting and events.
+Upstart supports the simple runner scripts that daemontools, supervisord, and
+other similar-class tools support. It also lets you configure jobs to respond
+to arbitrary events.
 
 Diving in, let's take a look the `ssh` server configuration Ubuntu ships for
 Upstart (I edited for clarity). This file lives as /etc/init/ssh.conf:
@@ -36,7 +36,7 @@ Some points:
 * `respawn` - tells Upstart to restart it if sshd ever stops abnormally
   (which means every exit except for those caused by you telling it to stop).
 * `oom never` - Gives hints to the Out-Of-Memory killer. In this case, we say
-  never kill this process. This is super useful as a built-in feature. You can
+  never kill this process. This is super useful as a built-in feature.
 *  `exec /usr/bin/sshd` - no massive SysV init script, just one line saying
   what binary to run. Awesome!
 
@@ -95,7 +95,7 @@ it should restart, right? Let's see:
 
 Excellent.
 
-## Other fun stuff
+## Events
 
 Upstart supports simple messages. That is, you can create messages with
 'initctl emit <event> [KEY=VALUE] ...' You can subscribe to an event in your
@@ -152,8 +152,7 @@ have many config files:
         # Copy to '<config file>.test_ok'
         cp $CONFIG_FILE ${CONFIG_FILE}.test_ok
       else
-        echo "Config check failed"
-        exit 1 
+        echo "Config check failed, using old config."
       fi
     end script
 
@@ -176,17 +175,21 @@ when you try to 'start' ssh as non-root:
 
 So, there's access control, but I'm not sure anyone knows how to use it.
 
-Fourth, there's no "died" or "exited" event to otherwise indicate that a
+Fourth: There's no "died" or "exited" event to otherwise indicate that a
 process has exited unexpectedly, so you can't have event-driven tasks that
 alert you if a process is flapping or to notify you otherwise that it died.
 
-Fifth, again on the debugging problem, there's no way to watch events passing
+Fifth: Again on the debugging problem, there's no way to watch events passing
 along to upstart. strace doesn't help very much:
 
     % sudo strace -s1500 -p 1 |& grep com.ubuntu.Upstart
     # output edited for sanity, I ran 'sudo initctl start ssh'
     read(10, "BEGIN ... binary mess ... /com/ubuntu/Upstart ... GetJobByName ...ssh\0", 2048) = 127
     ...
+
+Lastly, the system feels like it was built for desktops: lack of 'exited'
+event, confusing or missing access control, stopped state likely being lost
+across reboots, no slow-starts or backoff, little/no output on failures, etc.
 
 ## Conclusion
 
