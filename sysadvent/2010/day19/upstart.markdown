@@ -1,12 +1,12 @@
 # Upstart
 
-_This article was written by Jordan Sissel_
+_This article was written by [Jordan Sissel](http://www.semicomplete.com) ([@jordansissel](http://twitter.com/jordansissel))_
 
 In past sysadvents, I've talked about [babysitting services][sysadvent 2008/03]
 and showed how to use [supervisord][sysadvent 2009/15] to achieve it. This
 year, Ubuntu started shipping its release with a new init system called Upstart
-that has babysitting built in. I'll be covering Upstart on an Ubuntu 10.04
-system.
+that has babysitting built in, so let's talk about that. I'll be doing all of
+these examples on Ubuntu 10.04, but any upstart-using system should work.
 
 For me, the most important two features of Upstart are events and babysitting.
 Upstart lets you configure tasks to respond to arbitrary events. It also
@@ -14,11 +14,12 @@ supports the simple runner scripts that daemontools, supervisord, and other
 similar-class tools support.
 
 Diving in, let's take a look the `ssh` server configuration Ubuntu ships for
-Upstart (I trimmed some stuff for clarity/brevity). This file lives as
-/etc/init/ssh.conf:
+Upstart (I edited for clarity). This file lives as /etc/init/ssh.conf:
 
     description     "OpenSSH server"
 
+    # Start when we get the 'filesystem' event, presumably once the file
+    # systems are mounted. Stop when shutting down.
     start on filesystem
     stop on runlevel S
 
@@ -105,7 +106,7 @@ example:
     start on helloworld
     exec env | logger -t helloworld
 
-Now send the 'helloworld' message
+Now send the 'helloworld' message, but also set some parameters in that message.
 
     % sudo initctl emit helloworld foo=bar baz=fizz
 
@@ -187,6 +188,8 @@ along to upstart. strace doesn't help very much:
     read(10, "BEGIN ... binary mess ... /com/ubuntu/Upstart ... GetJobByName ...ssh\0", 2048) = 127
     ...
 
+## Conclusion
+
 Anyway, despite some problems, Upstart seems like a promising solution to the
 problem of babysitting your daemons. If it has no other benefit, the best
 benefit is that it comes with Ubuntu 10.04 and beyond, by default, so if you're
@@ -196,6 +199,8 @@ Further reading:
 
 * [Upstart's site](http://upstart.ubuntu.com/)
 * [Upstart](http://en.wikipedia.org/wiki/Upstart) on Wikipedia
+* [init(5)](http://manpages.ubuntu.com/manpages/lucid/en/man5/init.5.html) - upstart job configuration
+* [initctl(8)](http://manpages.ubuntu.com/manpages/maverick/en/man8/initctl.8.html) - upstart control tool
 
 [sysadvent 2008/03]: http://sysadvent.blogspot.com/2008/12/day-3-babysitting.html
 [sysadvent 2009/15]: http://sysadvent.blogspot.com/2009/12/day-15-replacing-init-scripts-with.html "Replacing Init Scripts with supervisord"

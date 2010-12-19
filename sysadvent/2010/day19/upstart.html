@@ -1,19 +1,20 @@
 <h1>Upstart</h1>
-<p><em>This article was written by Jordan Sissel</em></p>
+<p><em>This article was written by <a href="http://www.semicomplete.com">Jordan Sissel</a> (<a href="http://twitter.com/jordansissel">@jordansissel</a>)</em></p>
 <p>In past sysadvents, I've talked about <a href="http://sysadvent.blogspot.com/2008/12/day-3-babysitting.html">babysitting services</a>
 and showed how to use <a href="http://sysadvent.blogspot.com/2009/12/day-15-replacing-init-scripts-with.html" title="Replacing Init Scripts with supervisord">supervisord</a> to achieve it. This
 year, Ubuntu started shipping its release with a new init system called Upstart
-that has babysitting built in. I'll be covering Upstart on an Ubuntu 10.04
-system.</p>
+that has babysitting built in, so let's talk about that. I'll be doing all of
+these examples on Ubuntu 10.04, but any upstart-using system should work.</p>
 <p>For me, the most important two features of Upstart are events and babysitting.
 Upstart lets you configure tasks to respond to arbitrary events. It also
 supports the simple runner scripts that daemontools, supervisord, and other
 similar-class tools support.</p>
 <p>Diving in, let's take a look the <code>ssh</code> server configuration Ubuntu ships for
-Upstart (I trimmed some stuff for clarity/brevity). This file lives as
-/etc/init/ssh.conf:</p>
+Upstart (I edited for clarity). This file lives as /etc/init/ssh.conf:</p>
 <pre><code>description     "OpenSSH server"
 
+# Start when we get the 'filesystem' event, presumably once the file
+# systems are mounted. Stop when shutting down.
 start on filesystem
 stop on runlevel S
 
@@ -92,7 +93,7 @@ example:</p>
 start on helloworld
 exec env | logger -t helloworld
 </code></pre>
-<p>Now send the 'helloworld' message</p>
+<p>Now send the 'helloworld' message, but also set some parameters in that message.</p>
 <pre><code>% sudo initctl emit helloworld foo=bar baz=fizz
 </code></pre>
 <p>And look at the logger results (writes to syslog)</p>
@@ -161,6 +162,7 @@ along to upstart. strace doesn't help very much:</p>
 read(10, "BEGIN ... binary mess ... /com/ubuntu/Upstart ... GetJobByName ...ssh\0", 2048) = 127
 ...
 </code></pre>
+<h2>Conclusion</h2>
 <p>Anyway, despite some problems, Upstart seems like a promising solution to the
 problem of babysitting your daemons. If it has no other benefit, the best
 benefit is that it comes with Ubuntu 10.04 and beyond, by default, so if you're
@@ -169,4 +171,6 @@ an Ubuntu infrastructure, it's worth learning.</p>
 <ul>
 <li><a href="http://upstart.ubuntu.com/">Upstart's site</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Upstart">Upstart</a> on Wikipedia</li>
+<li><a href="http://manpages.ubuntu.com/manpages/lucid/en/man5/init.5.html">init(5)</a> - upstart job configuration</li>
+<li><a href="http://manpages.ubuntu.com/manpages/maverick/en/man8/initctl.8.html">initctl(8)</a> - upstart control tool</li>
 </ul>
