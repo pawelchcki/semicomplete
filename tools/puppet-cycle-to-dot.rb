@@ -35,18 +35,17 @@ verteces = edges.collect { |edge| edge.split(" => ") }.flatten.collect { |v| v.c
 template = ERB.new <<-ERB
 digraph Dependencies {
   label = "Dependencies"
+  graph [fontsize=24]
+  node [fontsize=24]
   <% verteces.each do |vertex| %>
   "<%= vertex %>" [
-    fontsize = 8,
     label = "<%= vertex %>"
   ]
   <% end %>
 
   <% edges.each do |edge| %>
   <%   left, right = edge.split(" => ") %>
-  "<%= left %>" -> "<%= right %>" [
-    fontsize = 8
-  ]
+  "<%= left %>" -> "<%= right %>" [ ]
   <% end %>
 }
 ERB
