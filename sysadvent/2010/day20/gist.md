@@ -2,7 +2,7 @@
 
 _This article was written by [Phil Hollenback](www.hollenback.net) ([@philiph](http://www.twitter.com/philiph))_
 
-I assume everyone is familiar with the idea of a [pastebin] - a website for
+I assume everyone is familiar with the idea of a [pastebin][pastebin] - a website for
 sharing text fragments with an emphasis on code fragments. Pastebins have been
 around since 2002, according to Wikipedia. They're an incredibly useful
 resource for sharing textual data and are something we, as sysadmins, need to do
@@ -14,7 +14,7 @@ existing pastebin implementations:
 * no privacy settings
 
 I recently came across a new (to me, anyway) alternative to the traditional
-pastebin: [github] _gists_.  The following is a description of how gists work
+pastebin: [github][github] _gists_.  The following is a description of how gists work
 and how they differ from traditional pastebin clippings.  I'll also describe
 some ways you can collaboratively edit gists with one or more people.
 
@@ -40,7 +40,7 @@ emacs script to automate all of this!
 
 ## Initial Setup
 
-As I mentioned, you have to have a [github] account to create gists (or to
+As I mentioned, you have to have a github account to create gists (or to
 comment on existing gists).  The good news is that's free and just takes a
 moment to set up.  Once you have your account created, go to [your account
 page](https://github.com/account) and click on `Account Admin`.  You will find
@@ -130,7 +130,7 @@ everyone can see what you post.  This usually works just fine.  However, if you
 want to protect your information, you can create a *private gist*.  There are
 two differences between private and public gists:
 
-1. public gists show up on the (gist main page)[https://gist.github.com/gists].
+1. public gists show up on the [gist main page](https://gist.github.com/gists).
 1. public gists use easily guessable sequence numbers, private ones use hash identifiers.
 
 For #2, public gists have incremented IDs like `73962` while private gists use
@@ -157,12 +157,13 @@ means you can use them to collaborate on a documentation project.  Here's the
 workflow:
 
 1. Create a gist through web interface, cli, etc.
-2. Visit your gist on github and copy the *private clone url*
-3. give the private clone url to your friend
-3. friend clones a copy of the repo with the command from step 2.
-4. friend makes his edits to the text file
-5. friend commits his changes locally with `git commit -a`
-6. friend pushes his changes upstream with `git push`
+2. Give your friend Joe the url to that gist on github.
+3. Joe visits that url and clicks 'fork' to get his own repository
+4. Joe makes edits to his forked copy of your gist
+4. Joe commits his changes to his repo, gives you his private clone url
+5. cd into your local repository on your computer
+6. Merge Joe's changes into yours with `git pull <Joe's private clone url> master`
+7. commit your merged changes to your repo with `git commit -a` and `git push`
 
 That's it! You're now collaborating with someone on a shared script, config
 file, markdown document, or whatever.  Also, since this is a distributed
@@ -201,9 +202,9 @@ your terminal and the cloud, all wrapped up in a sysadmin-friendly package.
 ## Further Reading
 
 * A good [blog writeup about gists](http://zerokspot.com/weblog/2008/07/22/github-presents-gist/).
-* The [gist api].
+* The [gist api][gistapi].
 * The [gist homepage](http:/www.github.com/gists).
 
 [github]: http://www.github.com
 [pastebin]: http://www.wikimedia.org/wikipedia/en/wiki/Pastebin
-[gist api]: http://develop.github.com/p/gist.html
+[gistapi]: http://develop.github.com/p/gist.html
