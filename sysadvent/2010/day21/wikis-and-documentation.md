@@ -47,10 +47,14 @@ Wiki markup languages must be amazing and precious, because we have
 dozens of them to choose from.  Seriously? I have to remember whether
 to write
 
-    [www.hollenback.net][http://www.hollenback.net]]
+    [[www.hollenback.net][http://www.hollenback.net]]
+
 or
+
     [www.hollenback.net|http://www.hollenback.net]
+
 or
+
     [http://www.hollenback.net www.hollenback.net]
 
 based on which wiki I'm using?  That's awesome.
@@ -98,14 +102,14 @@ optimizations.
 ## The problem with documentation is... ##
 
 The problem with documentation is that it's a lot of effort to write clear,
-correct, and usable documentation, just like software does. It takes time, not
-just any time, but concentrated, distraction free time. The sort of time that
-there is never enough of. Further, it takes a plan - a design for serving your
-intended audience reasonably, just like software. It does not help that most of
-the common tools that are chosen as the _repository_ of the documentation are
-not very good.  Sadly, this includes the most popular tool (in my experience),
-wikis, particularly my favorite tool for keeping documentation,
-[Mediawiki][mediawiki].
+correct, and usable documentation. It takes time, not just any time, but
+concentrated, distraction free time. The sort of time that there is never
+enough of. Further, it takes a plan - a design for serving your intended
+audience reasonably. It does not help that most of the common tools that are
+chosen as the _repository_ of the documentation are not very good. Bad tools
+drain your time.  Sadly, this includes the most popular tool (in my
+experience), wikis, particularly my
+favorite tool for keeping documentation, [Mediawiki][mediawiki].
 
 ## Documentation + Mediawiki == Maybe better ##
 
