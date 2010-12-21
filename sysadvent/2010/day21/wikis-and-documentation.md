@@ -2,7 +2,11 @@
 
 ## Intro ##
 
-This article is part one of a two part series and a collaboration between [Brandon Burton][solarce] and [Philip J. Hollenback][philiph] where they explore the problems with Wikis, the challenges of writing good documentation with today's tools, improvements to [Mediawiki][mediawiki] that [Brandon][solarce] has implemented, and ideas for further improvements.
+This article is part one of a two part series and is a collaboration between
+[Brandon Burton][solarce] and [Philip J. Hollenback][philiph] where they
+explore the problems with Wikis, the challenges of writing good documentation
+with today's tools, improvements to [Mediawiki][mediawiki] that
+[Brandon][solarce] has implemented, and ideas for further improvements.
 
 Part one focuses on the problems and challenges.
 
@@ -12,14 +16,14 @@ It's a wiki!  Wikis are a slightly less-worse alternative to all other
 documentation and publishing mechanisms. What's the worst thing about
 wikis?  Well...
 
-Here it is 2010 and guess what? Every wiki works pretty much exactly
-the same as they did back in 2001 (or for that matter back in 1995
+Here it is, 2010, and guess what? Every wiki works pretty much exactly
+the same as they did back in 2001 (or, for that matter, back in 1995
 when WikiWiki was invented).  Why has absolutely no real development
 happened in the world of wikis?  I realize that there may be amazing
 commercial wikis out there like Microsoft Sharepoint or Confluence,
 but who uses them? Instead we all blindly set up our own Mediawiki
 installations over and over again, with all the same annoyances and
-problems.  We are all unquestioning worshippers at the altar of the
+problems. We are all unquestioning worshippers at the altar of the
 wiki.
 
 Let's get down to business: here are some of the numerous things
@@ -28,12 +32,12 @@ wrong with wikis, in no particular order:
 ### CamelCase
 
 This seemed amazing back in 2001 because it allowed you to create your
-own web pages on the fly. Amazing! However the really cool thing was
+own web pages on the fly. Amazing! However, the really cool thing was
 the autocreation of web pages, not the mechanism of CamelCase.
 Camel case was just an easy way to tell early wiki syntax parsers to
-create a link to a new page.  Now in 2010 camel case is faintly
+create a link to a new page. Nine years later, camel case is faintly
 embarrassing.  It's like those pictures from the early 80s where guys
-all had perms.  Seemed a good idea at the time.  Every single time
+all had perms - seemed a good idea at the time.  Every single time
 you try to explain wikis to someone, you have to apologize for how
 camel case works.
 
@@ -91,20 +95,38 @@ means your search mechanism doesn't have any domain-specific
 optimizations.
 
 
-## The problem with documenta100  5820  100  5820    0     0  10318      0 --:--:-- --:--:-- --:--:-- 52432
-tion is... ##
+## The problem with documentation is... ##
 
-The problem with documentation is that it's a pain to write. It takes time, not just any time, but concentrated, distraction free time. The sort of time that there is never enough of. And it does not help that most of the common tools that are chosen as the _repository_ of the documentation are not very good. Sadly this includes the most popular tool (in my experience), wikis, particularly my favorite tool for keeping documentation, [Mediawiki][mediawiki].
+The problem with documentation is that it's a lot of effort to write clear,
+correct, and usable documentation, just like software does. It takes time, not
+just any time, but concentrated, distraction free time. The sort of time that
+there is never enough of. Further, it takes a plan - a design for serving your
+intended audience reasonably, just like software. It does not help that most of
+the common tools that are chosen as the _repository_ of the documentation are
+not very good.  Sadly, this includes the most popular tool (in my experience),
+wikis, particularly my favorite tool for keeping documentation,
+[Mediawiki][mediawiki].
 
 ## Documentation + Mediawiki == Maybe better ##
 
-Having said all that, wikis are still the best widely available documentation solution out there.  
+Having said all that, wikis are still the best widely available documentation
+solution out there.  
 
-Of all the available wikis, Mediawiki is the wiki most commonly chosen, and this is the one that Brandon has had the opportunity to make a number of improvements to.
+Of all the available wikis, Mediawiki is the wiki most commonly chosen, and
+this is the one that Brandon has had the opportunity to make a number of
+improvements to.
 
-Luckily, since Mediawiki is open source software and just PHP + MySQL + Text + CSS, it is relatively easy to improve how it can be used to keep more effective documentation. I've had the opportunity to make a number of changes to the Mediawiki installation at my [day job][reliam] and I'm going to take this opportunity share those with you. Additionally, I have some other ideas on how Mediawiki could be improved even further, a number of which have come from reading the [Mediawiki book][mediawiki book]
+Since Mediawiki is open source software and just PHP + MySQL + Text +
+CSS, it is relatively easy to improve how it can be used to keep more effective
+documentation. I've had the opportunity to make a number of changes to the
+Mediawiki installation at my [day job][reliam] and I'm going to take part two
+of this article to share those with you. Additionally, I have some other ideas
+on how Mediawiki could be improved even further, a number of which have come
+from reading the [Mediawiki book][mediawiki book]
 
-In [part 2][part2] we'll explore some improvements that [Brandon Burton][solarce] has implemented at his [work][reliam] and some ideas [Brandon][solarce] and [Philip][philiph] have for further improvements.
+In part two, we'll explore some improvements that [Brandon Burton][solarce] has
+implemented at his [work][reliam] and some ideas [Brandon][solarce] and
+[Philip][philiph] have for further improvements.
 
 [solarce]: http://www.twitter.com/solarce
 [philiph]: http://www.twitter.com/philiph
