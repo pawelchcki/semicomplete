@@ -47,6 +47,10 @@
       read-stderr: false
     }
 
+    # Load patterns from a file.
+    load-patterns: "patterns/base"
+
+
     # You can have multiple match {} blocks in your config.
     # They are applied, in order, against every line of input that
     # comes from your exec and file instances in this program block.
