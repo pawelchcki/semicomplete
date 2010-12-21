@@ -36,7 +36,7 @@
 
       # minimum amount of time from one start to the next start, if we
       # are restarting. Default is no minimum
-      minimum-restart-interval: 5
+      minimum-restart-delay: 5
 
       # run every N seconds, but only if the process has exited.
       # default is not to rerun at all.
