@@ -1,6 +1,6 @@
 # Package Maintainer Scripts are an Anti-pattern
 
-_Written by (Joshua Timberman)[http://twitter.com/jtimberman]_
+_Written by [Joshua Timberman](http://twitter.com/jtimberman)_
 
 Package management is a best practice in system administration. So is
 automated configuration management. However, the maintainer scripts
