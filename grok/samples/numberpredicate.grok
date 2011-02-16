@@ -1,9 +1,0 @@
-program {
-  load-patterns: "patterns/base"
-  exec "seq 25"
-
-  match {
-    pattern: "%{NUMBER > 20}"
-    reaction: "Found: %{NUMBER}"
-  }
-}

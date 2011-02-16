@@ -1,9 +1,0 @@
-program {
-  load-patterns: "patterns/base"
-  exec "ifconfig"
-
-  match {
-    pattern: "%{IP}"
-    reaction: "Found: %{IP}"
-  }
-}
