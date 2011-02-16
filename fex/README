@@ -5,4 +5,9 @@ token-based fields in a much more concise, flexible, and readable way.
 
 It steals the field extraction syntax much from ksb's xapply tool.
 
-http://www.semicomplete.com/projects/fex
+--
+
+
+This project now hosted at github:
+
+  https://github.com/jordansissel/fex
