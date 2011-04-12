@@ -8,6 +8,12 @@ public class LogTest {
     //BasicConfigurator.configure();
     PropertyConfigurator.configure("log4j.properties");
 
-    logger.info("Testing");
+    while (true) {
+      logger.info("Testing");
+      try {
+        Thread.sleep(1000);
+      }  catch (Exception e) {
+      }
+    }
   } /* public static void main(String[]) */
 } /* public class LogTest */
