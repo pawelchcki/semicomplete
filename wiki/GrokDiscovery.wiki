@@ -6,6 +6,12 @@ Grok makes regular expressions easier to manage, but what if you didn't have to 
 
 Given an input, grok can try to come up with a pattern that best matches your input.
 
+*NOTE*: Grok ships with a tool called 'discogrok' that you can use just like the ruby example below:
+
+`discogrok --patterns ./path/to/patterns/dir`
+
+reads from stdin, outputs discovered patterns.
+
 = Examples (from ruby) =
 
 Code (grokdisco.rb):
