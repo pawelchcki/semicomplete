@@ -28,7 +28,7 @@ Grok is also available for Ruby (gem install jls-grok)
 
 = Download Grok =
 
-  * Latest: [http://code.google.com/p/semicomplete/downloads/detail?name=grok-1.20110630.1.tar.gz]
+  * Latest: [http://semicomplete.googlecode.com/files/grok-1.20110630.1.tar.gz]
   * Archive: http://code.google.com/p/semicomplete/downloads/list?q=label:grok
 
 = Building =
