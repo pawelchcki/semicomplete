@@ -1,0 +1,23 @@
+/config.pl/1.6/Mon Aug 12 06:03:47 2002//
+/createaccount.pl/1.1/Fri Aug  9 06:29:52 2002//
+/login.pl/1.5/Wed Aug 14 19:50:40 2002//
+/logout.pl/1.2/Sun Jun 30 02:33:19 2002//
+/markall.pl/1.2/Mon Aug 12 05:46:53 2002//
+/signup.pl/1.4/Mon Aug 12 05:05:22 2002//
+/view.pl/1.1/Thu Jul 25 20:55:01 2002//
+D/cron////
+D/images////
+D/modules////
+D/bin////
+/about.pl/1.3/Thu Jan  2 08:04:57 2003//
+/periodic.sh/1.6/Fri Jan  3 05:32:50 2003//
+/search.pl/1.3/Fri Jan  3 19:10:31 2003//
+/front.pl/1.3/Fri Feb 14 19:21:47 2003//
+/TODO/1.5/Fri Feb 14 19:22:39 2003//
+/MODULES/1.2/Thu Jul 17 16:26:50 2003//
+/cleanup.pl/1.6/Sun Jul  4 08:38:57 2004//
+/index.pl/1.16/Sun Jul  4 08:38:58 2004//
+/mynews.pl/1.10/Sat Jul  3 00:42:50 2004//
+/rssnews.conf/1.12/Sun Jul  4 08:38:59 2004//
+/topmenu.pl/1.8/Sun Jul  4 08:38:59 2004//
+/upcron.pl/1.17/Sun Jul  4 08:39:00 2004//
