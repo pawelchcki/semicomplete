@@ -219,8 +219,8 @@ void packet_handler(u_char *args, const struct pcap_pkthdr *head,
 	/* If this packet is sent to our local net, ignore it... */
 	if (hash_lookup(xboxen, ETHERCONV(eptr->ether_shost)) != NULL) {
 		debuglog(15, "Packet!");
-		debuglog(3, "From: %s", ether_ntoa((struct ether_addr *)ETHERCONV(eptr->ether_shost)));
-		debuglog(3, "To: %s", ether_ntoa((struct ether_addr *)ETHERCONV(eptr->ether_dhost)));
+		debuglog(3, "From: %x", ETHERCONV(eptr->ether_shost));
+		debuglog(3, "To: %x", ETHERCONV(eptr->ether_dhost));
 	}
 
 	/*
@@ -694,10 +694,12 @@ void distribute_packet(proxy_t *ppt, char *packet, int pktlen) {
 	eptr = (struct ether_header *)packet;
 	ether_type = ntohs(eptr->ether_type);
 
-	debuglog(30, "----- REMOTE PACKET From: %s", 
-				ether_ntoa((struct ether_addr *)ETHERCONV(eptr->ether_shost)));
-	debuglog(30, "----- REMOTE PACKET To: %s",
-				ether_ntoa((struct ether_addr *)ETHERCONV(eptr->ether_dhost)));
+  debuglog(30, "REMOTE PACKET FROM:  %02x:%02x:%02x:%02x:%02x:%02x\n", 
+          eptr->ether_shost[0], eptr->ether_shost[1], eptr->ether_shost[2],
+          eptr->ether_shost[3], eptr->ether_shost[4], eptr->ether_shost[5]);
+  debuglog(30, "REMOTE PACKET TO:  %02x:%02x:%02x:%02x:%02x:%02x\n", 
+          eptr->ether_dhost[0], eptr->ether_dhost[1], eptr->ether_dhost[2],
+          eptr->ether_dhost[3], eptr->ether_dhost[4], eptr->ether_dhost[5]);
 
 	bytes = my_libnet_write_link_layer(libnet,pcapdev,packet,pktlen);
 
