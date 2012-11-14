@@ -358,7 +358,7 @@ void addxbox(MACTYPE *macaddr, proxy_t *ppt) {
 		//(ppt == NULL ? "Local" : inet_ntoa(ppt->addr)));
 
 
-		debuglog(1, "NEW XBOX FOUND: %s", ether_ntoa((struct ether_addr *)macaddr));
+		debuglog(1, "NEW XBOX FOUND: %06x", (unsigned long)(struct ether_addr *)macaddr);
 		debuglog(1, "\tLocation: %s", (ppt == NULL ? "Local" : inet_ntoa(ppt->addr)));
 		newbox = malloc(sizeof(xbox_t));
 		memcpy(newbox->macaddr,macaddr,ETHER_ADDR_LEN);
@@ -375,7 +375,10 @@ void addxbox(MACTYPE *macaddr, proxy_t *ppt) {
 		fprintf(stderr, "KNOWN XBOXES:\n");
 		while ((node = hash_scan_next(&hs))) {
 			xbox_t *x = (xbox_t *)(node->hash_data);
-			fprintf(stderr, "XBOX: %s\n", ether_ntoa((struct ether_addr *)x->macaddr));
+			fprintf(stderr, "XBOX: %02x:%02x:%02x:%02x:%02x:%02x\n", 
+							//ether_ntoa((struct ether_addr *)x->macaddr));
+							x->macaddr[0], x->macaddr[1], x->macaddr[2],
+							x->macaddr[3], x->macaddr[4], x->macaddr[5]);
 		}
 		fprintf(stderr, "END\n");
 	}
