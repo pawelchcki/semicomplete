@@ -66,14 +66,15 @@ PCAP_FOUND=0
 # Checking for paths for pcap
 AC_CHECK_PATHS([/usr /usr/local], 
 					[
-					AC_CHECK_FILE([${dirname}/lib/libpcap.a], [AC_PATH_FOUND])
+					AC_CHECK_FILE([${dirname}/lib/libpcap.so.1], [AC_PATH_FOUND])
+					AC_CHECK_FILE([${dirname}/lib64/libpcap.so.1], [AC_PATH_FOUND])
 					],
 					[
 					LDFLAGS="$LDFLAGS -L${dirname}/lib"
 					CFLAGS="$CFLAGS -I${dirname}/include"
 					PCAP_PREFIX=$dirname
 					],
-					[ AC_MSG_ERROR([Unable to find libpcap.a. Specify path wth --with-pcap ]) ]
+					[ AC_MSG_ERROR([Unable to find libpcap.so.1. Specify path wth --with-pcap ]) ]
 				  )
 
 AC_CHECK_HEADERS(pcap.h,,AC_MSG_ERROR([pcap.h not found]))
@@ -92,7 +93,8 @@ LIBS="$LIBS -lnet"
 
 AC_CHECK_PATHS([/usr /usr/local], 
 					[
-					AC_CHECK_FILE([${dirname}/lib/libnet.a], [AC_PATH_FOUND])
+					AC_CHECK_FILE([${dirname}/lib/libnet.so.1], [AC_PATH_FOUND])
+					AC_CHECK_FILE([${dirname}/lib64/libnet.so.1], [AC_PATH_FOUND])
 					],
 					[
 					LDFLAGS="$LDFLAGS -L${dirname}/lib"
