@@ -68,6 +68,7 @@ AC_CHECK_PATHS([/usr /usr/local],
 					[
 					AC_CHECK_FILE([${dirname}/lib/libpcap.so.1], [AC_PATH_FOUND])
 					AC_CHECK_FILE([${dirname}/lib64/libpcap.so.1], [AC_PATH_FOUND])
+					AC_CHECK_FILE([${dirname}/lib/x86_64-linux-gnu/libpcap.so.1.1.1], [AC_PATH_FOUND])
 					],
 					[
 					LDFLAGS="$LDFLAGS -L${dirname}/lib"
